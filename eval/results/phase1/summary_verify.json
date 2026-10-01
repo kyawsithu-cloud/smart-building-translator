@@ -1,0 +1,366 @@
+[
+  {
+    "file": "sample_en.pptx",
+    "output": "sample_en_en-ja_verify.pptx",
+    "mode": "offline",
+    "model": "hy-mt2-7b",
+    "model_file": "HY-MT2-7B-Q6_K.gguf",
+    "licence": "Apache-2.0",
+    "source_lang": "en",
+    "target_lang": "ja",
+    "protect": "verify",
+    "slides": 9,
+    "segments": 63,
+    "status_counts": {
+      "kept": 11,
+      "retried": 4,
+      "translated": 48
+    },
+    "translated_pct": 100.0,
+    "protected_token_integrity_pct": 100.0,
+    "glossary_adherence_pct": 97.6,
+    "tag_integrity_pct": 100.0,
+    "seconds": 37.1,
+    "llm_calls": 57,
+    "completion_tokens": 1219,
+    "tokens_per_second": 33.1,
+    "untranslatable": [],
+    "issues": [
+      {
+        "code": "term_missing",
+        "severity": "warning",
+        "segment": "s2/3/p4",
+        "message": "slide 2: term_missing (1)"
+      },
+      {
+        "code": "font_reduced",
+        "severity": "info",
+        "segment": "s9/2",
+        "message": "slide 9: font reduced to 85% to fit"
+      }
+    ],
+    "direction": "en→ja",
+    "warnings": 2
+  },
+  {
+    "file": "sample_ja.pptx",
+    "output": "sample_ja_ja-en_verify.pptx",
+    "mode": "offline",
+    "model": "hy-mt2-7b",
+    "model_file": "HY-MT2-7B-Q6_K.gguf",
+    "licence": "Apache-2.0",
+    "source_lang": "ja",
+    "target_lang": "en",
+    "protect": "verify",
+    "slides": 8,
+    "segments": 59,
+    "status_counts": {
+      "kept": 11,
+      "translated": 48
+    },
+    "translated_pct": 100.0,
+    "protected_token_integrity_pct": 100.0,
+    "glossary_adherence_pct": 100.0,
+    "tag_integrity_pct": 100.0,
+    "seconds": 20.0,
+    "llm_calls": 48,
+    "completion_tokens": 624,
+    "tokens_per_second": 31.6,
+    "untranslatable": [],
+    "issues": [
+      {
+        "code": "font_reduced",
+        "severity": "info",
+        "segment": "s1/3",
+        "message": "slide 1: font reduced to 85% to fit"
+      },
+      {
+        "code": "font_reduced",
+        "severity": "info",
+        "segment": "s6/3",
+        "message": "slide 6: font reduced to 90% to fit"
+      },
+      {
+        "code": "font_reduced",
+        "severity": "info",
+        "segment": "s8/3",
+        "message": "slide 8: font reduced to 95% to fit"
+      }
+    ],
+    "direction": "ja→en",
+    "warnings": 3
+  },
+  {
+    "file": "sample_en.pptx",
+    "output": "sample_en_en-ja_verify.pptx",
+    "mode": "offline",
+    "model": "qwen3-8b",
+    "model_file": "Qwen3-8B-Q5_K_M.gguf",
+    "licence": "Apache-2.0",
+    "source_lang": "en",
+    "target_lang": "ja",
+    "protect": "verify",
+    "slides": 9,
+    "segments": 63,
+    "status_counts": {
+      "kept": 11,
+      "retried": 1,
+      "translated": 51
+    },
+    "translated_pct": 100.0,
+    "protected_token_integrity_pct": 100.0,
+    "glossary_adherence_pct": 100.0,
+    "tag_integrity_pct": 100.0,
+    "seconds": 56.5,
+    "llm_calls": 12,
+    "completion_tokens": 2182,
+    "tokens_per_second": 38.8,
+    "untranslatable": [],
+    "issues": [
+      {
+        "code": "font_reduced",
+        "severity": "info",
+        "segment": "s9/2",
+        "message": "slide 9: font reduced to 80% to fit"
+      }
+    ],
+    "direction": "en→ja",
+    "warnings": 1
+  },
+  {
+    "file": "sample_ja.pptx",
+    "output": "sample_ja_ja-en_verify.pptx",
+    "mode": "offline",
+    "model": "qwen3-8b",
+    "model_file": "Qwen3-8B-Q5_K_M.gguf",
+    "licence": "Apache-2.0",
+    "source_lang": "ja",
+    "target_lang": "en",
+    "protect": "verify",
+    "slides": 8,
+    "segments": 59,
+    "status_counts": {
+      "kept": 11,
+      "translated": 48
+    },
+    "translated_pct": 100.0,
+    "protected_token_integrity_pct": 100.0,
+    "glossary_adherence_pct": 100.0,
+    "tag_integrity_pct": 100.0,
+    "seconds": 46.5,
+    "llm_calls": 10,
+    "completion_tokens": 1821,
+    "tokens_per_second": 39.4,
+    "untranslatable": [],
+    "issues": [
+      {
+        "code": "font_reduced",
+        "severity": "info",
+        "segment": "s1/3",
+        "message": "slide 1: font reduced to 95% to fit"
+      },
+      {
+        "code": "font_reduced",
+        "severity": "info",
+        "segment": "s8/3",
+        "message": "slide 8: font reduced to 95% to fit"
+      }
+    ],
+    "direction": "ja→en",
+    "warnings": 2
+  },
+  {
+    "file": "sample_en.pptx",
+    "output": "sample_en_en-ja_verify.pptx",
+    "mode": "offline",
+    "model": "cat-translate-7b",
+    "model_file": "CAT-Translate-7b.Q5_K_M.gguf",
+    "licence": "MIT",
+    "source_lang": "en",
+    "target_lang": "ja",
+    "protect": "verify",
+    "slides": 9,
+    "segments": 63,
+    "status_counts": {
+      "kept": 11,
+      "retried": 17,
+      "translated": 35
+    },
+    "translated_pct": 100.0,
+    "protected_token_integrity_pct": 89.7,
+    "glossary_adherence_pct": 83.3,
+    "tag_integrity_pct": 100.0,
+    "seconds": 45.9,
+    "llm_calls": 77,
+    "completion_tokens": 2070,
+    "tokens_per_second": 45.4,
+    "untranslatable": [],
+    "issues": [
+      {
+        "code": "token_missing",
+        "severity": "warning",
+        "segment": "s2/3/p0",
+        "message": "slide 2: token_missing (1)"
+      },
+      {
+        "code": "term_missing",
+        "severity": "warning",
+        "segment": "s2/3/p3",
+        "message": "slide 2: term_missing (2)"
+      },
+      {
+        "code": "term_missing",
+        "severity": "warning",
+        "segment": "s2/3/p4",
+        "message": "slide 2: term_missing (1)"
+      },
+      {
+        "code": "term_missing",
+        "severity": "warning",
+        "segment": "s2/notes/p0",
+        "message": "slide 2: term_missing (2)"
+      },
+      {
+        "code": "term_missing",
+        "severity": "warning",
+        "segment": "s3/3/p0",
+        "message": "slide 3: term_missing (1)"
+      },
+      {
+        "code": "token_missing",
+        "severity": "warning",
+        "segment": "s5/3/t1.2/p0",
+        "message": "slide 5: token_missing (1)"
+      },
+      {
+        "code": "token_missing",
+        "severity": "warning",
+        "segment": "s7/3/p0",
+        "message": "slide 7: token_missing (1)"
+      },
+      {
+        "code": "token_missing",
+        "severity": "warning",
+        "segment": "s7/3/p1",
+        "message": "slide 7: token_missing (1)"
+      },
+      {
+        "code": "term_missing",
+        "severity": "warning",
+        "segment": "s7/3/p1",
+        "message": "slide 7: term_missing (1)"
+      },
+      {
+        "code": "term_inconsistent",
+        "severity": "warning",
+        "segment": null,
+        "message": "3 glossary term(s) translated inconsistently"
+      },
+      {
+        "code": "overflow",
+        "severity": "warning",
+        "segment": "s5/2",
+        "message": "slide 5: text likely exceeds its box even at 80% font size"
+      },
+      {
+        "code": "overflow",
+        "severity": "warning",
+        "segment": "s7/2",
+        "message": "slide 7: text likely exceeds its box even at 80% font size"
+      },
+      {
+        "code": "overflow",
+        "severity": "warning",
+        "segment": "s9/2",
+        "message": "slide 9: text likely exceeds its box even at 80% font size"
+      }
+    ],
+    "direction": "en→ja",
+    "warnings": 13
+  },
+  {
+    "file": "sample_ja.pptx",
+    "output": "sample_ja_ja-en_verify.pptx",
+    "mode": "offline",
+    "model": "cat-translate-7b",
+    "model_file": "CAT-Translate-7b.Q5_K_M.gguf",
+    "licence": "MIT",
+    "source_lang": "ja",
+    "target_lang": "en",
+    "protect": "verify",
+    "slides": 8,
+    "segments": 59,
+    "status_counts": {
+      "kept": 11,
+      "retried": 9,
+      "translated": 39
+    },
+    "translated_pct": 100.0,
+    "protected_token_integrity_pct": 93.9,
+    "glossary_adherence_pct": 100.0,
+    "tag_integrity_pct": 100.0,
+    "seconds": 59.8,
+    "llm_calls": 59,
+    "completion_tokens": 2707,
+    "tokens_per_second": 45.6,
+    "untranslatable": [],
+    "issues": [
+      {
+        "code": "parentheses_lost",
+        "severity": "warning",
+        "segment": "s2/3/p1",
+        "message": "slide 2: parentheses_lost (2)"
+      },
+      {
+        "code": "token_missing",
+        "severity": "warning",
+        "segment": "s7/3/p0",
+        "message": "slide 7: token_missing (1)"
+      },
+      {
+        "code": "token_missing",
+        "severity": "warning",
+        "segment": "s7/3/p1",
+        "message": "slide 7: token_missing (1)"
+      },
+      {
+        "code": "overflow",
+        "severity": "warning",
+        "segment": "s1/2",
+        "message": "slide 1: text likely exceeds its box even at 80% font size"
+      },
+      {
+        "code": "font_reduced",
+        "severity": "info",
+        "segment": "s1/3",
+        "message": "slide 1: font reduced to 95% to fit"
+      },
+      {
+        "code": "overflow",
+        "severity": "warning",
+        "segment": "s3/3",
+        "message": "slide 3: text likely exceeds its box even at 80% font size"
+      },
+      {
+        "code": "overflow",
+        "severity": "warning",
+        "segment": "s4/2",
+        "message": "slide 4: text likely exceeds its box even at 80% font size"
+      },
+      {
+        "code": "overflow",
+        "severity": "warning",
+        "segment": "s5/2",
+        "message": "slide 5: text likely exceeds its box even at 80% font size"
+      },
+      {
+        "code": "font_reduced",
+        "severity": "info",
+        "segment": "s6/3",
+        "message": "slide 6: font reduced to 90% to fit"
+      }
+    ],
+    "direction": "ja→en",
+    "warnings": 9
+  }
+]

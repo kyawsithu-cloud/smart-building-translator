@@ -1,0 +1,107 @@
+{
+  "file": "sample_en.pptx",
+  "output": "sample_en_en-ja_verify.pptx",
+  "mode": "offline",
+  "model": "cat-translate-7b",
+  "model_file": "CAT-Translate-7b.Q5_K_M.gguf",
+  "licence": "MIT",
+  "source_lang": "en",
+  "target_lang": "ja",
+  "protect": "verify",
+  "slides": 9,
+  "segments": 63,
+  "status_counts": {
+    "kept": 11,
+    "retried": 17,
+    "translated": 35
+  },
+  "translated_pct": 100.0,
+  "protected_token_integrity_pct": 89.7,
+  "glossary_adherence_pct": 83.3,
+  "tag_integrity_pct": 100.0,
+  "seconds": 45.9,
+  "llm_calls": 77,
+  "completion_tokens": 2070,
+  "tokens_per_second": 45.4,
+  "untranslatable": [],
+  "issues": [
+    {
+      "code": "token_missing",
+      "severity": "warning",
+      "segment": "s2/3/p0",
+      "message": "slide 2: token_missing (1)"
+    },
+    {
+      "code": "term_missing",
+      "severity": "warning",
+      "segment": "s2/3/p3",
+      "message": "slide 2: term_missing (2)"
+    },
+    {
+      "code": "term_missing",
+      "severity": "warning",
+      "segment": "s2/3/p4",
+      "message": "slide 2: term_missing (1)"
+    },
+    {
+      "code": "term_missing",
+      "severity": "warning",
+      "segment": "s2/notes/p0",
+      "message": "slide 2: term_missing (2)"
+    },
+    {
+      "code": "term_missing",
+      "severity": "warning",
+      "segment": "s3/3/p0",
+      "message": "slide 3: term_missing (1)"
+    },
+    {
+      "code": "token_missing",
+      "severity": "warning",
+      "segment": "s5/3/t1.2/p0",
+      "message": "slide 5: token_missing (1)"
+    },
+    {
+      "code": "token_missing",
+      "severity": "warning",
+      "segment": "s7/3/p0",
+      "message": "slide 7: token_missing (1)"
+    },
+    {
+      "code": "token_missing",
+      "severity": "warning",
+      "segment": "s7/3/p1",
+      "message": "slide 7: token_missing (1)"
+    },
+    {
+      "code": "term_missing",
+      "severity": "warning",
+      "segment": "s7/3/p1",
+      "message": "slide 7: term_missing (1)"
+    },
+    {
+      "code": "term_inconsistent",
+      "severity": "warning",
+      "segment": null,
+      "message": "3 glossary term(s) translated inconsistently"
+    },
+    {
+      "code": "overflow",
+      "severity": "warning",
+      "segment": "s5/2",
+      "message": "slide 5: text likely exceeds its box even at 80% font size"
+    },
+    {
+      "code": "overflow",
+      "severity": "warning",
+      "segment": "s7/2",
+      "message": "slide 7: text likely exceeds its box even at 80% font size"
+    },
+    {
+      "code": "overflow",
+      "severity": "warning",
+      "segment": "s9/2",
+      "message": "slide 9: text likely exceeds its box even at 80% font size"
+    }
+  ]
+}

@@ -1,0 +1,521 @@
+﻿slide,segment,kind,status,problems,source,translation
+1,s1/2/p0,title,translated,,スマートビルディングプラットフォーム概要,"Smart Building Platform Overview
+
+The Smart Building Platform is a comprehensive solution that integrates various technologies and services to create a connected, intelligent building environment. It combines cutting-edge technologies such as IoT (Internet of Things), AI (Artificial Intelligence), and machine learning to deliver advanced capabilities and services to building occupants and operators.
+
+Key Features and Benefits:
+1. Connected Environment: The platform enables seamless integration of multiple technologies and services, creating a connected, intelligent building environment.
+2. Advanced Capabilities: It delivers advanced capabilities and services to building occupants and operators through cutting-edge technologies like IoT, AI, and machine learning.
+3. Efficient Management: The platform facilitates efficient management of building operations and maintenance, including energy consumption monitoring, occupancy detection, and facility security.
+4. Enhanced User Experience: It enhances the user experience for building occupants and operators by providing intuitive interfaces and personalized services.
+5. Integration with External Systems: The platform integrates with external systems to enable seamless integration of various technologies and services.
+
+Key Components:
+1. IoT (Internet of Things): The platform utilizes Io"
+1,s1/3/p0,body,translated,,ビル管理システム（BMS）統合提案 — 2026年3月15日,"Building Management System (BMS) Integration Proposal — March 15, 2026"
+2,s2/2/p0,title,translated,,ビル管理システム,Building Management System
+2,s2/3/p0,body,translated,,<g1>ビル管理システム</g1>は空調設備を監視・制御します。,The <g1>Building Management System</g1> monitors and controls the air conditioning equipment.
+2,s2/3/p1,body,translated,parentheses_lost,空調機（AHU）およびファンコイルユニット（FCU）の制御,Control of Air Handling Units (AHUs) and Fan Coil Units (FCUs)
+2,s2/3/p2,body,translated,,可変風量（VAV）ターミナル制御,Variable Air Volume (VAV) Terminal Control
+2,s2/3/p3,body,translated,,<g1>警報</g1>および<g2>機器状態</g2>の24時間監視,24-hour monitoring of <g1>alarms</g1> and <g2>equipment status</g2>
+2,s2/3/p4,body,translated,,エネルギー消費量分析のためのエネルギー管理システム（EMS）,Energy Management System (EMS) for Energy Consumption Analysis
+2,s2/notes/p0,note,retried,,"ビル管理システムは2,000点以上のポイントからデータを収集し、5秒以内にオペレーターへ警報を送信します。","The Building Management System collects data from over 2,000 points and sends alarms to operators within 5 seconds."
+3,s3/2/p0,title,translated,,センサーおよびフィールド機器,Sensors and Field Devices
+3,s3/3/p0,body,retried,,在室センサー,"Occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor
+occupancy sensor"
+3,s3/3/p1,body,translated,,"CO2センサー（0～2,000 ppm）","CO2 sensor (0–2,000 ppm)"
+3,s3/3/p2,body,translated,,温度センサー：精度±0.2 °C,Temperature sensor: Accuracy ±0.2 °C
+3,s3/3/p3,body,translated,,湿度：30～70 %RH,Humidity: 30-70% RH
+3,s3/3/p4,body,translated,,型式 <g1>FX-PCG2611-0</g1> コントローラー、ファームウェア v3.2.1,"Model <g1>FX-PCG2611-0</g1> Controller, Firmware v3.2.1"
+4,s4/2/p0,title,translated,,システム構成,"System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration
+
+System Configuration"
+4,s4/3/4/p0,body,translated,,エッジデバイス,Edge device
+4,s4/3/5/p0,body,translated,,ゲートウェイ,Gateway
+4,s4/3/6/p0,body,translated,,クラウドプラットフォーム,Cloud Platform
+4,s4/3/7/p0,body,translated,,ダッシュボード,Dashboard
+4,s4/8/p0,body,translated,,フィールドコントローラーはBACnet/IPおよびModbus TCPで通信し、ゲートウェイはMQTT over TLS（ポート8883）でクラウドプラットフォームへテレメトリを送信します。,"The field controller communicates via BACnet/IP and Modbus TCP, while the gateway sends telemetry to the cloud platform using MQTT over TLS (port 8883)."
+5,s5/2/p0,title,translated,,プロトコル比較,"Protocol Comparison
+
+Protocol comparison is a process of comparing different protocols to determine their relative merits and drawbacks. This involves evaluating each protocol's performance characteristics, performance characteristics, and performance characteristics.
+
+The process involves:
+1. Identifying the protocols to be compared.
+2. Defining the criteria for comparison.
+3. Conducting performance tests and performance tests.
+4. Analyzing the results of the performance tests.
+5. Evaluating the relative merits and drawbacks of each protocol.
+
+This process is typically conducted by:
+- Researchers in the field of protocols and networking.
+- Engineers and developers working on protocols and networking systems.
+- System administrators and network administrators.
+
+The results of the comparison can be used to:
+- Improve existing protocols.
+- Develop new protocols based on the findings.
+- Inform policy decisions regarding protocols and networking.
+
+Example:
+
+Protocol comparison is a process of comparing different protocols to determine their relative merits and drawbacks. This involves evaluating each protocol's performance characteristics, performance characteristics, and performance characteristics.
+
+The process involves:
+1. Ident"
+5,s5/3/t0.0/p0,table_cell,translated,,プロトコル,"Assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+ass"
+5,s5/3/t0.1/p0,table_cell,translated,,トランスポート,Transport
+5,s5/3/t0.2/p0,table_cell,translated,,主な用途,"Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses
+Main Uses"
+5,s5/3/t0.3/p0,table_cell,translated,,デフォルトポート,"Assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+assistant
+ass"
+5,s5/3/t1.0/p0,table_cell,kept,,BACnet/IP,BACnet/IP
+5,s5/3/t1.1/p0,table_cell,kept,,UDP,UDP
+5,s5/3/t1.2/p0,table_cell,translated,,空調コントローラー,Air Conditioning Controller
+5,s5/3/t1.3/p0,table_cell,kept,,47808,47808
+5,s5/3/t2.0/p0,table_cell,kept,,Modbus TCP,Modbus TCP
+5,s5/3/t2.1/p0,table_cell,kept,,TCP,TCP
+5,s5/3/t2.2/p0,table_cell,retried,,電力量計、冷凍機,"Electricity meter, chiller"
+5,s5/3/t2.3/p0,table_cell,kept,,502,502
+5,s5/3/t3.0/p0,table_cell,kept,,MQTT,MQTT
+5,s5/3/t3.1/p0,table_cell,kept,,TCP,TCP
+5,s5/3/t3.2/p0,table_cell,translated,,クラウドへのIoTテレメトリ,IoT telemetry to the cloud
+5,s5/3/t3.3/p0,table_cell,kept,,1883 / 8883,1883 / 8883
+5,s5/3/t4.0/p0,table_cell,kept,,KNX,KNX
+5,s5/3/t4.1/p0,table_cell,translated,,ツイストペア / IP,Twisted Pair / IP
+5,s5/3/t4.2/p0,table_cell,translated,,照明およびブラインド,Lighting and Blinds
+5,s5/3/t4.3/p0,table_cell,kept,,3671,3671
+6,s6/2/p0,title,translated,,省エネルギーとデマンドレスポンス,Energy Conservation and Demand Response
+6,s6/3/p0,body,translated,,2025年夏にピーク需要を18%削減,Reduce peak demand by 18% in the summer of 2025.
+6,s6/3/p1,body,translated,,"エネルギー消費量：1,250 MWh/年 → 1,020 MWh/年","Energy consumption: 1,250 MWh/year → 1,020 MWh/year"
+6,s6/3/p2,body,translated,,<g1>デマンドレスポンス</g1>信号は<g2>OpenADR 2.0b</g2>経由で電力会社から受信,The <g1>Demand Response</g1> signal is received from the power company via <g2>OpenADR 2.0b</g2>.
+6,s6/3/p3,body,retried,,設定値調整：ピーク時間帯は冷房設定値を24 °Cから26 °Cに変更,Setpoint adjustment: Change the cooling setpoint from 24°C to 26°C during peak hours.
+6,s6/3/p4,body,translated,,消費電力は15分ごとに計測,Power consumption is measured every 15 minutes.
+6,s6/notes/p0,note,retried,,省エネルギー制御は、在室率が30%未満かつ外気温度が32 °Cを超える場合にのみ有効になります。,Energy-saving control is only activated when the occupancy rate is below 30% and the outdoor air temperature exceeds 32°C.
+7,s7/2/p0,title,translated,,ネットワークとアクセス,Network and Access
+7,s7/3/p0,body,retried,token_missing,BMSサーバー：192.168.1.100（VLAN 20）,BM Server: 192.168.1.100 (VLAN 20)
+7,s7/3/p1,body,retried,token_missing,Webダッシュボード：https://bms.example.com/dashboard,"Web Dashboard: https://bmsc.example.com/dashboard
+assistant"
+7,s7/3/p2,body,translated,,サポート：support@example.com,Support: support@example.com
+7,s7/3/p3,body,translated,,設定ファイル：C:\Program Files\BMS\config\points.json,Configuration file: C:\Program Files\BMS\config\points.json
+7,s7/3/p4,body,translated,,HTTPS経由のREST API。ペイロードはJSON、旧形式のエクスポートはXMLおよびSQL,"REST API via HTTPS. Payload is JSON, old format exports are XML and SQL."
+8,s8/2/p0,title,translated,,運用・保守,Operation & Maintenance
+8,s8/3/p0,body,retried,,冷凍機の警報が発生すると、システムは保守チームに自動的にメールで通知して作業指示を作成し、30分以内に警報が確認されない場合は施設管理者にエスカレーションします。,"When a chiller alarm occurs, the system automatically notifies the maintenance team via email, creates a work order, and escalates to the facility manager if the alarm is not confirmed within 30 minutes."
+8,s8/3/p1,body,retried,,空調機フィルターの定期保守は3か月ごとに実施します。,Regular maintenance of the air handling unit filter is performed every three months.
+8,s8/3/p2,body,translated,,移行期間中もPLCおよびSCADAシステムは稼働を継続します。,The PLC and SCADA systems will continue to operate during the transition period.

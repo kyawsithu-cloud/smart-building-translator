@@ -1,0 +1,18 @@
+[privacy]
+mode = "offline"            # "offline" | "online" — online also requires per-job consent
+store_translation_cache = true
+log_document_text = false   # must stay false outside local debugging
+
+[engine]
+id = "llamacpp"             # "llamacpp" | "ollama"
+base_url = "http://127.0.0.1:8765"
+model = ""                  # set per machine; see MODEL_SETUP.md
+
+[translation]
+source = "en"
+target = "ja"
+ja_style_titles = "taigen-dome"   # 体言止め for titles/bullets
+ja_style_body = "desu-masu"       # です・ます for sentences/notes
+
+[render]
+min_font_scale = 0.8        # never shrink text below 80 % of original; flag instead

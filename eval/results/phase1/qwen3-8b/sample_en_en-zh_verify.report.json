@@ -1,0 +1,41 @@
+{
+  "file": "sample_en.pptx",
+  "output": "sample_en_en-zh_verify.pptx",
+  "mode": "offline",
+  "model": "qwen3-8b",
+  "model_file": "Qwen3-8B-Q5_K_M.gguf",
+  "licence": "Apache-2.0",
+  "source_lang": "en",
+  "target_lang": "zh",
+  "protect": "verify",
+  "slides": 9,
+  "segments": 63,
+  "status_counts": {
+    "kept": 11,
+    "retried": 4,
+    "translated": 48
+  },
+  "translated_pct": 100.0,
+  "protected_token_integrity_pct": 97.4,
+  "glossary_adherence_pct": null,
+  "tag_integrity_pct": 100.0,
+  "seconds": 55.9,
+  "llm_calls": 16,
+  "completion_tokens": 2141,
+  "tokens_per_second": 38.5,
+  "untranslatable": [],
+  "issues": [
+    {
+      "code": "length_suspicious",
+      "severity": "warning",
+      "segment": "s6/notes/p0",
+      "message": "slide 6: length_suspicious (1)"
+    },
+    {
+      "code": "token_missing",
+      "severity": "warning",
+      "segment": "s9/3/p2",
+      "message": "slide 9: token_missing (1)"
+    }
+  ]
+}

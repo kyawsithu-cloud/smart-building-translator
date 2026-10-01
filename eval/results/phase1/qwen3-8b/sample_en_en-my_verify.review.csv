@@ -1,0 +1,64 @@
+﻿slide,segment,kind,status,problems,source,translation
+1,s1/2/p0,title,translated,,Smart Building Platform Overview,စီးပွားရေးအဆင့်မြှင့်တင်ရေး ပလက်ဖောင်း အကြောင်းကို အကြမ်းဖျင်း သိရှိနိုင်ပါသည်။
+1,s1/3/p0,body,translated,number_mismatch,Building Management System (BMS) Integration Proposal — 15 March 2026,ဆောက်လုပ်ရေး စီမံခန့်ခွဲမှု စနစ် (BMS) အပေါ် အဆိုပြုချက် — ၂၀၂၆ ခုနှစ်၊ မတ်လ ၁၅ ရက်
+2,s2/2/p0,title,translated,,Building Management System,တိုးတက်စေသော စီမံခန့်ခွဲမှုစနစ်
+2,s2/3/p0,body,translated,,The <g1>Building Management System</g1> monitors and controls HVAC equipment.,အဆိုပါ <g1>တိုးတက်စေသော စီမံခန့်ခွဲမှုစနစ်</g1> သည် HVAC ကိရိယာများကို စောင့်ကြည့်ပြီး ထိန်းချုပ်ပေးသည်။
+2,s2/3/p1,body,translated,,Air Handling Unit (AHU) and Fan Coil Unit (FCU) control,လေကုန်းကားကိရိယာ (AHU) နှင့် ပိုက်ဆံကိရိယာ (FCU) ထိန်းချုပ်မှု
+2,s2/3/p2,body,translated,,Variable Air Volume (VAV) terminal control,အလွဲသုံးစွဲသော လေကုန်းကားကိရိယာ (VAV) အဆုံးအဖြတ်ထိန်းချုပ်မှု
+2,s2/3/p3,body,translated,,<g1>Alarm</g1> and <g2>equipment status</g2> monitoring 24/7,<g1>အသံ့အလိုအလျောက်အားလုံး</g1> နှင့် <g2>ကိရိယာ အခြေအနေ</g2> စောင့်ကြည့်မှု 24/7
+2,s2/3/p4,body,translated,,Energy Management System (EMS) for energy consumption analysis,အားလုံးကို စီမံခန့်ခွဲမှုစနစ် (EMS) အား အားသုံးစွဲမှု အစီရင်ခံစာ အတွက် အသုံးပြုသည်။
+2,s2/notes/p0,note,translated,number_mismatch,"The building management system collects data from more than 2,000 points and sends alarms to the operator within 5 seconds.",တိုးတက်စေသော အဆောက်အဦး စီမံခန့်ခွဲမှု စနစ်သည် ၅ စက္ကန့်အတွင်း အဆောက်အဦး အား ၂၀၀၀ ကျော် အချက်အလက်များကို စုဆောင်းပြီး အလုပ်သမားကို အသံ့အကြို အကြောင်းကို ပြောပြသည်။
+3,s3/2/p0,title,translated,,Sensors and Field Devices,စိတ်ကူးယဉ်ကိရိယာများနှင့် အမှုလုပ်ကိရိယာများ
+3,s3/3/p0,body,translated,,Occupancy sensor,အခန်းအသုံးပြုမှု စိတ်ကူးယဉ်ကိရိယာ
+3,s3/3/p1,body,translated,,"CO2 sensor (0–2,000 ppm)","CO2 စိတ်ကူးယဉ်ကိရိယာ (0–2,000 ppm)"
+3,s3/3/p2,body,translated,,Temperature sensor: ±0.2 °C accuracy,အပူချိန် စိတ်ကူးယဉ်ကိရိယာ: ±0.2 °C အမှန်တကယ်
+3,s3/3/p3,body,translated,,Humidity: 30–70 %RH,စိုထိုင်မှု: 30–70 %RH
+3,s3/3/p4,body,translated,,"Model <g1>FX-PCG2611-0</g1> controller, firmware v3.2.1",မှန်ပြား <g1>FX-PCG2611-0</g1> ထိန်းချုပ်မှုကိရိယာ၊ ဖိုင်များ v3.2.1
+4,s4/2/p0,title,retried,,System Architecture,စနစ် အဆိုပါအားကိုးကား
+4,s4/3/4/p0,body,failed,empty,Edge device,
+4,s4/3/5/p0,body,failed,empty,Gateway,
+4,s4/3/6/p0,body,failed,empty,Cloud platform,
+4,s4/3/7/p0,body,failed,empty,Dashboard,
+4,s4/8/p0,body,failed,empty,Field controllers communicate over BACnet/IP and Modbus TCP; the gateway publishes telemetry to the cloud platform via MQTT over TLS (port 8883).,
+5,s5/2/p0,title,translated,,Protocol Comparison,ပို့စ်ကိုယ်စားပြုချက်အကျုံးကျွံချက်
+5,s5/3/t0.0/p0,table_cell,translated,,Protocol,ပို့စ်
+5,s5/3/t0.1/p0,table_cell,translated,,Transport,ပို့ဆောင်မှု
+5,s5/3/t0.2/p0,table_cell,translated,,Typical use,အသုံးပြုမှုအများအပြား
+5,s5/3/t0.3/p0,table_cell,translated,,Default port,အမှုအရာအများအပြား
+5,s5/3/t1.0/p0,table_cell,kept,,BACnet/IP,BACnet/IP
+5,s5/3/t1.1/p0,table_cell,kept,,UDP,UDP
+5,s5/3/t1.2/p0,table_cell,translated,,HVAC controllers,HVAC ထိန်းချုပ်မှုကိရိယာများ
+5,s5/3/t1.3/p0,table_cell,kept,,47808,47808
+5,s5/3/t2.0/p0,table_cell,kept,,Modbus TCP,Modbus TCP
+5,s5/3/t2.1/p0,table_cell,kept,,TCP,TCP
+5,s5/3/t2.2/p0,table_cell,translated,,"Power meters, chillers",အားအားကိုင်းရှိသော မီတာများ၊ အော်ပရောင်းများ
+5,s5/3/t2.3/p0,table_cell,kept,,502,502
+5,s5/3/t3.0/p0,table_cell,kept,,MQTT,MQTT
+5,s5/3/t3.1/p0,table_cell,kept,,TCP,TCP
+5,s5/3/t3.2/p0,table_cell,translated,,IoT telemetry to cloud,IoT တိုင်းတာမှုကို မီးခိုးထဲသို့ ပို့ဆောင်ခြင်း
+5,s5/3/t3.3/p0,table_cell,kept,,1883 / 8883,1883 / 8883
+5,s5/3/t4.0/p0,table_cell,kept,,KNX,KNX
+5,s5/3/t4.1/p0,table_cell,translated,,Twisted pair / IP,ပို့စ်အမျိုးအစား / IP
+5,s5/3/t4.2/p0,table_cell,translated,,Lighting and blinds,မီးခိုးနှင့် အမှိုက်ပိုက်များ
+5,s5/3/t4.3/p0,table_cell,kept,,3671,3671
+6,s6/2/p0,title,translated,,Energy Efficiency and Demand Response,အော်ဂဲနစ်အားကောင်းမွန်မှုနှင့် လိုအပ်နေသော အားလိုအပ်မှုအား ဖြည့်ဆည်းပေးခြင်း
+6,s6/3/p0,body,translated,number_mismatch,Peak demand reduced by 18% in summer 2025,နွေရာသီ ၂၀၂၅ တွင် အများအားဖြင့် အားလိုအပ်မှုကို ၁၈% ထိ လျှော့ချခဲ့သည်
+6,s6/3/p1,body,translated,number_mismatch,"Energy consumption: 1,250 MWh/year → 1,020 MWh/year","အားလိုအပ်မှု: ၁,၂၅၀ MWh/နှစ် → ၁,၀၂၀ MWh/နှစ်"
+6,s6/3/p2,body,translated,,<g1>Demand response</g1> signals are received from the utility via <g2>OpenADR 2.0b</g2>,<g1>အားလိုအပ်မှုအား ဖြည့်ဆည်းပေးခြင်း</g1> အချက်အလက်များကို <g2>OpenADR 2.0b</g2> ကို အသုံးပြု၍ စီမံခန့်ခွဲသည်
+6,s6/3/p3,body,translated,number_mismatch,Setpoint adjustment: cooling setpoint raised from 24 °C to 26 °C during peak hours,အားလိုအပ်မှုကို ပြင်ဆင်ခြင်း: အများအားဖြင့် အားလိုအပ်မှုအချိန်များတွင် အအေးခံချက်ကို ၂၄ ဒီဂရီစင်တီဂရိတ်မှ ၂၆ ဒီဂရီစင်တီဂရိတ်အထိ တိုးမြှင့်ခဲ့သည်
+6,s6/3/p4,body,translated,number_mismatch,Power consumption is measured every 15 minutes,အားသုံးစွဲမှုကို ၁၅ မိနစ်တိုင်းတွင် တိုင်းတာသည်
+6,s6/notes/p0,note,translated,number_mismatch,Energy saving control is enabled only when the occupancy rate is below 30 percent and the outdoor air temperature is above 32 °C.,အထူးအားသာခွင့်ပြုချက်များကို အိမ်တွင်းလေအပူချိန် ၃၂ ဒီဂရီစင်တမ်းထက် များပြားလွန်ပြီး အသုံးပြုသူများရှိမှုနှုန်း ၃၀ ရာခိုင်နှုန်းထက် နည်းပါးသောအခါမျှသာ အလုပ်လုပ်သည်။
+7,s7/2/p0,title,retried,,Network and Access,နက်ရှိုင်းနှင့် ဝင်ရောက်ခွင့်
+7,s7/3/p0,body,retried,,BMS server: 192.168.1.100 (VLAN 20),BMS စက်ရုံ: 192.168.1.100 (VLAN 20)
+7,s7/3/p1,body,retried,,Web dashboard: https://bms.example.com/dashboard,ဝဘ် ဒေသန္တရားကြောင်း : https://bms.example.com/dashboard
+7,s7/3/p2,body,retried,,Support: support@example.com,အထောက်အပံ့: support@example.com
+7,s7/3/p3,body,retried,,Configuration file: C:\Program Files\BMS\config\points.json,အဆိုပါ စာရင်းသွင်းချက်အမည်: C:\Program Files\BMS\config\points.json အဆိုပါ BMS အဆိုပါ စာရင်းသွင်းချက်အမည်: C:\Program Files\BMS\config\points.json
+7,s7/3/p4,body,retried,,"REST API over HTTPS; payloads in JSON, legacy exports in XML and SQL",REST API အောက်တိုင်း HTTPS ပေါ်တူဂို အသုံးပြုခြင်း၊ JSON တွင် payload များ ပါဝင်ခြင်း၊ အရင်က ထုတ်လုပ်ခဲ့သော အမှားများကို XML နှင့် SQL တွင် ထုတ်လုပ်ခြင်း
+8,s8/2/p0,title,retried,,Operation and Maintenance,လုပ်ဆောင်ချက်များနှင့် ထိန်းသိမ်းထားမှုများ
+8,s8/3/p0,body,retried,number_mismatch,"When a chiller alarm occurs, the system automatically notifies the maintenance team by e-mail and creates a work order, and if the alarm is not acknowledged within 30 minutes, it is escalated to the facility manager.",စောင့်ကြည့်စက်အားလုံးတွင် အော်ဒါထွက်ပေါ်ပါက စနစ်သည် အော်ဒါကို အိမ်နှင့် အိမ်ရှင်များအား အီးမေးလ်ဖြင့် အသိပေးပြီး အလုပ်အမှုဆောင်ကို ဖန်တီးပေးပါသည်။ အော်ဒါကို ၃၀ မိနစ်အတွင်း အသိပေးခြင်းမရှိပါက အဆိုပါ အော်ဒါကို ဆောင်ရွက်ရေးအုပ်ချုပ်ရေးမှူးအား တိုးတက်စေပါသည်။
+8,s8/3/p1,body,retried,,Scheduled maintenance of the AHU filters is performed every 3 months.,AHU ပိုးများကို ၃လတာ တစ်ကြိမ် စီ စောင့်ကြည့်ထားသည်။
+8,s8/3/p2,body,retried,,The PLC and SCADA system remain in service during the migration period.,PLC နှင့် SCADA စနစ်များသည် ပြောင်းလဲမှုကာလအတွင်း ဆက်လက်အလုပ်လုပ်နေသည်။
+9,s9/2/p0,title,translated,,Building Automation Roadmap,ဗာန်းအိမ်အလိုက်အလုပ်လုပ်မှု လမ်းကြောင်းစီမံခန့်ခွဲမှု
+9,s9/3/p0,body,translated,number_mismatch,Phase 1 (Q2 2026): Building automation system upgrade,အဆင့် ၁ (၂၀၂၆ ခုနှစ် ဒီဇင်ဘာလအထိ) ဗာန်းအိမ်အလိုက်အလုပ်လုပ်မှုစနစ် တိုးတက်မှု
+9,s9/3/p1,body,translated,number_mismatch,Phase 2 (Q4 2026): IoT sensors and edge devices,အဆင့် ၂ (၂၀၂၆ ခုနှစ် အောက်တိုင်းလအထိ) IoT စမ်းသပ်မှုများနှင့် အလုပ်လုပ်မှုအကြား အဆုံးအဖြတ်ကိရိယာများ
+9,s9/3/p2,body,translated,number_mismatch,Phase 3 (2027): AI-based fault detection and diagnostics (FDD),အဆင့် ၃ (၂၀၂၇ ခုနှစ်) AI အခြေခံ အဆိုးရွားမှု ရှာဖွေခြင်းနှင့် အကြံပြုချက်ပေးခြင်း (FDD)

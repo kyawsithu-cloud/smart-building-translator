@@ -1,0 +1,186 @@
+{
+  "file": "sample_en.pptx",
+  "output": "sample_en_en-my_verify.pptx",
+  "mode": "offline",
+  "model": "qwen3-8b",
+  "model_file": "Qwen3-8B-Q5_K_M.gguf",
+  "licence": "Apache-2.0",
+  "source_lang": "en",
+  "target_lang": "my",
+  "protect": "verify",
+  "slides": 9,
+  "segments": 63,
+  "status_counts": {
+    "failed": 5,
+    "kept": 11,
+    "retried": 11,
+    "translated": 36
+  },
+  "translated_pct": 92.1,
+  "protected_token_integrity_pct": 84.6,
+  "glossary_adherence_pct": null,
+  "tag_integrity_pct": 100.0,
+  "seconds": 284.9,
+  "llm_calls": 33,
+  "completion_tokens": 11550,
+  "tokens_per_second": 40.6,
+  "untranslatable": [],
+  "issues": [
+    {
+      "code": "number_mismatch",
+      "severity": "warning",
+      "segment": "s1/3/p0",
+      "message": "slide 1: number_mismatch (2)"
+    },
+    {
+      "code": "number_mismatch",
+      "severity": "warning",
+      "segment": "s2/notes/p0",
+      "message": "slide 2: number_mismatch (1)"
+    },
+    {
+      "code": "empty",
+      "severity": "error",
+      "segment": "s4/3/4/p0",
+      "message": "slide 4: empty (1)"
+    },
+    {
+      "code": "empty",
+      "severity": "error",
+      "segment": "s4/3/5/p0",
+      "message": "slide 4: empty (1)"
+    },
+    {
+      "code": "empty",
+      "severity": "error",
+      "segment": "s4/3/6/p0",
+      "message": "slide 4: empty (1)"
+    },
+    {
+      "code": "empty",
+      "severity": "error",
+      "segment": "s4/3/7/p0",
+      "message": "slide 4: empty (1)"
+    },
+    {
+      "code": "empty",
+      "severity": "error",
+      "segment": "s4/8/p0",
+      "message": "slide 4: empty (1)"
+    },
+    {
+      "code": "number_mismatch",
+      "severity": "warning",
+      "segment": "s6/3/p0",
+      "message": "slide 6: number_mismatch (2)"
+    },
+    {
+      "code": "number_mismatch",
+      "severity": "warning",
+      "segment": "s6/3/p1",
+      "message": "slide 6: number_mismatch (2)"
+    },
+    {
+      "code": "number_mismatch",
+      "severity": "warning",
+      "segment": "s6/3/p3",
+      "message": "slide 6: number_mismatch (2)"
+    },
+    {
+      "code": "number_mismatch",
+      "severity": "warning",
+      "segment": "s6/3/p4",
+      "message": "slide 6: number_mismatch (1)"
+    },
+    {
+      "code": "number_mismatch",
+      "severity": "warning",
+      "segment": "s6/notes/p0",
+      "message": "slide 6: number_mismatch (2)"
+    },
+    {
+      "code": "number_mismatch",
+      "severity": "warning",
+      "segment": "s8/3/p0",
+      "message": "slide 8: number_mismatch (1)"
+    },
+    {
+      "code": "number_mismatch",
+      "severity": "warning",
+      "segment": "s9/3/p0",
+      "message": "slide 9: number_mismatch (1)"
+    },
+    {
+      "code": "number_mismatch",
+      "severity": "warning",
+      "segment": "s9/3/p1",
+      "message": "slide 9: number_mismatch (1)"
+    },
+    {
+      "code": "number_mismatch",
+      "severity": "warning",
+      "segment": "s9/3/p2",
+      "message": "slide 9: number_mismatch (1)"
+    },
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "s1/2",
+      "message": "slide 1: font reduced to 80% to fit"
+    },
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "s1/3",
+      "message": "slide 1: font reduced to 90% to fit"
+    },
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "s2/3",
+      "message": "slide 2: font reduced to 95% to fit"
+    },
+    {
+      "code": "overflow",
+      "severity": "warning",
+      "segment": "s3/2",
+      "message": "slide 3: text likely exceeds its box even at 80% font size"
+    },
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "s6/2",
+      "message": "slide 6: font reduced to 85% to fit"
+    },
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "s6/3",
+      "message": "slide 6: font reduced to 95% to fit"
+    },
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "s7/3",
+      "message": "slide 7: font reduced to 90% to fit"
+    },
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "s8/2",
+      "message": "slide 8: font reduced to 80% to fit"
+    },
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "s8/3",
+      "message": "slide 8: font reduced to 90% to fit"
+    },
+    {
+      "code": "overflow",
+      "severity": "warning",
+      "segment": "s9/2",
+      "message": "slide 9: text likely exceeds its box even at 80% font size"
+    }
+  ]
+}

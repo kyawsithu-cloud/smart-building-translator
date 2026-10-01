@@ -1,0 +1,46 @@
+{
+  "file": "sample_ja.pptx",
+  "output": "sample_ja_ja-en_verify.pptx",
+  "mode": "offline",
+  "model": "hy-mt2-7b",
+  "model_file": "HY-MT2-7B-Q6_K.gguf",
+  "licence": "Apache-2.0",
+  "source_lang": "ja",
+  "target_lang": "en",
+  "protect": "verify",
+  "slides": 8,
+  "segments": 59,
+  "status_counts": {
+    "kept": 11,
+    "translated": 48
+  },
+  "translated_pct": 100.0,
+  "protected_token_integrity_pct": 100.0,
+  "glossary_adherence_pct": 100.0,
+  "tag_integrity_pct": 100.0,
+  "seconds": 20.0,
+  "llm_calls": 48,
+  "completion_tokens": 624,
+  "tokens_per_second": 31.6,
+  "untranslatable": [],
+  "issues": [
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "s1/3",
+      "message": "slide 1: font reduced to 85% to fit"
+    },
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "s6/3",
+      "message": "slide 6: font reduced to 90% to fit"
+    },
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "s8/3",
+      "message": "slide 8: font reduced to 95% to fit"
+    }
+  ]
+}

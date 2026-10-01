@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.gguf
+/*.pptx
+/*.pdf
+!tests/fixtures/**/*.pptx
+eval/results/*.local.*
+runtime/
+/*.review.csv
+/*.report.json
+runtime_download.log
+.claude/
+*.egg-info/

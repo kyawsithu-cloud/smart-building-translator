@@ -1,0 +1,64 @@
+﻿slide,segment,kind,status,problems,source,translation
+1,s1/2/p0,title,translated,,Smart Building Platform Overview,스마트빌딩 플랫폼 개요
+1,s1/3/p0,body,translated,,Building Management System (BMS) Integration Proposal — 15 March 2026,빌딩 관리 시스템 (BMS) 통합 제안 — 2026년 3월 15일
+2,s2/2/p0,title,translated,,Building Management System,빌딩 관리 시스템
+2,s2/3/p0,body,translated,,The <g1>Building Management System</g1> monitors and controls HVAC equipment.,<g1>빌딩 관리 시스템</g1>은 HVAC 장비를 모니터링하고 제어합니다.
+2,s2/3/p1,body,translated,,Air Handling Unit (AHU) and Fan Coil Unit (FCU) control,공기 처리 단위 (AHU) 및 팬코일 단위 (FCU) 제어
+2,s2/3/p2,body,translated,,Variable Air Volume (VAV) terminal control,변압 공기량 (VAV) 터미널 제어
+2,s2/3/p3,body,translated,,<g1>Alarm</g1> and <g2>equipment status</g2> monitoring 24/7,<g1>경보</g1> 및 <g2>장비 상태</g2> 모니터링 24/7
+2,s2/3/p4,body,translated,,Energy Management System (EMS) for energy consumption analysis,에너지 관리 시스템 (EMS)을 통해 에너지 소비 분석
+2,s2/notes/p0,note,translated,,"The building management system collects data from more than 2,000 points and sends alarms to the operator within 5 seconds.","건물 관리 시스템은 2,000개 이상의 포인트에서 데이터를 수집하고, 5초 이내에 운영자에게 경보를 전송합니다."
+3,s3/2/p0,title,translated,,Sensors and Field Devices,센서 및 필드 장치
+3,s3/3/p0,body,translated,,Occupancy sensor,인구 존재 센서
+3,s3/3/p1,body,translated,,"CO2 sensor (0–2,000 ppm)","CO2 센서 (0–2,000 ppm)"
+3,s3/3/p2,body,translated,,Temperature sensor: ±0.2 °C accuracy,온도 센서: ±0.2 °C 정확도
+3,s3/3/p3,body,translated,,Humidity: 30–70 %RH,습도: 30–70 %RH
+3,s3/3/p4,body,translated,,"Model <g1>FX-PCG2611-0</g1> controller, firmware v3.2.1","모델 <g1>FX-PCG2611-0</g1> 컨트롤러, 펌웨어 v3.2.1"
+4,s4/2/p0,title,translated,,System Architecture,시스템 아키텍처
+4,s4/3/4/p0,body,translated,,Edge device,엣지 장치
+4,s4/3/5/p0,body,translated,,Gateway,게이트웨이
+4,s4/3/6/p0,body,translated,,Cloud platform,클라우드 플랫폼
+4,s4/3/7/p0,body,translated,,Dashboard,대시보드
+4,s4/8/p0,body,translated,,Field controllers communicate over BACnet/IP and Modbus TCP; the gateway publishes telemetry to the cloud platform via MQTT over TLS (port 8883).,"필드 컨트롤러는 BACnet/IP 및 Modbus TCP를 통해 통신하며, 게이트웨이는 TLS를 통해 MQTT를 사용하여 클라우드 플랫폼에 텔레메트리 데이터를 게시합니다 (포트 8883)."
+5,s5/2/p0,title,translated,,Protocol Comparison,프로토콜 비교
+5,s5/3/t0.0/p0,table_cell,translated,,Protocol,프로토콜
+5,s5/3/t0.1/p0,table_cell,translated,,Transport,전송
+5,s5/3/t0.2/p0,table_cell,translated,,Typical use,일반적 사용
+5,s5/3/t0.3/p0,table_cell,translated,,Default port,기본 포트
+5,s5/3/t1.0/p0,table_cell,kept,,BACnet/IP,BACnet/IP
+5,s5/3/t1.1/p0,table_cell,kept,,UDP,UDP
+5,s5/3/t1.2/p0,table_cell,translated,,HVAC controllers,HVAC 컨트롤러
+5,s5/3/t1.3/p0,table_cell,kept,,47808,47808
+5,s5/3/t2.0/p0,table_cell,kept,,Modbus TCP,Modbus TCP
+5,s5/3/t2.1/p0,table_cell,kept,,TCP,TCP
+5,s5/3/t2.2/p0,table_cell,translated,,"Power meters, chillers","전력계측기, 냉각기"
+5,s5/3/t2.3/p0,table_cell,kept,,502,502
+5,s5/3/t3.0/p0,table_cell,kept,,MQTT,MQTT
+5,s5/3/t3.1/p0,table_cell,kept,,TCP,TCP
+5,s5/3/t3.2/p0,table_cell,translated,,IoT telemetry to cloud,IoT 텔레메트리 클라우드로
+5,s5/3/t3.3/p0,table_cell,kept,,1883 / 8883,1883 / 8883
+5,s5/3/t4.0/p0,table_cell,kept,,KNX,KNX
+5,s5/3/t4.1/p0,table_cell,translated,,Twisted pair / IP,트위스트 쌍선 / IP
+5,s5/3/t4.2/p0,table_cell,translated,,Lighting and blinds,조명 및 커튼
+5,s5/3/t4.3/p0,table_cell,kept,,3671,3671
+6,s6/2/p0,title,translated,,Energy Efficiency and Demand Response,에너지 효율성 및 수요 반응
+6,s6/3/p0,body,translated,,Peak demand reduced by 18% in summer 2025,2025년 여름 기간 동안 피크 수요가 18% 감소
+6,s6/3/p1,body,translated,,"Energy consumption: 1,250 MWh/year → 1,020 MWh/year","에너지 소비량: 1,250 MWh/년 → 1,020 MWh/년"
+6,s6/3/p2,body,translated,,<g1>Demand response</g1> signals are received from the utility via <g2>OpenADR 2.0b</g2>,<g1>수요 반응</g1> 신호는 <g2>OpenADR 2.0b</g2>를 통해 공급업체로부터 수신됨
+6,s6/3/p3,body,translated,,Setpoint adjustment: cooling setpoint raised from 24 °C to 26 °C during peak hours,설정값 조정: 피크 시간대 동안 냉방 설정값을 24°C에서 26°C로 상향 조정
+6,s6/3/p4,body,translated,,Power consumption is measured every 15 minutes,전력 소비량은 15분 간격으로 측정됨
+6,s6/notes/p0,note,translated,,Energy saving control is enabled only when the occupancy rate is below 30 percent and the outdoor air temperature is above 32 °C.,사용률이 30퍼센트 미만이고 외부 공기 온도가 32°C 이상일 때 에너지 절약 제어가 활성화됩니다.
+7,s7/2/p0,title,translated,,Network and Access,네트워크 및 접근
+7,s7/3/p0,body,translated,,BMS server: 192.168.1.100 (VLAN 20),BMS 서버: 192.168.1.100 (VLAN 20)
+7,s7/3/p1,body,translated,,Web dashboard: https://bms.example.com/dashboard,웹 대시보드: https://bms.example.com/dashboard
+7,s7/3/p2,body,translated,,Support: support@example.com,지원: support@example.com
+7,s7/3/p3,body,translated,,Configuration file: C:\Program Files\BMS\config\points.json,구성 파일: C:\Program Files\BMS\config\points.json
+7,s7/3/p4,body,translated,,"REST API over HTTPS; payloads in JSON, legacy exports in XML and SQL","HTTPS를 통한 REST API; 데이터는 JSON 형식, 구식 내보내기 파일은 XML 및 SQL 형식"
+8,s8/2/p0,title,translated,,Operation and Maintenance,운영 및 유지보수
+8,s8/3/p0,body,translated,,"When a chiller alarm occurs, the system automatically notifies the maintenance team by e-mail and creates a work order, and if the alarm is not acknowledged within 30 minutes, it is escalated to the facility manager.","차iller 경고가 발생할 경우, 시스템은 자동으로 유지보수 팀에게 이메일로 알림을 보내고 작업 명령을 생성하며, 경고가 30분 이내에 확인되지 않으면 시설 관리자에게 상향 처리됩니다."
+8,s8/3/p1,body,translated,,Scheduled maintenance of the AHU filters is performed every 3 months.,AHU 필터의 예약된 유지보수는 매 3개월마다 수행됩니다.
+8,s8/3/p2,body,translated,,The PLC and SCADA system remain in service during the migration period.,PLC 및 SCADA 시스템은 마이그레이션 기간 동안 계속 운영됩니다.
+9,s9/2/p0,title,translated,,Building Automation Roadmap,빌딩 자동화 로드맵
+9,s9/3/p0,body,translated,,Phase 1 (Q2 2026): Building automation system upgrade,1단계 (2026년 2분기): 빌딩 자동화 시스템 업그레이드
+9,s9/3/p1,body,translated,,Phase 2 (Q4 2026): IoT sensors and edge devices,2단계 (2026년 4분기): IoT 센서 및 엣지 장치
+9,s9/3/p2,body,translated,,Phase 3 (2027): AI-based fault detection and diagnostics (FDD),3단계 (2027년): AI 기반 고장 감지 및 진단(FDD)

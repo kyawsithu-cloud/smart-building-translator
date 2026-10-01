@@ -1,0 +1,64 @@
+﻿slide,segment,kind,status,problems,source,translation
+1,s1/2/p0,title,translated,,Smart Building Platform Overview,ภาพรวมแพลตฟอร์มอาคารอัจฉริยะ
+1,s1/3/p0,body,translated,,Building Management System (BMS) Integration Proposal — 15 March 2026,ข้อเสนอแนะการผสานระบบจัดการอาคาร (BMS) — 15 มีนาคม 2026
+2,s2/2/p0,title,translated,,Building Management System,ระบบจัดการอาคาร
+2,s2/3/p0,body,translated,,The <g1>Building Management System</g1> monitors and controls HVAC equipment.,ระบบจัดการอาคาร <g1>Building Management System</g1> ใช้ในการตรวจสอบและควบคุมอุปกรณ์ระบบปรับอากาศ (HVAC).
+2,s2/3/p1,body,translated,,Air Handling Unit (AHU) and Fan Coil Unit (FCU) control,การควบคุมหน่วยจัดการอากาศ (Air Handling Unit: (AHU)) และหน่วยคอยล์ฟัน (Fan Coil Unit: (FCU))
+2,s2/3/p2,body,translated,,Variable Air Volume (VAV) terminal control,การควบคุมหน่วยปลายทางปริมาณอากาศเปลี่ยนแปลงได้ (Variable Air Volume: (VAV))
+2,s2/3/p3,body,translated,,<g1>Alarm</g1> and <g2>equipment status</g2> monitoring 24/7,<g1>การแจ้งเตือน</g1> และ <g2>การตรวจสอบสถานะอุปกรณ์</g2> ตลอดเวลา 24 ชั่วโมงต่อวัน
+2,s2/3/p4,body,translated,,Energy Management System (EMS) for energy consumption analysis,ระบบจัดการพลังงาน (Energy Management System: (EMS)) สำหรับการวิเคราะห์การใช้พลังงาน
+2,s2/notes/p0,note,translated,,"The building management system collects data from more than 2,000 points and sends alarms to the operator within 5 seconds.","ระบบจัดการอาคารรวบรวมข้อมูลจากจุดมากกว่า 2,000 จุด และส่งการแจ้งเตือนไปยังผู้ปฏิบัติงานภายในเวลา 5 วินาที"
+3,s3/2/p0,title,translated,,Sensors and Field Devices,เซนเซอร์และอุปกรณ์ในสนาม
+3,s3/3/p0,body,translated,,Occupancy sensor,เซนเซอร์ตรวจจับการใช้พื้นที่
+3,s3/3/p1,body,translated,,"CO2 sensor (0–2,000 ppm)","เซนเซอร์ CO2 (0–2,000 ppm)"
+3,s3/3/p2,body,translated,,Temperature sensor: ±0.2 °C accuracy,เซนเซอร์อุณหภูมิ: ความแม่นยำ ±0.2 °C
+3,s3/3/p3,body,translated,,Humidity: 30–70 %RH,ความชื้น: 30–70 %RH
+3,s3/3/p4,body,translated,,"Model <g1>FX-PCG2611-0</g1> controller, firmware v3.2.1",คอนโทรลเลอร์แบบ <g1>FX-PCG2611-0</g1> รุ่นเฟิร์มแวร์ v3.2.1
+4,s4/2/p0,title,translated,,System Architecture,สถาปัตยกรรมระบบ
+4,s4/3/4/p0,body,translated,,Edge device,อุปกรณ์ปลายทาง
+4,s4/3/5/p0,body,translated,,Gateway,เกตเวย์
+4,s4/3/6/p0,body,translated,,Cloud platform,แพลตฟอร์มคลาวด์
+4,s4/3/7/p0,body,translated,,Dashboard,แดชบอร์ด
+4,s4/8/p0,body,translated,,Field controllers communicate over BACnet/IP and Modbus TCP; the gateway publishes telemetry to the cloud platform via MQTT over TLS (port 8883).,อุปกรณ์ควบคุมในพื้นที่ สามารถสื่อสารผ่าน BACnet/IP และ Modbus TCP; เกตเวย์ เผยแพร่ข้อมูลการวัดระยะไกลไปยัง แพลตฟอร์มคลาวด์ ผ่าน MQTT ที่ใช้ TLS (พอร์ต 8883)
+5,s5/2/p0,title,translated,,Protocol Comparison,การเปรียบเทียบโปรโตคอล
+5,s5/3/t0.0/p0,table_cell,translated,,Protocol,โปรโตคอล
+5,s5/3/t0.1/p0,table_cell,translated,,Transport,การขนส่ง
+5,s5/3/t0.2/p0,table_cell,translated,,Typical use,การใช้งานทั่วไป
+5,s5/3/t0.3/p0,table_cell,translated,,Default port,พอร์ตเริ่มต้น
+5,s5/3/t1.0/p0,table_cell,kept,,BACnet/IP,BACnet/IP
+5,s5/3/t1.1/p0,table_cell,kept,,UDP,UDP
+5,s5/3/t1.2/p0,table_cell,translated,,HVAC controllers,คอนโทรลเลอร์ระบบปรับอากาศ (HVAC)
+5,s5/3/t1.3/p0,table_cell,kept,,47808,47808
+5,s5/3/t2.0/p0,table_cell,kept,,Modbus TCP,Modbus TCP
+5,s5/3/t2.1/p0,table_cell,kept,,TCP,TCP
+5,s5/3/t2.2/p0,table_cell,translated,,"Power meters, chillers","มิเตอร์พลังงาน, ระบบทำความเย็น"
+5,s5/3/t2.3/p0,table_cell,kept,,502,502
+5,s5/3/t3.0/p0,table_cell,kept,,MQTT,MQTT
+5,s5/3/t3.1/p0,table_cell,kept,,TCP,TCP
+5,s5/3/t3.2/p0,table_cell,translated,,IoT telemetry to cloud,การส่งข้อมูล IoT ไปยังคลาวด์
+5,s5/3/t3.3/p0,table_cell,kept,,1883 / 8883,1883 / 8883
+5,s5/3/t4.0/p0,table_cell,kept,,KNX,KNX
+5,s5/3/t4.1/p0,table_cell,translated,,Twisted pair / IP,คู่สาย / IP
+5,s5/3/t4.2/p0,table_cell,translated,,Lighting and blinds,ระบบไฟฟ้าและม่าน
+5,s5/3/t4.3/p0,table_cell,kept,,3671,3671
+6,s6/2/p0,title,translated,,Energy Efficiency and Demand Response,ประสิทธิภาพพลังงานและการตอบสนองความต้องการพลังงาน
+6,s6/3/p0,body,translated,,Peak demand reduced by 18% in summer 2025,ความต้องการสูงลดลง 18% ในฤดูร้อนปี 2025
+6,s6/3/p1,body,translated,,"Energy consumption: 1,250 MWh/year → 1,020 MWh/year","การใช้พลังงาน: 1,250 MWh/ปี → 1,020 MWh/ปี"
+6,s6/3/p2,body,translated,,<g1>Demand response</g1> signals are received from the utility via <g2>OpenADR 2.0b</g2>,<g1>การตอบสนองความต้องการพลังงาน</g1> ได้รับจากผู้ให้บริการพลังงานผ่าน <g2>OpenADR 2.0b</g2>
+6,s6/3/p3,body,translated,,Setpoint adjustment: cooling setpoint raised from 24 °C to 26 °C during peak hours,การปรับค่าตั้งค่า: ปรับอุณหภูมิการระบายความร้อนจาก 24 °C เป็น 26 °C ในช่วงเวลาความต้องการสูง
+6,s6/3/p4,body,translated,,Power consumption is measured every 15 minutes,การใช้พลังงานถูกวัดทุก 15 นาที
+6,s6/notes/p0,note,translated,,Energy saving control is enabled only when the occupancy rate is below 30 percent and the outdoor air temperature is above 32 °C.,การควบคุมการประหยัดพลังงานจะถูกเปิดใช้งานเฉพาะเมื่ออัตราการใช้พื้นที่ต่ำกว่า 30 เปอร์เซ็นต์ และอุณหภูมิอากาศภายนอกสูงกว่า 32 °C.
+7,s7/2/p0,title,translated,,Network and Access,เครือข่ายและการเข้าถึง
+7,s7/3/p0,body,translated,,BMS server: 192.168.1.100 (VLAN 20),เซิร์ฟเวอร์ BMS: 192.168.1.100 (VLAN 20)
+7,s7/3/p1,body,translated,,Web dashboard: https://bms.example.com/dashboard,แดชบอร์ดเว็บ: https://bms.example.com/dashboard
+7,s7/3/p2,body,translated,,Support: support@example.com,การสนับสนุน: support@example.com
+7,s7/3/p3,body,translated,,Configuration file: C:\Program Files\BMS\config\points.json,ไฟล์การตั้งค่า: C:\Program Files\BMS\config\points.json
+7,s7/3/p4,body,translated,,"REST API over HTTPS; payloads in JSON, legacy exports in XML and SQL","API REST ผ่าน HTTPS; ข้อมูลในรูปแบบ JSON, การส่งออกแบบเก่าในรูปแบบ XML และ SQL"
+8,s8/2/p0,title,translated,,Operation and Maintenance,การดำเนินงานและการบำรุงรักษา
+8,s8/3/p0,body,translated,,"When a chiller alarm occurs, the system automatically notifies the maintenance team by e-mail and creates a work order, and if the alarm is not acknowledged within 30 minutes, it is escalated to the facility manager.",เมื่อเกิดการแจ้งเตือนของเครื่องเย็น ระบบจะแจ้งเตือนทีมบำรุงรักษาโดยอีเมล และสร้างใบงานบำรุงรักษา หากไม่มีการยืนยันการแจ้งเตือนภายใน 30 นาที ระบบจะส่งไปยังผู้จัดการทรัพย์สิน
+8,s8/3/p1,body,translated,,Scheduled maintenance of the AHU filters is performed every 3 months.,การบำรุงรักษาตามกำหนดของตัวกรอง AHU จะดำเนินการทุก 3 เดือน
+8,s8/3/p2,body,translated,,The PLC and SCADA system remain in service during the migration period.,ระบบ PLC และ SCADA จะยังคงให้บริการในช่วงการย้ายข้อมูล
+9,s9/2/p0,title,translated,,Building Automation Roadmap,แผนการพัฒนาระบบอัตโนมัติของอาคาร
+9,s9/3/p0,body,translated,,Phase 1 (Q2 2026): Building automation system upgrade,ขั้นตอนที่ 1 (ไตรมาสที่ 2 ปี 2026): การอัปเกรดระบบอัตโนมัติของอาคาร
+9,s9/3/p1,body,translated,,Phase 2 (Q4 2026): IoT sensors and edge devices,ขั้นตอนที่ 2 (ไตรมาสที่ 4 ปี 2026): เซ็นเซอร์ IoT และอุปกรณ์ปลายทาง
+9,s9/3/p2,body,translated,,Phase 3 (2027): AI-based fault detection and diagnostics (FDD),ขั้นตอนที่ 3 (ปี 2027): การตรวจจับและวินิจฉัยข้อผิดพลาดโดยใช้ AI (FDD)
