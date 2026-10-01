@@ -1,0 +1,33 @@
+{
+  "file": "consistency_en.pptx",
+  "output": "consistency_en_en-ja_hint.pptx",
+  "mode": "offline",
+  "model": "hy-mt2-7b",
+  "model_file": "HY-MT2-7B-Q6_K.gguf",
+  "licence": "Apache-2.0",
+  "repair_model": null,
+  "repaired": 0,
+  "source_lang": "en",
+  "target_lang": "ja",
+  "protect": "verify",
+  "doc_terms_mode": "hint",
+  "memory": false,
+  "seconds": 23.3,
+  "llm_calls": 42,
+  "completion_tokens": 714,
+  "tokens_per_second": 31.0,
+  "slides": 8,
+  "segments": 32,
+  "translated_segments": 32,
+  "status_counts": {
+    "translated": 32
+  },
+  "translated_pct": 100.0,
+  "protected_token_integrity_pct": 100.0,
+  "glossary_adherence_pct": 100.0,
+  "doc_terms": 10,
+  "doc_term_consistency_pct": 100.0,
+  "tag_integrity_pct": null,
+  "untranslatable": [],
+  "issues": []
+}

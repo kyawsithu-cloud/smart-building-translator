@@ -1,0 +1,13 @@
+﻿source_term,target_term,source_lang,target_lang,category,notes,do_not_translate,priority,context
+free cooling,အခမဲ့ အအေးပေးစနစ်,en,my,document,5 paragraphs; review before importing,false,normal,
+chilled water plant,အေးသောရေစက်ရုံ,en,my,document,"UNRESOLVED (4 paragraphs, translated inconsistently); candidates: အေးသောရေစက်ရုံ / အေးသောရေစနစ် — correct the target before importing",false,normal,
+air temperature,လေအပူချိန်,en,my,document,"UNRESOLVED (4 paragraphs, translated inconsistently); candidates: လေအပူချိန် / လေ၏ အပူချိန် — correct the target before importing",false,normal,
+load shedding,လျှပ်စစ်ဖြတ်တောက်ခြင်း,en,my,document,4 paragraphs; review before importing,false,normal,
+fault detection and diagnostics,ချို့ယွင်းမှု ရှာဖွေခြင်းနှင့် ခွဲခြားစစ်ဆေးခြင်း,en,my,document,3 paragraphs; review before importing,false,normal,
+demand-controlled ventilation,လိုအပ်ချက်အရ ထိန်းချုပ်သော လေဝင်လေထွက်စနစ်,en,my,document,"UNRESOLVED (3 paragraphs, translated inconsistently); candidates: လိုအပ်ချက်အရ ထိန်းချုပ်သော လေဝင်လေထွက်စနစ် / ဝယ်လိုအားအလိုက် ထိန်းချုပ်သည့် လေဝင်လေထွက်စနစ် / ဝယ်လိုအားအခြေပြု လေဝင်လေထွက်စနစ် — correct the target before importing",false,normal,
+supply air temperature,ထောက်ပံ့လေ၏ အပူချိန်,en,my,document,"UNRESOLVED (3 paragraphs, translated inconsistently); candidates: ထောက်ပံ့လေ၏ အပူချိန် / လေထောက်ပံ့သည့် အပူချိန် — correct the target before importing",false,normal,
+condenser water,အပူစုပ်ရေ,en,my,document,"UNRESOLVED (3 paragraphs, translated inconsistently); candidates: အပူစုပ်ရေ / ကွန်ဒင်ဆာရေ — correct the target before importing",false,normal,
+trend log,လမ်းကြောင်းမှတ်တမ်း,en,my,document,3 paragraphs; review before importing,false,normal,
+air handling units,လေထိန်းချုပ်ယူနစ်များ,en,my,document,"UNRESOLVED (2 paragraphs, translated inconsistently); candidates: လေထိန်းချုပ်ယူနစ်များ / လေထိန်းစက်များ — correct the target before importing",false,normal,
+heat recovery,အပူပြန်လည်ရယူခြင်း,en,my,document,"UNRESOLVED (2 paragraphs, translated inconsistently); candidates: အပူပြန်လည်ရယူခြင်း — correct the target before importing",false,normal,
+point list,အမှတ်စာရင်း,en,my,document,2 paragraphs; review before importing,false,normal,

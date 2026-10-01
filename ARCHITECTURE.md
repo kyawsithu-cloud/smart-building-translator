@@ -1,6 +1,9 @@
 # Smart Building Translator — Architecture & Feasibility Analysis
 
-Status: **Proposal (pre-Phase 1)**. Nothing here is final until the Phase 1 POC has produced measured results.
+Status: original proposal (2026-09-30), kept for reference. Phase 1 and 2 are implemented; what changed after
+measurement is recorded in [Phase 1 results](eval/results/PHASE1_RESULTS.md) and
+[Phase 2 results](eval/results/PHASE2_RESULTS.md) (model choice: Hy-MT2-7B + Qwen3-8B repair; document terms by
+majority vote instead of up-front term translation; data in %LOCALAPPDATA%; no web server, CLI first).
 Research snapshot date: 2026-09-30. Model landscape changes monthly — re-verify versions and licenses before locking choices.
 
 Priorities, in order: **Privacy → Technical translation accuracy → Formatting preservation**. Speed is explicitly secondary.

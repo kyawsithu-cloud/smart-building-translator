@@ -1,0 +1,13 @@
+﻿source_term,target_term,source_lang,target_lang,category,notes,do_not_translate,priority,context
+free cooling,自由冷却,en,zh,document,5 paragraphs; review before importing,false,normal,
+chilled water plant,冷水机组,en,zh,document,4 paragraphs; review before importing,false,normal,
+air temperature,空气温度,en,zh,document,"UNRESOLVED (4 paragraphs, translated inconsistently); candidates: 空气温度 — correct the target before importing",false,normal,
+load shedding,停电措施,en,zh,document,"UNRESOLVED (4 paragraphs, translated inconsistently); candidates: 停电措施 / 停电限电 — correct the target before importing",false,normal,
+fault detection and diagnostics,故障检测与诊断,en,zh,document,3 paragraphs; review before importing,false,normal,
+demand-controlled ventilation,按需控制的通风系统,en,zh,document,"UNRESOLVED (3 paragraphs, translated inconsistently); candidates: 按需控制的通风系统 / 按需控制通风系统 — correct the target before importing",false,normal,
+supply air temperature,送风温度,en,zh,document,3 paragraphs; review before importing,false,normal,
+condenser water,冷凝水,en,zh,document,3 paragraphs; review before importing,false,normal,
+trend log,趋势日志,en,zh,document,3 paragraphs; review before importing,false,normal,
+air handling units,空气处理单元,en,zh,document,2 paragraphs; review before importing,false,normal,
+heat recovery,热回收,en,zh,document,2 paragraphs; review before importing,false,normal,
+point list,点数列表,en,zh,document,"UNRESOLVED (2 paragraphs, translated inconsistently); candidates: 点数列表 / 点表 — correct the target before importing",false,normal,

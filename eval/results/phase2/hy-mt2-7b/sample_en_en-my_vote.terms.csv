@@ -1,0 +1,7 @@
+﻿source_term,target_term,source_lang,target_lang,category,notes,do_not_translate,priority,context
+management system,စီမံခန့်ခွဲမှုစနစ်,en,my,document,5 paragraphs; review before importing,false,normal,
+building management system,အဆောက်အအုံ စီမံခန့်ခွဲမှုစနစ်,en,my,document,4 paragraphs; review before importing,false,normal,
+building automation,အဆောက်အအုံ အလိုအလျောက်ထိန်းချုပ်စနစ်,en,my,document,"UNRESOLVED (2 paragraphs, translated inconsistently); candidates: အဆောက်အအုံ အလိုအလျောက်ထိန်းချုပ်စနစ် — correct the target before importing",false,normal,
+energy consumption,စွမ်းအင်သုံးစွဲမှု,en,my,document,2 paragraphs; review before importing,false,normal,
+demand response,ဝယ်လိုအားဆိုင်ရာ တုံ့ပြန်မှု,en,my,document,2 paragraphs; review before importing,false,normal,
+cloud platform,ကလောက်ဒ် ပလက်ဖောင်း,en,my,document,2 paragraphs; review before importing,false,normal,

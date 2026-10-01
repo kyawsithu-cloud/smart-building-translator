@@ -1,0 +1,43 @@
+{
+  "file": "consistency_en.pptx",
+  "output": "consistency_en_en-th_vote.pptx",
+  "mode": "offline",
+  "model": "hy-mt2-7b",
+  "model_file": "HY-MT2-7B-Q6_K.gguf",
+  "licence": "Apache-2.0",
+  "repair_model": "qwen3-8b",
+  "repaired": 0,
+  "repair_note": null,
+  "source_lang": "en",
+  "target_lang": "th",
+  "protect": "verify",
+  "doc_terms_mode": "vote",
+  "memory": false,
+  "seconds": 68.2,
+  "llm_calls": 65,
+  "completion_tokens": 2398,
+  "tokens_per_second": 35.2,
+  "slides": 8,
+  "segments": 32,
+  "translated_segments": 32,
+  "status_counts": {
+    "translated": 32
+  },
+  "translated_pct": 100.0,
+  "protected_token_integrity_pct": 100.0,
+  "glossary_adherence_pct": null,
+  "doc_terms": 8,
+  "doc_terms_unresolved": 4,
+  "harmonised": 0,
+  "doc_term_consistency_pct": 100.0,
+  "tag_integrity_pct": null,
+  "untranslatable": [],
+  "issues": [
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "s6/2",
+      "message": "slide 6: font reduced to 80% to fit"
+    }
+  ]
+}

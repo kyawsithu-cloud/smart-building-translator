@@ -9,7 +9,9 @@ from sbt.pipeline.tags import is_well_formed, strip_tags, tag_counts, tag_ids
 from sbt.protection.tokens import parenthesised, significant_numbers
 from sbt.terminology.glossary import Hint
 
-RETRYABLE = {"empty", "tags", "placeholders", "token_missing", "term_missing", "untranslated", "foreign_script"}
+# number_mismatch became retryable in Phase 2 after "210 MWh" turned into "2.1亿千瓦时" (×1000) in Chinese.
+RETRYABLE = {"empty", "tags", "placeholders", "token_missing", "term_missing", "untranslated", "foreign_script",
+             "number_mismatch"}
 _SCRIPTS = {
     "Korean": re.compile(r"[가-힯ᄀ-ᇿ]"),
     "Japanese kana": re.compile(r"[぀-ヿ]"),
@@ -93,7 +95,8 @@ def validate(source: str, output: str, tokens: list[str], hints: tuple[Hint, ...
     tgt_nums = significant_numbers(plain)
     lost = src_nums - tgt_nums
     if lost:
-        problems.append(Problem("number_mismatch", "", len(lost)))
+        problems.append(Problem("number_mismatch", "Keep every number and unit exactly as in the source text: "
+                                + ", ".join(sorted(lost)) + ".", len(lost)))
 
     src_plain = strip_tags(source)
     lo, hi = _RATIO.get((src, tgt), (0.25, 4.0))

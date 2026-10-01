@@ -1,36 +1,37 @@
-"""Starts and stops a bundled llama-server bound to 127.0.0.1 in offline mode."""
+"""Starts and stops the bundled llama-server: bound to 127.0.0.1, offline, no web UI."""
 from __future__ import annotations
 
 import socket
 import subprocess
 import time
 from pathlib import Path
+from typing import IO
 
 import httpx
 
 from sbt.engines.profiles import ModelProfile
+from sbt.hardware.probe import free_vram_mib
+from sbt.settings import PROJECT_ROOT
 
-ROOT = Path(__file__).resolve().parents[3]
-RUNTIME = ROOT / "runtime"
-
-
-def free_vram_mib() -> int | None:
-    """Free memory on the first NVIDIA GPU, or None if it cannot be read."""
-    try:
-        out = subprocess.run(["nvidia-smi", "--query-gpu=memory.free", "--format=csv,noheader,nounits"],
-                             capture_output=True, text=True, timeout=10,
-                             creationflags=subprocess.CREATE_NO_WINDOW).stdout
-        return int(out.split()[0])
-    except (OSError, ValueError, IndexError, subprocess.TimeoutExpired):
-        return None
+RUNTIME = PROJECT_ROOT / "runtime"
 
 
-def choose_gpu_layers(model: Path, ctx_mib: int = 1300) -> str:
+def model_path(profile: ModelProfile) -> Path:
+    return RUNTIME / "models" / profile.file
+
+
+def vram_needed_mib(profile: ModelProfile) -> int:
+    """Model weights + KV cache (~1.1 GiB per 8k tokens for these 7–8B models) + compute buffers + margin."""
+    path = model_path(profile)
+    size = path.stat().st_size // 2**20 if path.exists() else 6000
+    return size + profile.ctx * 1100 // 8192 + 400
+
+
+def choose_gpu_layers(profile: ModelProfile) -> str:
     """'all' when the whole model + context fits in currently free VRAM (fastest); otherwise 'auto', which lets
     llama.cpp put what fits on the GPU and the rest on the CPU instead of spilling into slow shared memory."""
     free = free_vram_mib()
-    need = model.stat().st_size // 2**20 + ctx_mib + 300
-    return "all" if free is not None and free >= need else "auto"
+    return "all" if free is not None and free >= vram_needed_mib(profile) else "auto"
 
 
 def _free_port() -> int:
@@ -44,29 +45,33 @@ class LlamaServer:
         self.profile = profile
         self.port = _free_port()
         self.url = f"http://127.0.0.1:{self.port}"
-        self.gpu_layers = gpu_layers          # None = decide from free VRAM at start-up
+        self.gpu_layers = gpu_layers          # None = decide from free VRAM at start-up; "0" = CPU only
         self._proc: subprocess.Popen[bytes] | None = None
+        self._log: IO[bytes] | None = None
         self.log_path = RUNTIME / "logs" / f"llama-server-{profile.id}.log"
 
     def __enter__(self) -> LlamaServer:
-        model = RUNTIME / "models" / self.profile.file
+        model = model_path(self.profile)
         exe = RUNTIME / "llama" / "llama-server.exe"
+        if not exe.exists():
+            raise FileNotFoundError(f"Translation engine not installed: {exe.relative_to(PROJECT_ROOT)}")
         if not model.exists():
-            raise FileNotFoundError(f"Model not installed: {model.name} (run scripts/download_phase1.py)")
+            raise FileNotFoundError(f"Model not installed: {model.name} (see MODEL_SETUP.md)")
         self.log_path.parent.mkdir(parents=True, exist_ok=True)
         if self.gpu_layers is None:
-            self.gpu_layers = choose_gpu_layers(model)
+            self.gpu_layers = choose_gpu_layers(self.profile)
         args = [str(exe), "-m", str(model), "--host", "127.0.0.1", "--port", str(self.port),
                 "-ngl", self.gpu_layers, "-c", str(self.profile.ctx), "--offline", "--no-webui",
                 "-np", "1", *self.profile.server_args]
-        log = self.log_path.open("wb")
-        self._proc = subprocess.Popen(args, stdout=log, stderr=subprocess.STDOUT,
-                                      creationflags=subprocess.CREATE_NO_WINDOW)
+        self._log = self.log_path.open("wb")
+        self._proc = subprocess.Popen(args, stdout=self._log, stderr=subprocess.STDOUT,
+                                      creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
         where = {"all": "GPU", "0": "CPU only"}.get(self.gpu_layers, "GPU + CPU (GPU memory is partly in use)")
-        print(f"Loading the translation model on {where}...", flush=True)
+        print(f"Loading {self.profile.id} on {where}...", flush=True)
         deadline = time.time() + 300
         while time.time() < deadline:
             if self._proc.poll() is not None:
+                self.__exit__()
                 raise RuntimeError(f"llama-server exited during start-up; see {self.log_path}")
             try:
                 if httpx.get(f"{self.url}/health", timeout=2, trust_env=False).status_code == 200:
@@ -74,6 +79,7 @@ class LlamaServer:
             except httpx.HTTPError:
                 pass
             time.sleep(1)
+        self.__exit__()
         raise TimeoutError("llama-server did not become ready within 300 s")
 
     def __exit__(self, *exc: object) -> None:
@@ -83,3 +89,6 @@ class LlamaServer:
                 self._proc.wait(timeout=20)
             except subprocess.TimeoutExpired:
                 self._proc.kill()
+        if self._log:
+            self._log.close()
+            self._log = None

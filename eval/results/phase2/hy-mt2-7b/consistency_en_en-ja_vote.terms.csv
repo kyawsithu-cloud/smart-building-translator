@@ -1,0 +1,11 @@
+﻿source_term,target_term,source_lang,target_lang,category,notes,do_not_translate,priority,context
+free cooling,自由冷却,en,ja,document,5 paragraphs; review before importing,false,normal,
+chilled water plant,冷却水プラント,en,ja,document,4 paragraphs; review before importing,false,normal,
+load shedding,停電順序,en,ja,document,"UNRESOLVED (4 paragraphs, translated inconsistently); candidates: 停電順序 / 停電 / 停電実施 — correct the target before importing",false,normal,
+fault detection and diagnostics,故障検出・診断,en,ja,document,3 paragraphs; review before importing,false,normal,
+demand-controlled ventilation,需要制御換気,en,ja,document,3 paragraphs; review before importing,false,normal,
+supply air temperature,給気温度,en,ja,document,3 paragraphs; review before importing,false,normal,
+condenser water,凝縮水,en,ja,document,3 paragraphs; review before importing,false,normal,
+trend log,トレンドログ,en,ja,document,3 paragraphs; review before importing,false,normal,
+heat recovery,熱回収,en,ja,document,2 paragraphs; review before importing,false,normal,
+point list,ポイントリスト,en,ja,document,2 paragraphs; review before importing,false,normal,

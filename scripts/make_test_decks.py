@@ -196,11 +196,102 @@ def build_ja() -> Presentation:
     return prs
 
 
+def _title_slide(prs, title: str, subtitle: str) -> None:
+    s = prs.slides.add_slide(prs.slide_layouts[0])
+    s.shapes.title.text = title
+    s.placeholders[1].text = subtitle
+
+
+def build_consistency_en() -> Presentation:
+    """Ten non-glossary terms, each recurring 2–5 times in titles, bullets, sentences and notes."""
+    prs = Presentation()
+    _title_slide(prs, "Central Plant Optimisation", "Chilled water plant and air-side improvements — 2026")
+    bullets_slide(prs, "Chilled Water Plant Overview", [
+        (0, "The chilled water plant serves 12 air handling units."),
+        (0, "Condenser water is cooled by three cooling towers."),
+        (0, "Free cooling is used when the outdoor air temperature is below 10 °C."),
+    ], notes="During winter, free cooling reduces chiller operating hours and condenser water pump energy.")
+    bullets_slide(prs, "Free Cooling", [
+        (0, "Free cooling mode switches automatically"),
+        (0, "Free cooling savings: 210 MWh/year"),
+        (0, "Heat recovery from condenser water"),
+    ])
+    bullets_slide(prs, "Supply Air Temperature Reset", [
+        (0, "Supply air temperature is reset between 13 °C and 18 °C"),
+        (0, "The reset is based on zone demand"),
+        (0, "Supply air temperature setpoint is shown on the dashboard"),
+    ])
+    bullets_slide(prs, "Fault Detection and Diagnostics (FDD)", [
+        (0, "Fault detection and diagnostics runs every 15 minutes."),
+        (0, "FDD rules check the chilled water plant and air handling units."),
+        (0, "Typical faults: stuck damper, sensor drift, simultaneous heating and cooling"),
+    ], notes="Fault detection and diagnostics results are stored in the trend log for 13 months.")
+    bullets_slide(prs, "Demand-Controlled Ventilation", [
+        (0, "Demand-controlled ventilation uses CO2 sensors in meeting rooms."),
+        (0, "Demand-controlled ventilation reduces fan energy by 25%."),
+        (0, "Heat recovery wheels operate when ventilation rates are high."),
+    ])
+    bullets_slide(prs, "Load Shedding", [
+        (0, "Load shedding is triggered by demand response events."),
+        (0, "Load shedding sequence: lighting, then chiller demand limit"),
+        (0, "Trend log data verifies the load shedding result."),
+    ])
+    bullets_slide(prs, "Data and Integration", [
+        (0, "The point list contains 2,400 BACnet objects."),
+        (0, "Trend log interval: 5 minutes"),
+        (0, "The point list is exported to the cloud platform weekly."),
+    ])
+    return prs
+
+
+def build_consistency_ja() -> Presentation:
+    prs = Presentation()
+    _title_slide(prs, "中央熱源プラントの最適化", "冷水プラントおよび空調側の改善 — 2026年")
+    bullets_slide(prs, "冷水プラントの概要", [
+        (0, "冷水プラントは12台の空調機に冷水を供給します。"),
+        (0, "冷却水は3基の冷却塔で冷却されます。"),
+        (0, "外気温度が10 °C未満の場合はフリークーリングを使用します。"),
+    ], notes="冬季はフリークーリングにより冷凍機の運転時間と冷却水ポンプのエネルギーを削減します。")
+    bullets_slide(prs, "フリークーリング", [
+        (0, "フリークーリングモードは自動で切り替わる"),
+        (0, "フリークーリングによる削減量：210 MWh/年"),
+        (0, "冷却水からの熱回収"),
+    ])
+    bullets_slide(prs, "給気温度リセット", [
+        (0, "給気温度は13 °Cから18 °Cの範囲でリセット"),
+        (0, "リセットはゾーン負荷に基づく"),
+        (0, "給気温度設定値はダッシュボードに表示"),
+    ])
+    bullets_slide(prs, "故障検知・診断（FDD）", [
+        (0, "故障検知・診断は15分ごとに実行されます。"),
+        (0, "FDDルールで冷水プラントと空調機をチェック"),
+        (0, "代表的な故障：ダンパー固着、センサードリフト、冷暖房の同時運転"),
+    ], notes="故障検知・診断の結果はトレンドログに13か月間保存されます。")
+    bullets_slide(prs, "デマンド制御換気", [
+        (0, "デマンド制御換気は会議室のCO2センサーを使用します。"),
+        (0, "デマンド制御換気によりファンのエネルギーを25%削減"),
+        (0, "換気量が多い場合は熱回収ホイールが運転"),
+    ])
+    bullets_slide(prs, "負荷遮断", [
+        (0, "負荷遮断はデマンドレスポンスイベントにより起動されます。"),
+        (0, "負荷遮断の順序：照明、次に冷凍機のデマンド制限"),
+        (0, "トレンドログのデータで負荷遮断の結果を検証"),
+    ])
+    bullets_slide(prs, "データ連携", [
+        (0, "ポイントリストには2,400個のBACnetオブジェクトが含まれます。"),
+        (0, "トレンドログの収集間隔：5分"),
+        (0, "ポイントリストは毎週クラウドプラットフォームへエクスポートされます。"),
+    ])
+    return prs
+
+
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
-    build_en().save(OUT / "sample_en.pptx")
-    build_ja().save(OUT / "sample_ja.pptx")
-    print(f"Wrote {OUT / 'sample_en.pptx'} and {OUT / 'sample_ja.pptx'}")
+    decks = {"sample_en.pptx": build_en, "sample_ja.pptx": build_ja,
+             "consistency_en.pptx": build_consistency_en, "consistency_ja.pptx": build_consistency_ja}
+    for name, build in decks.items():
+        build().save(OUT / name)
+    print(f"Wrote {', '.join(decks)} to {OUT}")
 
 
 if __name__ == "__main__":

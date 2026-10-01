@@ -1,0 +1,65 @@
+﻿slide,segment,kind,status,problems,source,translation
+1,s1/2/p0,title,translated,,Smart Building Platform Overview,ဉာဏ်ရည်မြင့် အဆောက်အအုံ ပလက်ဖောင်း၏ အကျဉ်းချုပ်
+1,s1/3/p0,body,harmonised,,Building Management System (BMS) Integration Proposal — 15 March 2026,အဆောက်အအုံ စီမံခန့်ခွဲမှုစနစ် (BMS) ပေါင်းစည်းခြင်းဆိုင်ရာ အဆိုပြုချက် — ၂၀၂၆ ခုနှစ်၊ မတ်လ ၁၅ ရက်
+2,s2/2/p0,title,translated,,Building Management System,အဆောက်အအုံ စီမံခန့်ခွဲမှုစနစ်
+2,s2/3/p0,body,translated,,The <g1>Building Management System</g1> monitors and controls HVAC equipment.,<g1>အဆောက်အအုံ စီမံခန့်ခွဲမှုစနစ်</g1> သည် HVAC စက်ပစ္စည်းများကို စောင့်ကြည့်ခြင်းနှင့် ထိန်းချုပ်ခြင်းများ ပြုလုပ်ပါသည်။
+2,s2/3/p1,body,translated,,Air Handling Unit (AHU) and Fan Coil Unit (FCU) control,Air Handling Unit (AHU) နှင့် Fan Coil Unit (FCU) တို့ကို ထိန်းချုပ်ခြင်း
+2,s2/3/p2,body,translated,,Variable Air Volume (VAV) terminal control,Variable Air Volume (VAV) တာမီနယ် ထိန်းချုပ်မှု
+2,s2/3/p3,body,translated,,<g1>Alarm</g1> and <g2>equipment status</g2> monitoring 24/7,<g1>သတိပေးချက်</g1> နှင့် <g2>စက်ပစ္စည်း၏ အခြေအနေ</g2> တို့ကို ၂၄ နာရီ ၇ ရက် စောင့်ကြည့်ခြင်း
+2,s2/3/p4,body,harmonised,,Energy Management System (EMS) for energy consumption analysis,စွမ်းအင် သုံးစွဲမှုကို ခွဲခြမ်းစိတ်ဖြာရန်အတွက် စွမ်းအင် စီမံခန့်ခွဲမှုစနစ် (EMS)
+2,s2/notes/p0,note,translated,,"The building management system collects data from more than 2,000 points and sends alarms to the operator within 5 seconds.","အဆောက်အအုံ စီမံခန့်ခွဲမှုစနစ် သည် အမှတ်အသား ၂,၀၀၀ ကျော်မှ ဒေတာများကို စုဆောင်းပြီး၊ ၅ စက္ကန့်အတွင်း လုပ်ငန်းလည်ပတ်သူထံသို့ သတိပေးချက်များကို ပေးပို့ပါသည်။"
+3,s3/2/p0,title,translated,,Sensors and Field Devices,အာရုံခံကိရိယာများနှင့် ကွင်းဆင်းကိရိယာများ
+3,s3/3/p0,body,translated,,Occupancy sensor,လူရှိနေမှု အာရုံခံကိရိယာ
+3,s3/3/p1,body,translated,,"CO2 sensor (0–2,000 ppm)","CO2 အာရုံခံကိရိယာ (0–2,000 ppm)"
+3,s3/3/p2,body,translated,,Temperature sensor: ±0.2 °C accuracy,အပူချိန် အာရုံခံကိရိယာ: ±0.2 °C တိကျမှု
+3,s3/3/p3,body,translated,,Humidity: 30–70 %RH,စိုထိုင်းဆ: 30–70 %RH
+3,s3/3/p4,body,translated,,"Model <g1>FX-PCG2611-0</g1> controller, firmware v3.2.1",<g1>FX-PCG2611-0</g1> မော်ဒယ် ထိန်းချုပ်ကိရိယာ၊ firmware v3.2.1
+4,s4/2/p0,title,translated,,System Architecture,စနစ် ဗိသုကာပုံစံ
+4,s4/3/4/p0,body,translated,,Edge device,Edge device => အနားသတ် ကိရိယာ
+4,s4/3/5/p0,body,translated,,Gateway,Gateway => Gateway => ဂိတ်ဝ ကိရိယာ
+4,s4/3/6/p0,body,translated,,Cloud platform,Cloud platform => ကလောက်ဒ် ပလက်ဖောင်း
+4,s4/3/7/p0,body,translated,,Dashboard,ထိန်းချုပ်ခန်း
+4,s4/8/p0,body,translated,,Field controllers communicate over BACnet/IP and Modbus TCP; the gateway publishes telemetry to the cloud platform via MQTT over TLS (port 8883).,လယ်ကွင်းထိန်းချုပ်ကိရိယာများသည် BACnet/IP နှင့် Modbus TCP တို့မှတစ်ဆင့် အချင်းချင်း ဆက်သွယ်ကြပါသည်။ ဂိတ်ဝ ကိရိယာသည် TLS (port 8883) မှတစ်ဆင့် MQTT ကို အသုံးပြု၍ ရရှိလာသော ဒေတာများကို ကလောက်ဒ် ပလက်ဖောင်းထံသို့ ပေးပို့ပါသည်။
+5,s5/2/p0,title,translated,,Protocol Comparison,ပရိုတိုကော နှိုင်းယှဉ်ချက်
+5,s5/3/t0.0/p0,table_cell,translated,,Protocol,ပရိုတိုကော
+5,s5/3/t0.1/p0,table_cell,translated,,Transport,သယ်ယူပို့ဆောင်ရေး
+5,s5/3/t0.2/p0,table_cell,translated,,Typical use,ပုံမှန်အသုံးပြုမှု
+5,s5/3/t0.3/p0,table_cell,translated,,Default port,ပုံမှန် ပေါ့တ်
+5,s5/3/t1.0/p0,table_cell,kept,,BACnet/IP,BACnet/IP
+5,s5/3/t1.1/p0,table_cell,kept,,UDP,UDP
+5,s5/3/t1.2/p0,table_cell,translated,,HVAC controllers,HVAC ထိန်းချုပ်ကိရိယာများ
+5,s5/3/t1.3/p0,table_cell,kept,,47808,47808
+5,s5/3/t2.0/p0,table_cell,kept,,Modbus TCP,Modbus TCP
+5,s5/3/t2.1/p0,table_cell,kept,,TCP,TCP
+5,s5/3/t2.2/p0,table_cell,translated,,"Power meters, chillers",စွမ်းအားတိုင်းကိရိယာများ၊ အအေးပေးစက်များ
+5,s5/3/t2.3/p0,table_cell,kept,,502,502
+5,s5/3/t3.0/p0,table_cell,kept,,MQTT,MQTT
+5,s5/3/t3.1/p0,table_cell,kept,,TCP,TCP
+5,s5/3/t3.2/p0,table_cell,translated,,IoT telemetry to cloud,cloud သို့ IoT telemetry
+5,s5/3/t3.3/p0,table_cell,kept,,1883 / 8883,1883 / 8883
+5,s5/3/t4.0/p0,table_cell,kept,,KNX,KNX
+5,s5/3/t4.1/p0,table_cell,translated,,Twisted pair / IP,"Twisted pair => ကြိုးနှစ်ခွ  
+IP => IP"
+5,s5/3/t4.2/p0,table_cell,translated,,Lighting and blinds,မီးထွန်းစနစ်များနှင့် လိုက်ကာများ
+5,s5/3/t4.3/p0,table_cell,kept,,3671,3671
+6,s6/2/p0,title,translated,,Energy Efficiency and Demand Response,စွမ်းအင် ထိရောက်စွာ အသုံးချခြင်းနှင့် ဝယ်လိုအားဆိုင်ရာ တုံ့ပြန်မှု
+6,s6/3/p0,body,translated,,Peak demand reduced by 18% in summer 2025,၂၀၂၅ ခုနှစ် နွေရာသီတွင် အမြင့်ဆုံး ဝယ်လိုအားသည် ၁၈% လျော့ကျခဲ့သည်။
+6,s6/3/p1,body,translated,,"Energy consumption: 1,250 MWh/year → 1,020 MWh/year","စွမ်းအင် သုံးစွဲမှု - ၁,၂၅၀ MWh/နှစ် → ၁,၀၂၀ MWh/နှစ်"
+6,s6/3/p2,body,translated,,<g1>Demand response</g1> signals are received from the utility via <g2>OpenADR 2.0b</g2>,<g1>ဝယ်လိုအားဆိုင်ရာ တုံ့ပြန်မှု</g1> ဆိုင်ရာ အချက်ပြမှုများကို <g2>OpenADR 2.0b</g2> မှတစ်ဆင့် လျှပ်စစ်ဝန်ဆောင်မှုကုမ္ပဏီထံမှ လက်ခံရရှိပါသည်။
+6,s6/3/p3,body,translated,,Setpoint adjustment: cooling setpoint raised from 24 °C to 26 °C during peak hours,Setpoint ချိန်ညှိမှု - အမြင့်ဆုံး ဝယ်လိုအားရှိသည့် အချိန်များတွင် အအေးပေးစနစ်၏ Setpoint ကို ၂၄ °C မှ ၂၆ °C သို့ မြှင့်တင်ခဲ့ပါသည်။
+6,s6/3/p4,body,translated,,Power consumption is measured every 15 minutes,စွမ်းအင် သုံးစွဲမှုကို ၁၅ မိနစ်တစ်ကြိမ် တိုင်းတာပါသည်။
+6,s6/notes/p0,note,translated,,Energy saving control is enabled only when the occupancy rate is below 30 percent and the outdoor air temperature is above 32 °C.,အဆောက်အအုံတွင် လူနေထိုင်မှုနှုန်းသည် ၃၀ ရာခိုင်နှုန်းအောက်တွင်ရှိပြီး အပြင်ဘက်လေအပူချိန်သည် ၃၂ °C အထက်တွင်ရှိမှသာ စွမ်းအင်ခြွေတာခြင်းဆိုင်ရာ ထိန်းချုပ်မှုကို အသုံးပြုနိုင်ပါသည်။
+7,s7/2/p0,title,translated,,Network and Access,ကွန်ရက်နှင့် ဝင်ရောက်ခွင့်
+7,s7/3/p0,body,failed,untranslated,BMS server: 192.168.1.100 (VLAN 20),
+7,s7/3/p1,body,retried,,Web dashboard: https://bms.example.com/dashboard,Web dashboard: https://bms.example.com/dashboard => ဝဘ် dashboard: https://bms.example.com/dashboard
+7,s7/3/p2,body,translated,,Support: support@example.com,ပံ့ပိုးမှု: support@example.com
+7,s7/3/p3,body,failed,untranslated,Configuration file: C:\Program Files\BMS\config\points.json,
+7,s7/3/p4,body,translated,,"REST API over HTTPS; payloads in JSON, legacy exports in XML and SQL",HTTPS မှတစ်ဆင့် REST API၊ JSON ဖိုင်ပုံစံဖြင့် ဒေတာများ၊ XML နှင့် SQL ဖိုင်ပုံစံဖြင့် ယခင်ဗားရှင်း ထုတ်ယူမှုများ
+8,s8/2/p0,title,translated,,Operation and Maintenance,လုပ်ငန်းလည်ပတ်မှုနှင့် ထိန်းသိမ်းစောင့်ရှောက်မှု
+8,s8/3/p0,body,translated,,"When a chiller alarm occurs, the system automatically notifies the maintenance team by e-mail and creates a work order, and if the alarm is not acknowledged within 30 minutes, it is escalated to the facility manager.",Chiller အချက်ပေးသံ ထွက်ပေါ်လာပါက၊ စနစ်သည် ထိန်းသိမ်းစောင့်ရှောက်ရေးအဖွဲ့ထံ အီးမေးလ်ဖြင့် အလိုအလျောက် အကြောင်းကြားပြီး လုပ်ငန်းတာဝန်စာရွက်ကိုလည်း ဖန်တီးပေးပါသည်။ အကယ်၍ ၃၀ မိနစ်အတွင်း ထိုအချက်ပေးသံကို တုံ့ပြန်ခြင်းမရှိပါက၊ ၎င်းကိစ္စကို အဆောက်အအုံစီမံခန့်ခွဲသူထံသို့ တင်ပြပေးပါသည်။
+8,s8/3/p1,body,translated,,Scheduled maintenance of the AHU filters is performed every 3 months.,AHU ၏ စစ်ထုတ်ကိရိယာများအတွက် သတ်မှတ်ထားသော ထိန်းသိမ်းစောင့်ရှောက်မှုကို ၃ လတစ်ကြိမ် ပြုလုပ်ပါသည်။
+8,s8/3/p2,body,translated,,The PLC and SCADA system remain in service during the migration period.,ပြောင်းရွှေ့မှုကာလအတွင်း PLC နှင့် SCADA စနစ်များသည် ဆက်လက်၍ အသုံးပြုနေမည်ဖြစ်ပါသည်။
+9,s9/2/p0,title,translated,,Building Automation Roadmap,အဆောက်အအုံ အလိုအလျောက် ထိန်းချုပ်မှု လမ်းညွှန်
+9,s9/3/p0,body,translated,,Phase 1 (Q2 2026): Building automation system upgrade,အဆင့် ၁ (၂၀၂၆ ခုနှစ်၊ ဒုတိယသုံးလပတ်) – အဆောက်အအုံ အလိုအလျောက် ထိန်းချုပ်မှု စနစ် အဆင့်မြှင့်တင်ခြင်း
+9,s9/3/p1,body,translated,,Phase 2 (Q4 2026): IoT sensors and edge devices,အဆင့် ၂ (၂၀၂၆ ခုနှစ်၊ စတုတ္ထသုံးလပတ်) – IoT အာရုံခံကိရိယာများနှင့် edge devices
+9,s9/3/p2,body,translated,,Phase 3 (2027): AI-based fault detection and diagnostics (FDD),အဆင့် ၃ (၂၀၂၇) – AI အခြေခံ ချို့ယွင်းချက် ရှာဖွေခြင်းနှင့် ရောဂါရှာဖွေစစ်ဆေးခြင်း (FDD)

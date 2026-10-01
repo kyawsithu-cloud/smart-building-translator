@@ -6,7 +6,7 @@ import json
 from sbt import languages
 from sbt.engines.base import TranslationItem, TranslationRequest
 
-PROMPT_VERSION = "p1.3"
+PROMPT_VERSION = "p2.0"
 
 DOMAIN = ("smart buildings, building management systems (BMS/BAS), HVAC, energy management, IoT, "
           "building automation, electrical and facility management, cloud and IT systems")
@@ -31,8 +31,11 @@ def hymt_messages(req: TranslationRequest, item: TranslationItem,
     """
     tgt = languages.get(req.target_lang).name
     parts: list[str] = []
-    if req.context or previous:
+    if req.context or previous or item.examples:
         background = list(req.context)
+        if item.examples:
+            background.append("Similar sentences translated earlier (reuse their wording where it fits):")
+            background += [f"{s} => {t}" for s, t in item.examples]
         if previous:
             background.append("Lines of this slide already translated (keep the same wording and numbering "
                               "style):")
@@ -72,7 +75,8 @@ Rules:
 3. Keep product names, protocol names, acronyms, model/part numbers, URLs, e-mail addresses, IP addresses,
    file paths, numbers and units unchanged.
 4. {tag_rule} {placeholder_rule}
-5. "context" is for understanding only; do not translate it.
+5. "context" is for understanding only; do not translate it. Reuse the wording of
+   "similar_earlier_translations" where the meaning is the same.
 6. {style}
 7. Output JSON only, one translation per input id."""
 
@@ -91,6 +95,8 @@ def qwen_messages(req: TranslationRequest) -> list[dict[str, str]]:
             {"id": it.id, "text": it.text,
              **({"terms": {h.source: h.target for h in it.hints}} if it.hints else {}),
              **({"style": "heading" if it.is_heading else "sentence"}),
+             **({"similar_earlier_translations": [{"source": x, "translation": y} for x, y in it.examples]}
+                if it.examples else {}),
              **({"previous_attempt_problem": it.feedback} if it.feedback else {})}
             for it in req.items
         ],

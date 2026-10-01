@@ -1,0 +1,48 @@
+{
+  "file": "sample_en.pptx",
+  "output": "sample_en_en-ja_vote.pptx",
+  "mode": "offline",
+  "model": "hy-mt2-7b",
+  "model_file": "HY-MT2-7B-Q6_K.gguf",
+  "licence": "Apache-2.0",
+  "repair_model": null,
+  "repaired": 0,
+  "source_lang": "en",
+  "target_lang": "ja",
+  "protect": "verify",
+  "doc_terms_mode": "vote",
+  "memory": false,
+  "seconds": 38.7,
+  "llm_calls": 58,
+  "completion_tokens": 1264,
+  "tokens_per_second": 32.9,
+  "slides": 9,
+  "segments": 63,
+  "translated_segments": 63,
+  "status_counts": {
+    "kept": 11,
+    "retried": 4,
+    "translated": 48
+  },
+  "translated_pct": 100.0,
+  "protected_token_integrity_pct": 100.0,
+  "glossary_adherence_pct": 97.6,
+  "doc_terms": 0,
+  "doc_term_consistency_pct": null,
+  "tag_integrity_pct": 100.0,
+  "untranslatable": [],
+  "issues": [
+    {
+      "code": "term_missing",
+      "severity": "warning",
+      "segment": "s2/3/p4",
+      "message": "slide 2: term_missing"
+    },
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "s9/2",
+      "message": "slide 9: font reduced to 85% to fit"
+    }
+  ]
+}

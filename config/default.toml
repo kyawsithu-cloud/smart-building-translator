@@ -1,18 +1,19 @@
+# Project defaults. Override any key in %LOCALAPPDATA%\SmartBuildingTranslator\settings.toml
+# (same keys, sections optional). See README.md.
+
 [privacy]
-mode = "offline"            # "offline" | "online" — online also requires per-job consent
-store_translation_cache = true
-log_document_text = false   # must stay false outside local debugging
+mode = "offline"            # only offline exists; online mode would need explicit per-job consent
+use_memory = true           # keep a local translation memory (contains document text; `sbt history clear`)
 
 [engine]
-id = "llamacpp"             # "llamacpp" | "ollama"
-base_url = "http://127.0.0.1:8765"
-model = ""                  # set per machine; see MODEL_SETUP.md
+model = "hy-mt2-7b"         # see `python -m sbt doctor`
+repair_model = "qwen3-8b"   # second engine for paragraphs still flagged after retries ("" = off)
+gpu = "auto"                # auto | cpu
 
 [translation]
-source = "en"
-target = "ja"
-ja_style_titles = "taigen-dome"   # 体言止め for titles/bullets
-ja_style_body = "desu-masu"       # です・ます for sentences/notes
+glossary = "smart-building"
+doc_terms = "vote"          # recurring-term consistency: off | vote | hint | enforce (see PHASE2_RESULTS)
+protect = "verify"          # verify | mask
 
 [render]
-min_font_scale = 0.8        # never shrink text below 80 % of original; flag instead
+min_font_scale = 0.8        # never shrink text below 80 % of the original; flag instead

@@ -13,6 +13,6 @@ set "SRC=%~2"
 set "TGT=%~3"
 if "%SRC%"=="" set "SRC=auto"
 if "%TGT%"=="" set "TGT=auto"
-"%ROOT%.venv\Scripts\python.exe" -m sbt.poc translate "%~1" --src %SRC% --tgt %TGT%
+"%ROOT%.venv\Scripts\python.exe" -m sbt translate "%~1" --src %SRC% --tgt %TGT%
 echo.
 pause

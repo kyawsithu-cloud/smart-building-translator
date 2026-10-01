@@ -1,0 +1,33 @@
+﻿slide,segment,kind,status,problems,source,translation
+1,s1/2/p0,title,translated,,Central Plant Optimisation,中央工厂优化
+1,s1/3/p0,body,harmonised,,Chilled water plant and air-side improvements — 2026,冷水机组及空气侧系统优化——2026年
+2,s2/2/p0,title,translated,,Chilled Water Plant Overview,冷水机组概述
+2,s2/3/p0,body,translated,,The chilled water plant serves 12 air handling units.,该冷水机组概述为12台空气处理单元提供冷却服务。
+2,s2/3/p1,body,translated,,Condenser water is cooled by three cooling towers.,冷凝水由三座冷却塔进行冷却。
+2,s2/3/p2,body,harmonised,,Free cooling is used when the outdoor air temperature is below 10 °C.,当室外空气温度低于10℃时，会采用自由冷却方式。
+2,s2/notes/p0,note,harmonised,,"During winter, free cooling reduces chiller operating hours and condenser water pump energy.",在冬季，自由冷却能够减少冷水机的运行时间以及冷凝水泵的能耗。
+3,s3/2/p0,title,translated,,Free Cooling,自由冷却
+3,s3/3/p0,body,translated,,Free cooling mode switches automatically,自由冷却模式会自动切换
+3,s3/3/p1,body,retried,,Free cooling savings: 210 MWh/year,自由冷却带来的节能效果：210 兆瓦时/年
+3,s3/3/p2,body,translated,,Heat recovery from condenser water,从冷凝水中进行热回收
+4,s4/2/p0,title,translated,,Supply Air Temperature Reset,送风温度重置
+4,s4/3/p0,body,translated,,Supply air temperature is reset between 13 °C and 18 °C,送风温度将在13℃至18℃之间进行重置。
+4,s4/3/p1,body,translated,,The reset is based on zone demand,该重置是根据各区域的需求来进行的。
+4,s4/3/p2,body,translated,,Supply air temperature setpoint is shown on the dashboard,送风温度设定值显示在仪表板上。
+5,s5/2/p0,title,translated,,Fault Detection and Diagnostics (FDD),故障检测与诊断（FDD）
+5,s5/3/p0,body,translated,,Fault detection and diagnostics runs every 15 minutes.,故障检测与诊断（FDD）功能每15分钟运行一次。
+5,s5/3/p1,body,translated,,FDD rules check the chilled water plant and air handling units.,故障检测与诊断（FDD）的规则用于检查冷水机组和空气处理单元。
+5,s5/3/p2,body,translated,,"Typical faults: stuck damper, sensor drift, simultaneous heating and cooling",常见故障：风阀卡滞、传感器漂移、同时进行制热和制冷操作
+5,s5/notes/p0,note,translated,,Fault detection and diagnostics results are stored in the trend log for 13 months.,故障检测与诊断的结果会存储在趋势日志中，保留时长为13个月。
+6,s6/2/p0,title,translated,,Demand-Controlled Ventilation,需求控制式通风
+6,s6/3/p0,body,retried,,Demand-controlled ventilation uses CO2 sensors in meeting rooms.,需求控制式通风系统在会议室中使用CO2传感器。
+6,s6/3/p1,body,translated,,Demand-controlled ventilation reduces fan energy by 25%.,需求控制式通风可将风扇的能耗降低25%。
+6,s6/3/p2,body,translated,,Heat recovery wheels operate when ventilation rates are high.,在通风量较大时，热回收轮便会开始运转。
+7,s7/2/p0,title,translated,,Load Shedding,限电措施
+7,s7/3/p0,body,translated,,Load shedding is triggered by demand response events.,限电措施是由需求响应事件触发的。
+7,s7/3/p1,body,translated,,"Load shedding sequence: lighting, then chiller demand limit",限电措施的实施顺序：首先限制照明用电，随后限制冷水机组的需求。
+7,s7/3/p2,body,translated,,Trend log data verifies the load shedding result.,趋势日志数据可用于验证限电措施的执行效果。
+8,s8/2/p0,title,translated,,Data and Integration,数据与集成
+8,s8/3/p0,body,translated,,"The point list contains 2,400 BACnet objects.","该点列表包含2,400个BACnet对象。"
+8,s8/3/p1,body,translated,,Trend log interval: 5 minutes,趋势日志间隔：5分钟
+8,s8/3/p2,body,translated,,The point list is exported to the cloud platform weekly.,该点列表每周会被导出至云平台。

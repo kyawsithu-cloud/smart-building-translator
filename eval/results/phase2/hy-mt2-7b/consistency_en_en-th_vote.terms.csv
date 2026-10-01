@@ -1,0 +1,13 @@
+﻿source_term,target_term,source_lang,target_lang,category,notes,do_not_translate,priority,context
+free cooling,ระบบทำความเย็นแบบไม่ใช้พลังงาน,en,th,document,"UNRESOLVED (5 paragraphs, translated inconsistently); candidates: ระบบทำความเย็นแบบไม่ใช้พลังงาน / ระบบระบายความร้อนแบบฟรี / โหมดระบายความร้อนแบบฟรี — correct the target before importing",false,normal,
+chilled water plant,โรงผลิตน้ำเย็น,en,th,document,"UNRESOLVED (4 paragraphs, translated inconsistently); candidates: โรงผลิตน้ำเย็น — correct the target before importing",false,normal,
+air temperature,อุณหภูมิอากาศ,en,th,document,4 paragraphs; review before importing,false,normal,
+load shedding,การตัดไฟ,en,th,document,4 paragraphs; review before importing,false,normal,
+fault detection and diagnostics,การตรวจจับความผิดพลาดและการวินิจฉัย,en,th,document,3 paragraphs; review before importing,false,normal,
+demand-controlled ventilation,ระบบระบายอากาศที่ควบคุมตามความต้องการ,en,th,document,"UNRESOLVED (3 paragraphs, translated inconsistently); candidates: ระบบระบายอากาศที่ควบคุมตามความต้องการ — correct the target before importing",false,normal,
+supply air temperature,อุณหภูมิอากาศที่ส่งเข้า,en,th,document,3 paragraphs; review before importing,false,normal,
+condenser water,น้ำคอนเดนเซอร์,en,th,document,3 paragraphs; review before importing,false,normal,
+trend log,บันทึกแนวโน้ม,en,th,document,3 paragraphs; review before importing,false,normal,
+air handling units,หน่วยจัดการอากาศ,en,th,document,2 paragraphs; review before importing,false,normal,
+heat recovery,การกู้คืนความร้อน,en,th,document,"UNRESOLVED (2 paragraphs, translated inconsistently); candidates: การกู้คืนความร้อน — correct the target before importing",false,normal,
+point list,รายการจุด,en,th,document,2 paragraphs; review before importing,false,normal,

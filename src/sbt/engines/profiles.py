@@ -20,9 +20,12 @@ class ModelProfile:
 
 
 PROFILES: dict[str, ModelProfile] = {p.id: p for p in [
-    ModelProfile("hy-mt2-7b", "HY-MT2-7B-Q6_K.gguf", "hymt", ALL_9, "Apache-2.0",
+    # Hy-MT2 translates one paragraph per request (<1k tokens), so a 4k context is plenty and lets the
+    # Q6 model fit entirely in 8 GB VRAM next to a normal desktop.
+    ModelProfile("hy-mt2-7b", "HY-MT2-7B-Q6_K.gguf", "hymt", ALL_9, "Apache-2.0", ctx=4096,
                  sampling={"temperature": 0.0, "top_p": 0.6, "top_k": 20, "repeat_penalty": 1.05}),
-    ModelProfile("qwen3-8b", "Qwen3-8B-Q5_K_M.gguf", "qwen_json", ALL_9, "Apache-2.0",
+    # Burmese excluded: Phase 1 measured empty lines and clear mistranslations (eval/results/PHASE1_RESULTS.md).
+    ModelProfile("qwen3-8b", "Qwen3-8B-Q5_K_M.gguf", "qwen_json", ALL_9 - {"my"}, "Apache-2.0",
                  sampling={"temperature": 0.0, "top_p": 0.8, "top_k": 20},
                  server_args=("--reasoning", "off")),
     # cat-translate-7b removed after Phase 1: it altered identifiers (HVAC→HVAAC, URLs). See PHASE1_RESULTS.md.

@@ -1,0 +1,7 @@
+﻿source_term,target_term,source_lang,target_lang,category,notes,do_not_translate,priority,context
+management system,ระบบการจัดการ,en,th,document,"UNRESOLVED (5 paragraphs, translated inconsistently); candidates: ระบบการจัดการ — correct the target before importing",false,normal,
+building management system,ระบบการจัดการอาคาร,en,th,document,"UNRESOLVED (4 paragraphs, translated inconsistently); candidates: ระบบการจัดการอาคาร — correct the target before importing",false,normal,
+building automation,ระบบอัตโนมัติสำหรับอาคาร,en,th,document,2 paragraphs; review before importing,false,normal,
+energy consumption,การใช้พลังงาน,en,th,document,2 paragraphs; review before importing,false,normal,
+demand response,การตอบสนองความต้องการไฟฟ้า,en,th,document,"UNRESOLVED (2 paragraphs, translated inconsistently); candidates: การตอบสนองความต้องการไฟฟ้า — correct the target before importing",false,normal,
+cloud platform,แพลตฟอร์มคลาวด์,en,th,document,2 paragraphs; review before importing,false,normal,

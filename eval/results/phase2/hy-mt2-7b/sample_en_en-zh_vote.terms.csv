@@ -1,0 +1,7 @@
+﻿source_term,target_term,source_lang,target_lang,category,notes,do_not_translate,priority,context
+management system,管理系统,en,zh,document,5 paragraphs; review before importing,false,normal,
+building management system,管理系统,en,zh,document,4 paragraphs; review before importing,false,normal,
+building automation,建筑自动化,en,zh,document,2 paragraphs; review before importing,false,normal,
+energy consumption,能源消耗,en,zh,document,"UNRESOLVED (2 paragraphs, translated inconsistently); candidates: 能源消耗 / 能源消耗量 — correct the target before importing",false,normal,
+demand response,需求响应,en,zh,document,2 paragraphs; review before importing,false,normal,
+cloud platform,云平台,en,zh,document,2 paragraphs; review before importing,false,normal,

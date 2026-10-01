@@ -1,0 +1,7 @@
+﻿source_term,target_term,source_lang,target_lang,category,notes,do_not_translate,priority,context
+management system,관리 시스템,en,ko,document,5 paragraphs; review before importing,false,normal,
+building management system,관리 시스템,en,ko,document,4 paragraphs; review before importing,false,normal,
+building automation,빌딩 자동화,en,ko,document,2 paragraphs; review before importing,false,normal,
+energy consumption,에너지 소비량,en,ko,document,"UNRESOLVED (2 paragraphs, translated inconsistently); candidates: 에너지 소비량 — correct the target before importing",false,normal,
+demand response,수요 반응,en,ko,document,2 paragraphs; review before importing,false,normal,
+cloud platform,클라우드 플랫폼,en,ko,document,2 paragraphs; review before importing,false,normal,

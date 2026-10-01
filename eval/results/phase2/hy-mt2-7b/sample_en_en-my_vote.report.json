@@ -1,0 +1,101 @@
+{
+  "file": "sample_en.pptx",
+  "output": "sample_en_en-my_vote.pptx",
+  "mode": "offline",
+  "model": "hy-mt2-7b",
+  "model_file": "HY-MT2-7B-Q6_K.gguf",
+  "licence": "Apache-2.0",
+  "repair_model": "qwen3-8b",
+  "repaired": 0,
+  "repair_note": null,
+  "source_lang": "en",
+  "target_lang": "my",
+  "protect": "verify",
+  "doc_terms_mode": "vote",
+  "memory": false,
+  "seconds": 195.8,
+  "llm_calls": 74,
+  "completion_tokens": 6914,
+  "tokens_per_second": 35.3,
+  "slides": 9,
+  "segments": 63,
+  "translated_segments": 61,
+  "status_counts": {
+    "failed": 2,
+    "harmonised": 2,
+    "kept": 11,
+    "retried": 1,
+    "translated": 47
+  },
+  "translated_pct": 96.8,
+  "protected_token_integrity_pct": 100.0,
+  "glossary_adherence_pct": null,
+  "doc_terms": 5,
+  "doc_terms_unresolved": 1,
+  "harmonised": 2,
+  "doc_term_consistency_pct": 100.0,
+  "tag_integrity_pct": 100.0,
+  "untranslatable": [],
+  "issues": [
+    {
+      "code": "untranslated",
+      "severity": "error",
+      "segment": "s7/3/p0",
+      "message": "slide 7: untranslated"
+    },
+    {
+      "code": "untranslated",
+      "severity": "error",
+      "segment": "s7/3/p3",
+      "message": "slide 7: untranslated"
+    },
+    {
+      "code": "overflow",
+      "severity": "warning",
+      "segment": "s1/3",
+      "message": "slide 1: text likely exceeds its box even at 80% font size"
+    },
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "s2/3",
+      "message": "slide 2: font reduced to 90% to fit"
+    },
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "s3/2",
+      "message": "slide 3: font reduced to 80% to fit"
+    },
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "s6/3",
+      "message": "slide 6: font reduced to 90% to fit"
+    },
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "s7/3",
+      "message": "slide 7: font reduced to 90% to fit"
+    },
+    {
+      "code": "overflow",
+      "severity": "warning",
+      "segment": "s8/2",
+      "message": "slide 8: text likely exceeds its box even at 80% font size"
+    },
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "s8/3",
+      "message": "slide 8: font reduced to 85% to fit"
+    },
+    {
+      "code": "overflow",
+      "severity": "warning",
+      "segment": "s9/2",
+      "message": "slide 9: text likely exceeds its box even at 80% font size"
+    }
+  ]
+}

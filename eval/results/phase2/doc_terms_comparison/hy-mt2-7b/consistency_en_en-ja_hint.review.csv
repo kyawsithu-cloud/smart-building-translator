@@ -1,0 +1,33 @@
+﻿slide,segment,kind,status,problems,source,translation
+1,s1/2/p0,title,translated,,Central Plant Optimisation,中央プラント最適化
+1,s1/3/p0,body,translated,,Chilled water plant and air-side improvements — 2026,冷却水プラント及び空気側改良 — 2026
+2,s2/2/p0,title,translated,,Chilled Water Plant Overview,冷却水プラント概要
+2,s2/3/p0,body,translated,,The chilled water plant serves 12 air handling units.,冷却水プラント概要では、12台の空調機に給水を供給しています。
+2,s2/3/p1,body,translated,,Condenser water is cooled by three cooling towers.,凝縮水は3基の冷却塔によって冷却されます。
+2,s2/3/p2,body,translated,,Free cooling is used when the outdoor air temperature is below 10 °C.,外気温度が10℃未満の場合には、自由冷却が適用されます。
+2,s2/notes/p0,note,translated,,"During winter, free cooling reduces chiller operating hours and condenser water pump energy.",冬季には、自由冷却により冷凍機の運転時間や凝縮水ポンプの消費エネルギーが削減されます。
+3,s3/2/p0,title,translated,,Free Cooling,自由冷却
+3,s3/3/p0,body,translated,,Free cooling mode switches automatically,自由冷却モードの自動切り替え
+3,s3/3/p1,body,translated,,Free cooling savings: 210 MWh/year,自由冷却による節電量：210 MWh/年
+3,s3/3/p2,body,translated,,Heat recovery from condenser water,凝縮水からの熱回収
+4,s4/2/p0,title,translated,,Supply Air Temperature Reset,供給空気温度リセット
+4,s4/3/p0,body,translated,,Supply air temperature is reset between 13 °C and 18 °C,供給空気温度リセットは13℃～18℃で行われる
+4,s4/3/p1,body,translated,,The reset is based on zone demand,ゾーン負荷に基づくリセット
+4,s4/3/p2,body,translated,,Supply air temperature setpoint is shown on the dashboard,供給空気温度の設定値はダッシュボードに表示される
+5,s5/2/p0,title,translated,,Fault Detection and Diagnostics (FDD),故障検出・診断(FDD)
+5,s5/3/p0,body,translated,,Fault detection and diagnostics runs every 15 minutes.,故障検出・診断(FDD)は、15分ごとに実行されます。
+5,s5/3/p1,body,translated,,FDD rules check the chilled water plant and air handling units.,故障検出・診断(FDD)のルールにより、冷却水プラントおよび空調機がチェックされます。
+5,s5/3/p2,body,translated,,"Typical faults: stuck damper, sensor drift, simultaneous heating and cooling",代表的な故障：ダンパーの固着、センサーのドリフト、同時加熱・冷却
+5,s5/notes/p0,note,translated,,Fault detection and diagnostics results are stored in the trend log for 13 months.,故障検出・診断(FDD)の結果は、トレンドログに13ヶ月間保存されます。
+6,s6/2/p0,title,translated,,Demand-Controlled Ventilation,需要応答型換気
+6,s6/3/p0,body,translated,,Demand-controlled ventilation uses CO2 sensors in meeting rooms.,需要応答型換気では、会議室にCO2センサーを設置して利用されています。
+6,s6/3/p1,body,translated,,Demand-controlled ventilation reduces fan energy by 25%.,需要応答型換気を導入することで、ファンの消費エネルギーを25%削減することができます。
+6,s6/3/p2,body,translated,,Heat recovery wheels operate when ventilation rates are high.,換気量が多い場合には、熱回収輪が動作します。
+7,s7/2/p0,title,translated,,Load Shedding,停電順序
+7,s7/3/p0,body,translated,,Load shedding is triggered by demand response events.,停電順序は、デマンドレスポンスの実施によって発動されます。
+7,s7/3/p1,body,translated,,"Load shedding sequence: lighting, then chiller demand limit",停電順序：照明、次に冷凍機の需要制限
+7,s7/3/p2,body,translated,,Trend log data verifies the load shedding result.,トレンドログのデータにより、停電順序が正しく適用されたかが確認されます。
+8,s8/2/p0,title,translated,,Data and Integration,データと統合
+8,s8/3/p0,body,translated,,"The point list contains 2,400 BACnet objects.","このポイントリストには、2,400個のBACnetオブジェクトが含まれています。"
+8,s8/3/p1,body,translated,,Trend log interval: 5 minutes,トレンドログ間隔：5分
+8,s8/3/p2,body,translated,,The point list is exported to the cloud platform weekly.,このポイントリストは、毎週クラウドプラットフォームにエクスポートされます。

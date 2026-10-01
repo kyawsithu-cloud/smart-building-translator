@@ -1,0 +1,33 @@
+﻿slide,segment,kind,status,problems,source,translation
+1,s1/2/p0,title,translated,,Central Plant Optimisation,ဗဟိုစက်ရုံ အကောင်းဆုံးဖြစ်အောင် စီမံခန့်ခွဲခြင်း
+1,s1/3/p0,body,translated,,Chilled water plant and air-side improvements — 2026,အအေးပေးရေစနစ်နှင့် လေဝင်လေထွက်စနစ် တိုးတက်မှုများ — ၂၀၂၆
+2,s2/2/p0,title,translated,,Chilled Water Plant Overview,အေးသောရေစက်ရုံ အကျဉ်းချုပ်
+2,s2/3/p0,body,translated,,The chilled water plant serves 12 air handling units.,အေးသောရေစက်ရုံ အကျဉ်းချုပ်သည် လေထိန်းစက်ယန္တရား ၁၂ ခုကို ဝန်ဆောင်မှုပေးပါသည်။
+2,s2/3/p1,body,translated,,Condenser water is cooled by three cooling towers.,အေးခံရေကို အေးခံမျှော်စင် ၃ ခုဖြင့် အေးအောင်လုပ်ပါသည်။
+2,s2/3/p2,body,harmonised,,Free cooling is used when the outdoor air temperature is below 10 °C.,အပြင်ဘက်ရှိ လေထုအပူချိန်သည် ၁၀ °C အောက်တွင် ရှိသည့်အခါ အခမဲ့ အအေးပေးစနစ်ကို အသုံးပြုပါသည်။
+2,s2/notes/p0,note,harmonised,,"During winter, free cooling reduces chiller operating hours and condenser water pump energy.",ဆောင်းရာသီတွင် အခမဲ့ အအေးပေးစနစ်သည် ရေအေးပေးစက်များ၏ လုပ်ငန်းလည်ပတ်ချိန်နှင့် အေးခံရေပန့်စက်များ၏ စွမ်းအင်သုံးစွဲမှုကို လျော့ကျစေပါသည်။
+3,s3/2/p0,title,translated,,Free Cooling,အခမဲ့ အအေးပေးစနစ်
+3,s3/3/p0,body,translated,,Free cooling mode switches automatically,အခမဲ့ အအေးပေးစနစ် မော်ဒ်သည် အလိုအလျောက် ပြောင်းလဲသွားပါသည်။
+3,s3/3/p1,body,translated,,Free cooling savings: 210 MWh/year,အခမဲ့ အအေးပေးစနစ်ဖြင့် ကုန်ကျစရိတ် သက်သာမှု - ၂၁၀ MWh/နှစ်
+3,s3/3/p2,body,translated,,Heat recovery from condenser water,ကွန်ဒင်ဆာ ရေမှ အပူပြန်လည်ရယူခြင်း
+4,s4/2/p0,title,translated,,Supply Air Temperature Reset,လေဝင်အပူချိန် ပြန်လည်သတ်မှတ်ခြင်း
+4,s4/3/p0,body,translated,,Supply air temperature is reset between 13 °C and 18 °C,လေဝင်အပူချိန် ပြန်လည်သတ်မှတ်ခြင်းကို ၁၃ °C နှင့် ၁၈ °C အကြားတွင် ပြုလုပ်ပါသည်။
+4,s4/3/p1,body,translated,,The reset is based on zone demand,ပြန်လည်သတ်မှတ်ခြင်းကို ဇုန်၏ လိုအပ်ချက်အပေါ် အခြေခံ၍ ပြုလုပ်ပါသည်။
+4,s4/3/p2,body,translated,,Supply air temperature setpoint is shown on the dashboard,လေဝင်အပူချိန် သတ်မှတ်ချက်ကို ဒက်ရှ်ဘုတ်ပေါ်တွင် ပြသထားပါသည်။
+5,s5/2/p0,title,translated,,Fault Detection and Diagnostics (FDD),ချို့ယွင်းမှု ရှာဖွေခြင်းနှင့် ခွဲခြားစစ်ဆေးခြင်း (FDD)
+5,s5/3/p0,body,translated,,Fault detection and diagnostics runs every 15 minutes.,ချို့ယွင်းမှု ရှာဖွေခြင်းနှင့် ခွဲခြားစစ်ဆေးခြင်း (FDD) ကို ၁၅ မိနစ်တစ်ကြိမ် လည်ပတ်ဆောင်ရွက်ပါသည်။
+5,s5/3/p1,body,translated,,FDD rules check the chilled water plant and air handling units.,ချို့ယွင်းမှု ရှာဖွေခြင်းနှင့် ခွဲခြားစစ်ဆေးခြင်း (FDD) ၏ စည်းမျဉ်းများသည် အအေးပေးရေစနစ်နှင့် လေစီမံခန့်ခွဲမှု ယူနစ်များကို စစ်ဆေးပါသည်။
+5,s5/3/p2,body,translated,,"Typical faults: stuck damper, sensor drift, simultaneous heating and cooling",ပုံမှန်ချို့ယွင်းချက်များ - ဒမ်ပါ ပိတ်ဆို့ခြင်း၊ အာရုံခံကိရိယာ တဖြည်းဖြည်းပြောင်းလဲခြင်း၊ တစ်ပြိုင်နက် အပူပေးခြင်းနှင့် အအေးပေးခြင်း။
+5,s5/notes/p0,note,harmonised,,Fault detection and diagnostics results are stored in the trend log for 13 months.,ချို့ယွင်းမှု ရှာဖွေခြင်းနှင့် ခွဲခြားစစ်ဆေးခြင်း (FDD) ၏ ရလဒ်များကို လမ်းကြောင်းမှတ်တမ်းတွင် ၁၃ လကြာ သိမ်းဆည်းထားပါသည်။
+6,s6/2/p0,title,translated,,Demand-Controlled Ventilation,ဝယ်လိုအား-ထိန်းချုပ် လေဝင်လေထွက်စနစ်
+6,s6/3/p0,body,translated,,Demand-controlled ventilation uses CO2 sensors in meeting rooms.,ဝယ်လိုအား-ထိန်းချုပ် လေဝင်လေထွက်စနစ်တွင် အစည်းအဝေးခန်းများ၌ CO2 အာရုံခံကိရိယာများကို အသုံးပြုပါသည်။
+6,s6/3/p1,body,translated,,Demand-controlled ventilation reduces fan energy by 25%.,ဝယ်လိုအား-ထိန်းချုပ် လေဝင်လေထွက်စနစ်သည် ပန်ကာများ၏ စွမ်းအင်သုံးစွဲမှုကို ၂၅% လျော့ကျစေပါသည်။
+6,s6/3/p2,body,translated,,Heat recovery wheels operate when ventilation rates are high.,လေဝင်လေထွက်နှုန်း မြင့်မားသည့်အခါ အပူပြန်လည်ရယူသည့် ဝှီးများသည် အလုပ်လုပ်ပါသည်။
+7,s7/2/p0,title,translated,,Load Shedding,လျှပ်စစ်ဖြတ်တောက်ခြင်း
+7,s7/3/p0,body,translated,,Load shedding is triggered by demand response events.,လျှပ်စစ်ဖြတ်တောက်ခြင်းကို ဝယ်လိုအားဆိုင်ရာ တုံ့ပြန်မှုများကြောင့် စတင်ဖြစ်ပေါ်စေပါသည်။
+7,s7/3/p1,body,translated,,"Load shedding sequence: lighting, then chiller demand limit",လျှပ်စစ်ဖြတ်တောက်ခြင်း၏ အစီအစဉ် - မီးလုံးများ၊ ထို့နောက် ရေခဲစက်များ၏ ဝယ်လိုအား ကန့်သတ်ချက်
+7,s7/3/p2,body,translated,,Trend log data verifies the load shedding result.,လမ်းကြောင်းမှတ်တမ်း ဒေတာများသည် လျှပ်စစ်ဖြတ်တောက်ခြင်း၏ ရလဒ်ကို အတည်ပြုပေးပါသည်။
+8,s8/2/p0,title,translated,,Data and Integration,ဒေတာနှင့် ပေါင်းစည်းခြင်း
+8,s8/3/p0,body,translated,,"The point list contains 2,400 BACnet objects.","အမှတ်စာရင်းတွင် BACnet object ၂,၄၀၀ ပါဝင်ပါသည်။"
+8,s8/3/p1,body,translated,,Trend log interval: 5 minutes,လမ်းကြောင်းမှတ်တမ်း အချိန်ကာလ - ၅ မိနစ်
+8,s8/3/p2,body,translated,,The point list is exported to the cloud platform weekly.,အမှတ်စာရင်းကို အပတ်စဉ် ကလောက်ဒ် ပလက်ဖောင်းသို့ တင်ပို့ပေးပါသည်။

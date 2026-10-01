@@ -22,6 +22,7 @@ class TranslationItem:
     hints: tuple[Hint, ...] = ()
     is_heading: bool = False          # titles/bullets vs full sentences (affects Japanese style)
     feedback: str = ""                # validation problems from a previous attempt
+    examples: tuple[tuple[str, str], ...] = ()   # similar earlier translations from the translation memory
 
 
 @dataclass(frozen=True)
