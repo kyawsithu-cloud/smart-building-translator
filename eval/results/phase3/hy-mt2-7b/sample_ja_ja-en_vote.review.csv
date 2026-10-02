@@ -1,0 +1,60 @@
+﻿page/slide,segment,kind,status,problems,ocr_confidence,source,translation
+1,s1/2/p0,title,translated,,,スマートビルディングプラットフォーム概要,Overview of Smart Building Platforms
+1,s1/3/p0,body,retried,,,ビル管理システム（BMS）統合提案 — 2026年3月15日,"Integration Proposal for Building Management System (BMS) — March 15, 2026"
+2,s2/2/p0,title,translated,,,ビル管理システム,Building Management System
+2,s2/3/p0,body,translated,,,<g1>ビル管理システム</g1>は空調設備を監視・制御します。,The <g1>Building Management System</g1> monitors and controls HVAC systems.
+2,s2/3/p1,body,translated,,,空調機（AHU）およびファンコイルユニット（FCU）の制御,Control of air handling units (AHU) and fan coil units (FCU)
+2,s2/3/p2,body,translated,,,可変風量（VAV）ターミナル制御,Variable air volume (VAV) terminal control
+2,s2/3/p3,body,translated,,,<g1>警報</g1>および<g2>機器状態</g2>の24時間監視,24/7 monitoring of <g1>alarm</g1> and <g2>equipment status</g2>
+2,s2/3/p4,body,translated,,,エネルギー消費量分析のためのエネルギー管理システム（EMS）,Energy Management System (EMS) for energy consumption analysis
+2,s2/notes/p0,note,translated,,,"ビル管理システムは2,000点以上のポイントからデータを収集し、5秒以内にオペレーターへ警報を送信します。","The Building Management System collects data from over 2,000 monitoring points and sends alarms to operators within 5 seconds."
+3,s3/2/p0,title,translated,,,センサーおよびフィールド機器,Sensors and field devices
+3,s3/3/p0,body,translated,,,在室センサー,Occupancy sensor
+3,s3/3/p1,body,translated,,,"CO2センサー（0～2,000 ppm）","CO2 sensor (0–2,000 ppm)"
+3,s3/3/p2,body,translated,,,温度センサー：精度±0.2 °C,Temperature sensor: Accuracy ±0.2 °C
+3,s3/3/p3,body,translated,,,湿度：30～70 %RH,Humidity: 30–70 %RH
+3,s3/3/p4,body,translated,,,型式 <g1>FX-PCG2611-0</g1> コントローラー、ファームウェア v3.2.1,"Model <g1>FX-PCG2611-0</g1> controller, firmware v3.2.1"
+4,s4/2/p0,title,translated,,,システム構成,System Configuration
+4,s4/3/4/p0,body,translated,,,エッジデバイス,Edge device
+4,s4/3/5/p0,body,translated,,,ゲートウェイ,Gateway
+4,s4/3/6/p0,body,translated,,,クラウドプラットフォーム,Cloud platform
+4,s4/3/7/p0,body,translated,,,ダッシュボード,Dashboard
+4,s4/8/p0,body,translated,,,フィールドコントローラーはBACnet/IPおよびModbus TCPで通信し、ゲートウェイはMQTT over TLS（ポート8883）でクラウドプラットフォームへテレメトリを送信します。,"The field controller communicates using BACnet/IP and Modbus TCP, while the gateway sends telemetry to the cloud platform via MQTT over TLS (port 8883)."
+5,s5/2/p0,title,translated,,,プロトコル比較,Protocol Comparison
+5,s5/3/t0.0/p0,table_cell,translated,,,プロトコル,Protocol
+5,s5/3/t0.1/p0,table_cell,translated,,,トランスポート,Transport
+5,s5/3/t0.2/p0,table_cell,translated,,,主な用途,Primary Uses
+5,s5/3/t0.3/p0,table_cell,translated,,,デフォルトポート,Default Port
+5,s5/3/t1.0/p0,table_cell,kept,,,BACnet/IP,BACnet/IP
+5,s5/3/t1.1/p0,table_cell,kept,,,UDP,UDP
+5,s5/3/t1.2/p0,table_cell,translated,,,空調コントローラー,Air conditioning controller
+5,s5/3/t1.3/p0,table_cell,kept,,,47808,47808
+5,s5/3/t2.0/p0,table_cell,kept,,,Modbus TCP,Modbus TCP
+5,s5/3/t2.1/p0,table_cell,kept,,,TCP,TCP
+5,s5/3/t2.2/p0,table_cell,translated,,,電力量計、冷凍機,"Power meter, chiller"
+5,s5/3/t2.3/p0,table_cell,kept,,,502,502
+5,s5/3/t3.0/p0,table_cell,kept,,,MQTT,MQTT
+5,s5/3/t3.1/p0,table_cell,kept,,,TCP,TCP
+5,s5/3/t3.2/p0,table_cell,translated,,,クラウドへのIoTテレメトリ,IoT telemetry to the cloud
+5,s5/3/t3.3/p0,table_cell,kept,,,1883 / 8883,1883 / 8883
+5,s5/3/t4.0/p0,table_cell,kept,,,KNX,KNX
+5,s5/3/t4.1/p0,table_cell,translated,,,ツイストペア / IP,Twisted Pair / IP
+5,s5/3/t4.2/p0,table_cell,translated,,,照明およびブラインド,Lighting and blinds
+5,s5/3/t4.3/p0,table_cell,kept,,,3671,3671
+6,s6/2/p0,title,translated,,,省エネルギーとデマンドレスポンス,Energy conservation and demand response
+6,s6/3/p0,body,translated,,,2025年夏にピーク需要を18%削減,Reduce peak demand by 18% by the summer of 2025
+6,s6/3/p1,body,translated,,,"エネルギー消費量：1,250 MWh/年 → 1,020 MWh/年","Energy consumption: 1,250 MWh/year → 1,020 MWh/year"
+6,s6/3/p2,body,translated,,,<g1>デマンドレスポンス</g1>信号は<g2>OpenADR 2.0b</g2>経由で電力会社から受信,<g1>Demand response</g1> signals are received from power companies via <g2>OpenADR 2.0b</g2>.
+6,s6/3/p3,body,translated,,,設定値調整：ピーク時間帯は冷房設定値を24 °Cから26 °Cに変更,Setpoint adjustment: Changing the air conditioning setpoint from 24 °C to 26 °C during peak hours
+6,s6/3/p4,body,translated,,,消費電力は15分ごとに計測,Power consumption is measured every 15 minutes.
+6,s6/notes/p0,note,translated,,,省エネルギー制御は、在室率が30%未満かつ外気温度が32 °Cを超える場合にのみ有効になります。,The energy conservation control is activated only when the occupancy rate is below 30% and the outdoor air temperature exceeds 32 °C.
+7,s7/2/p0,title,translated,,,ネットワークとアクセス,Network and Access
+7,s7/3/p0,body,translated,,,BMSサーバー：192.168.1.100（VLAN 20）,BMS server: 192.168.1.100 (VLAN 20)
+7,s7/3/p1,body,translated,,,Webダッシュボード：https://bms.example.com/dashboard,Web dashboard: https://bms.example.com/dashboard
+7,s7/3/p2,body,translated,,,サポート：support@example.com,Support: support@example.com
+7,s7/3/p3,body,translated,,,設定ファイル：C:\Program Files\BMS\config\points.json,Configuration file: C:\Program Files\BMS\config\points.json
+7,s7/3/p4,body,translated,,,HTTPS経由のREST API。ペイロードはJSON、旧形式のエクスポートはXMLおよびSQL,"REST API over HTTPS. The payload is JSON, while legacy exports use XML and SQL."
+8,s8/2/p0,title,translated,,,運用・保守,Operation & Maintenance
+8,s8/3/p0,body,translated,,,冷凍機の警報が発生すると、システムは保守チームに自動的にメールで通知して作業指示を作成し、30分以内に警報が確認されない場合は施設管理者にエスカレーションします。,"When an alarm is triggered on a chiller, the system automatically sends an email notification to the maintenance team to create a work order. If the alarm is not resolved within 30 minutes, it is escalated to the facility manager."
+8,s8/3/p1,body,translated,,,空調機フィルターの定期保守は3か月ごとに実施します。,Regular maintenance for air handling unit filters is carried out every 3 months.
+8,s8/3/p2,body,translated,,,移行期間中もPLCおよびSCADAシステムは稼働を継続します。,The PLC and SCADA systems will continue to operate throughout the transition period.

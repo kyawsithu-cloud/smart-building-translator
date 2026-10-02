@@ -6,14 +6,13 @@ import time
 from dataclasses import dataclass
 from pathlib import Path
 
+from sbt import formats
 from sbt.app import reports
 from sbt.engines.base import EngineStats, TranslationEngine
 from sbt.engines.llama_server import LlamaServer, model_path
 from sbt.engines.llamacpp import LlamaCppEngine
 from sbt.engines.profiles import PROFILES, ModelProfile
-from sbt.parsers.pptx_parser import PptxParser
 from sbt.pipeline.translator import PipelineOptions, PipelineResult, TranslationPipeline
-from sbt.renderers.pptx_renderer import PptxRenderer
 from sbt.settings import Settings
 from sbt.storage import db
 from sbt.storage.glossary_repo import GlossaryRepo
@@ -35,6 +34,7 @@ class JobSpec:
     protect: str = "verify"
     doc_terms: str = "vote"
     min_font_scale: float = 0.8
+    ocr: bool = True                  # scanned PDF pages, text inside pictures
 
 
 class TranslationJob:
@@ -44,7 +44,7 @@ class TranslationJob:
         self.spec = spec
         self.profile = _profile(spec.model, spec.source_lang, spec.target_lang)
         t0 = time.perf_counter()
-        self.doc = PptxParser().parse(spec.input)
+        self.doc = formats.parser_for(spec.input, spec.source_lang, spec.ocr).parse(spec.input)
         self.active = time.perf_counter() - t0      # seconds spent on this document (excludes model loading)
         self.glossary = glossary
         self.memory = memory
@@ -53,8 +53,8 @@ class TranslationJob:
         self.repair_note = ""
         self.pipeline: TranslationPipeline | None = None
         self.result: PipelineResult | None = None
-        log.info("Job started: type=pptx slides=%d segments=%d model=%s %s->%s", self.doc.container_count,
-                 len(self.doc.segments), spec.model, spec.source_lang, spec.target_lang)
+        log.info("Job started: type=%s pages=%d segments=%d model=%s %s->%s", self.doc.file_type,
+                 self.doc.container_count, len(self.doc.segments), spec.model, spec.source_lang, spec.target_lang)
 
     def translate(self, engine: TranslationEngine) -> None:
         t0 = time.perf_counter()
@@ -82,11 +82,13 @@ class TranslationJob:
     def finish(self) -> dict[str, object]:
         assert self.result is not None
         t0 = time.perf_counter()
-        renderer = PptxRenderer(self.spec.source_lang, self.spec.target_lang, self.spec.min_font_scale)
+        renderer = formats.renderer_for(self.spec.input, self.spec.source_lang, self.spec.target_lang,
+                                        self.spec.min_font_scale)
         render_issues = renderer.render(self.doc, self.spec.output)
         self.active += time.perf_counter() - t0
         meta: dict[str, object] = {
             "file": self.spec.input.name, "output": self.spec.output.name, "mode": "offline",
+            "file_type": self.doc.file_type,
             "model": self.profile.id, "model_file": self.profile.file, "licence": self.profile.licence,
             "repair_model": self.spec.repair_model or None, "repaired": self.repaired,
             "repair_note": self.repair_note or None,

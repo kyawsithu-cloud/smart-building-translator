@@ -1,0 +1,44 @@
+{
+  "file": "rich_en.pptx",
+  "output": "rich_en_en-ja_vote.pptx",
+  "mode": "offline",
+  "file_type": "pptx",
+  "model": "hy-mt2-7b",
+  "model_file": "HY-MT2-7B-Q6_K.gguf",
+  "licence": "Apache-2.0",
+  "repair_model": "qwen3-8b",
+  "repaired": 0,
+  "repair_note": null,
+  "source_lang": "en",
+  "target_lang": "ja",
+  "protect": "verify",
+  "doc_terms_mode": "vote",
+  "memory": false,
+  "seconds": 5.1,
+  "llm_calls": 16,
+  "completion_tokens": 107,
+  "tokens_per_second": 28.2,
+  "slides": 2,
+  "segments": 15,
+  "translated_segments": 15,
+  "status_counts": {
+    "translated": 15
+  },
+  "translated_pct": 100.0,
+  "protected_token_integrity_pct": null,
+  "glossary_adherence_pct": 100.0,
+  "doc_terms": 1,
+  "doc_terms_unresolved": 0,
+  "harmonised": 0,
+  "repair_tried": 0,
+  "doc_term_consistency_pct": 100.0,
+  "tag_integrity_pct": null,
+  "untranslatable": [
+    "slide 2: picture contains text (not translated)"
+  ],
+  "notices": [
+    "slide 1: chart labels translated; the chart's data sheet (Edit Data) keeps the original labels"
+  ],
+  "ocr_segments": 0,
+  "issues": []
+}

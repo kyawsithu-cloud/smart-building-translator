@@ -56,6 +56,7 @@ class PipelineResult:
     doc_term_checks: int = 0
     doc_term_hits: int = 0
     harmonised: int = 0
+    repair_tried: int = 0
     term_sheet: TermSheet | None = None
 
 
@@ -88,16 +89,29 @@ class TranslationPipeline:
         self._work: dict[str, _Work] = {}
 
     # --- context ----------------------------------------------------------------------------------------
-    def _context(self, segs: list[Segment], for_notes: bool) -> list[str]:
-        """Slide title for slide text; title + slide body for speaker notes.
+    def _context(self, segs: list[Segment], seg: Segment) -> list[str]:
+        """Read-only context for one paragraph:
+          heading      none (only earlier lines, passed separately as `previous`)
+          other text   the nearest heading above it on the slide/page
+          notes        all headings + body text of the slide
 
-        The text being translated must NOT appear in its own context: in testing, Hy-MT2 then abbreviated
-        "Air Handling Unit (AHU)" to "AHU". Earlier lines of the slide are passed separately as `previous`.
-        """
-        title = [f"Slide title: {s.plain_source}" for s in segs if s.kind == SegmentKind.TITLE]
-        others = [s.plain_source for s in segs if s.kind != SegmentKind.TITLE and s.kind != SegmentKind.NOTE]
+        The text being translated must NOT appear in its own context (Hy-MT2 then abbreviated "Air Handling
+        Unit (AHU)" to "AHU"), and other headings must not either (a PDF page has several; Hy-MT2 then added
+        the next heading to its translation)."""
+        if seg.kind == SegmentKind.TITLE:
+            return []
+        if seg.kind != SegmentKind.NOTE:
+            heading = None
+            for s in segs:
+                if s is seg:
+                    break
+                if s.kind == SegmentKind.TITLE:
+                    heading = s
+            return [f"Heading: {heading.plain_source}"] if heading else []
+        texts = [f"Heading: {s.plain_source}" for s in segs if s.kind == SegmentKind.TITLE]
+        texts += [s.plain_source for s in segs if s.kind not in (SegmentKind.TITLE, SegmentKind.NOTE)]
         ctx, size = [], 0
-        for text in title + (others if for_notes else []):
+        for text in texts:
             if size + len(text) > self.opt.context_chars:
                 break
             ctx.append(text)
@@ -152,11 +166,19 @@ class TranslationPipeline:
                              protected, mapping))
 
             previous: list[tuple[str, str]] = []      # this slide's finished lines, for consistency
-            for note in (False, True):
-                part = [w for w in work if (w[0].kind == SegmentKind.NOTE) == note]
-                ctx = self._context(segs, note)
-                for i in range(0, len(part), BATCH):
-                    self._translate_batch(part[i:i + BATCH], ctx, previous, result)
+            ordered = [w for w in work if w[0].kind != SegmentKind.NOTE] + \
+                      [w for w in work if w[0].kind == SegmentKind.NOTE]
+            batch: list = []
+            batch_ctx: list[str] | None = None
+            for w in ordered:                          # consecutive paragraphs with the same context share a batch
+                ctx = self._context(segs, w[0])
+                if batch and (ctx != batch_ctx or len(batch) >= BATCH):
+                    self._translate_batch(batch, batch_ctx or [], previous, result)
+                    batch = []
+                batch.append(w)
+                batch_ctx = ctx
+            if batch:
+                self._translate_batch(batch, batch_ctx or [], previous, result)
             done += len(segs)
             if progress:
                 progress(done, len(model.segments))
@@ -283,6 +305,7 @@ class TranslationPipeline:
     def repair(self, model: DocumentModel, engine: TranslationEngine, result: PipelineResult) -> int:
         """Re-translate still-flagged segments with a second engine; keep whichever result scores better."""
         ids = self.flagged(result)
+        result.repair_tried = len(ids)
         improved = 0
         src, tgt = self.opt.source_lang, self.opt.target_lang
         for sid in ids:

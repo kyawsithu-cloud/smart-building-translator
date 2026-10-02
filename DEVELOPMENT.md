@@ -12,8 +12,10 @@ src/sbt/
   cli/          python -m sbt <command>: translate, glossary, history, doctor (thin; no logic)
   app/          jobs.py (one document end to end), reports.py (report/review/terms files)
   domain/       dataclasses shared by all layers
-  parsers/      PPTX traversal + parser (pdf/ocr in Phase 3)
-  renderers/    PPTX writer + text fitting
+  formats.py    which parser/renderer handles which file type
+  parsers/      PPTX traversal (incl. charts, SmartArt, pictures) + parser; PDF parser (text, tables, scans)
+  renderers/    PPTX writer + text fitting; PDF writer (redact + re-layout); fonts per language
+  ocr/          offline OCR wrapper (RapidOCR), paragraph grouping, Japanese OCR clean-up
   pipeline/     translator.py (passes, retries, harmonise, repair), validate.py, tags.py
   terminology/  glossary.py (matching, context, priority), term_sheet.py (recurring document terms)
   protection/   identifiers that must survive, tidy-up, parenthesis repair
@@ -24,7 +26,7 @@ src/sbt/
   settings.py   config/default.toml + %LOCALAPPDATA%\SmartBuildingTranslator\settings.toml
   langdetect.py offline language detection
   languages.py  language registry (add a language here)
-scripts/        model download, test decks, evaluation, slide rendering
+scripts/        model download, test decks/PDFs, evaluation (translation, consistency, OCR), rendering
 eval/           public test decks and results (never put real documents here)
 tests/unit/     fast tests; pipeline tests use a fake engine
 ```

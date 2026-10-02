@@ -6,13 +6,17 @@ requires-python = ">=3.12"
 dependencies = [
     "python-pptx>=1.0",
     "lxml>=5.0",
-    "httpx>=0.27",      # talks to llama-server / Ollama on 127.0.0.1 only
+    "httpx>=0.27",      # talks to llama-server on 127.0.0.1 only
     "rapidfuzz>=3.0",
+    "pillow>=10",
+    "numpy>=1.26",
+    "pymupdf>=1.26",    # PDF read/write — AGPL-3.0 (see README, Licence)
+    "rapidocr>=3.4",    # offline OCR; bundles the multilingual PP-OCRv6 models
+    "onnxruntime>=1.18",
 ]
 
 [project.optional-dependencies]
-pdf = ["pymupdf>=1.24", "rapidocr-onnxruntime>=1.3"]
-dev = ["pytest>=8", "ruff>=0.6", "mypy>=1.11", "sacrebleu>=2.4"]
+dev = ["pytest>=8", "ruff>=0.6", "mypy>=1.11"]
 
 [build-system]
 requires = ["setuptools>=69"]

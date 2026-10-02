@@ -31,7 +31,7 @@ _FONT_FILES = {
     "my": ["mmrtext.ttf"],
     "*": ["calibri.ttf", "arial.ttf"],
 }
-_TOKEN = re.compile(r"[A-Za-z0-9\u00C0-\u024F\-./:@_%°±+#()]+\s*|\s+|.", re.S)
+_TOKEN = re.compile(r"[A-Za-z0-9\u00C0-\u024F\-./:@_%\u00b0\u00b1+#()]+\s*|\s+|.", re.S)
 
 
 @dataclass

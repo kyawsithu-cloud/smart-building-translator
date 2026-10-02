@@ -1,15 +1,28 @@
 # Smart Building Translator
 
-Private, offline-first translation of technical documents (PPTX, later PDF) between English and Japanese
+Private, offline-first translation of technical documents (PowerPoint and PDF, including scanned PDFs) between
+English and Japanese
 (plus Chinese, Korean, Burmese, Thai, German, French, Spanish), with terminology control and formatting
 preservation. Domain: smart buildings, BMS/BAS, HVAC, energy, IoT.
 
-**Status: Phase 2 — translation engine (command line).** Results: [Phase 1](eval/results/PHASE1_RESULTS.md),
-[Phase 2](eval/results/PHASE2_RESULTS.md). Design: [ARCHITECTURE.md](ARCHITECTURE.md).
+**Status: Phase 3 — document processing (command line).** Results: [Phase 1](eval/results/PHASE1_RESULTS.md),
+[Phase 2](eval/results/PHASE2_RESULTS.md), [Phase 3](eval/results/PHASE3_RESULTS.md).
+Design: [ARCHITECTURE.md](ARCHITECTURE.md).
 
-## Translate a deck
-**Easiest:** drag a `.pptx` file onto `translate.bat`. The language is detected automatically:
-English decks become Japanese, Japanese decks become English, other languages become English.
+## Translate a document
+**Easiest:** drag a `.pptx` or `.pdf` file onto `translate.bat`. The language is detected automatically:
+English documents become Japanese, Japanese documents become English, other languages become English.
+
+What is translated:
+
+| | PowerPoint (.pptx) | PDF |
+|---|---|---|
+| Text boxes, titles, bullets, tables | yes, formatting kept | yes: text replaced in place, fonts/colours/bold kept |
+| Speaker notes | yes | – |
+| Charts | titles, axis titles, series names, category labels | as page text |
+| SmartArt | yes (diagram text and its displayed copy) | as page text |
+| Scanned pages | – | yes, read by OCR (offline); check the review sheet |
+| Text inside pictures | detected and reported, not translated | detected and reported, not translated |
 
 **From a terminal** (in this folder):
 ```
@@ -17,6 +30,7 @@ English decks become Japanese, Japanese decks become English, other languages be
 .venv\Scripts\python -m sbt translate "C:\path\deck.pptx" --src en --tgt zh   # choose languages
 .venv\Scripts\python -m sbt translate "C:\path\deck.pptx" --cpu              # GPU busy (e.g. a game)
 .venv\Scripts\python -m sbt translate "C:\path\deck.pptx" --no-memory        # don't store this document
+.venv\Scripts\python -m sbt translate "C:\path\spec.pdf" --no-ocr            # skip scanned pages / picture text
 ```
 Results are written **next to the original**, which is never modified:
 
@@ -114,9 +128,19 @@ py -3.13 scripts/download_phase1.py                 # runtime + models, hash-ver
 - Local models are below frontier cloud translation quality on long, complex sentences, and they make
   domain-term mistakes (e.g. condenser water → 凝縮水) until the glossary covers those terms. Review before
   external use.
-- `.pptx` only; PDF and OCR are Phase 3. Text inside images is reported, not translated.
-- Command line only; the desktop UI is Phase 4.
+- PDF output keeps the layout but is not pixel-identical: text that needs more room is placed in the free space
+  to its right/below or shrunk (reported). Very dense layouts, rotated text and text in vector drawings are
+  harder; rotated text is kept as-is and reported.
+- Scanned PDFs: OCR reads English/Japanese/Chinese/Latin languages (Korean and Thai need the optional models in
+  MODEL_SETUP.md; there is no Burmese OCR). OCR'd text loses bold, and colour only where the scan is in colour.
+- Text inside pictures is detected and reported, not translated. A chart's data sheet (Edit Data) keeps the
+  original labels.
+- `.ppt`, Word and Excel files are not supported (save as .pptx/.pdf). Command line only; the UI is Phase 4.
 
 ## Licence
 MIT for this project's code (see `LICENSE`). Models are downloaded separately under their own
-licences: Hy-MT2 and Qwen3 are Apache-2.0, llama.cpp is MIT.
+licences: Hy-MT2 and Qwen3 are Apache-2.0, llama.cpp is MIT, RapidOCR and its PaddleOCR models are Apache-2.0.
+
+**PDF support uses PyMuPDF, which is AGPL-3.0.** For private or open-source use this changes nothing. If you ever
+distribute a packaged build (e.g. an `.exe`) to others, the AGPL applies to that build: its complete source must
+be available (it already is, on GitHub) — or a commercial PyMuPDF licence is needed for closed distribution.

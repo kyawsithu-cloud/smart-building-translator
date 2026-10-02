@@ -30,9 +30,9 @@ our your their his her we you they i up out about between during after before wh
 _EN_EDGE_STOP = _EN_STOP | {"and", "of", "for", "with"}
 _CHUNK_SPLIT = re.compile(r"[,.;:!?()\[\]{}\"“”'’/|•→–—]|\s-\s|\n")
 _EN_WORD = re.compile(r"^[A-Za-z][A-Za-z\-]*$")
-_JA_RUN = re.compile(r"[ァ-ヴーｦ-ﾟ一-龯々]+")
-_KATAKANA_ONLY = re.compile(r"^[ァ-ヴーｦ-ﾟ]+$")
-_SCRIPT_CHUNK = re.compile(r"[ァ-ヴーｦ-ﾟ]+|[一-龯々]+")
+_JA_RUN = re.compile(r"[\u30a1-\u30f4\u30fc\uff66-\uff9f\u4e00-\u9faf\u3005]+")
+_KATAKANA_ONLY = re.compile(r"^[\u30a1-\u30f4\u30fc\uff66-\uff9f]+$")
+_SCRIPT_CHUNK = re.compile(r"[\u30a1-\u30f4\u30fc\uff66-\uff9f]+|[\u4e00-\u9faf\u3005]+")
 _LATIN = ("en", "de", "fr", "es")
 
 

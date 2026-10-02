@@ -243,3 +243,14 @@ def test_term_matching_ignores_optional_spaces_in_non_latin_scripts() -> None:
     assert term_sheet.contains("အဆောက်အအုံ အလိုအလျောက်ထိန်းချုပ်စနစ်ကို", "အဆောက်အအုံအလိုအလျောက် ထိန်းချုပ်စနစ်", "my")
     assert term_sheet.contains("The Trend Log shows", "trend log", "en")
     assert not term_sheet.contains("トレンド記録", "トレンドログ", "ja")
+
+
+def test_identifier_boundaries_in_japanese_text() -> None:
+    from sbt.protection import tokens as tok
+    assert tok.protected_tokens("クラウド(https://bms.example.com/trends)に13か月間", []) == \
+        ["https://bms.example.com/trends"]
+    assert "https://en.wikipedia.org/wiki/BACnet_(protocol)" in tok.protected_tokens(
+        "see https://en.wikipedia.org/wiki/BACnet_(protocol).", [])
+    assert r"C:\Program Files\BMS\config\points.json" in tok.protected_tokens(
+        r"設定ファイル：C:\Program Files\BMS\config\points.json", [])
+    assert "mqtt.example.com:8883" in tok.protected_tokens("MQTT broker mqtt.example.com:8883", [])

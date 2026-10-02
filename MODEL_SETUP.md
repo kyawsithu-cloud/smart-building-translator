@@ -24,6 +24,16 @@ also scanned with Windows Defender after extraction. GGUF model files are pure w
 
 CAT-Translate-7B was tested in Phase 1 and removed: it altered identifiers such as HVAC and URLs.
 
+## OCR (scanned PDFs, text in pictures)
+Runs on the CPU with ONNX Runtime; about 1–3 s per page. Fully offline.
+- **English, Japanese, Chinese and Latin-script languages**: the multilingual PP-OCRv6 models ship inside the
+  `rapidocr` Python package — nothing to download.
+- **Korean, Thai** (optional, 13 MB + 8 MB): `.venv\Scripts\python.exe scripts\download_phase1.py --only ocr-ko ocr-th`
+  (RapidOCR's official model host, checked against the SHA-256 published in the rapidocr package).
+- **Burmese**: no OCR model exists in this family; scanned Burmese pages are reported as not translatable.
+
+Measured accuracy on the public scanned test PDFs: see eval/results/PHASE3_RESULTS.md.
+
 ## Hardware notes
 - RTX 4060 8 GB: each model runs fully on the GPU when about 7 GB is free (Hy-MT2 uses a 4k context, which is
   enough because it translates one paragraph at a time). If a game or other app is using GPU memory, the app

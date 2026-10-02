@@ -10,12 +10,12 @@ from collections import Counter
 from dataclasses import dataclass
 
 _SCRIPTS = {
-    "kana": re.compile(r"[぀-ヿ]"),
-    "han": re.compile(r"[一-鿿]"),
-    "hangul": re.compile(r"[가-힯]"),
-    "thai": re.compile(r"[฀-๿]"),
-    "myanmar": re.compile(r"[က-႟]"),
-    "latin": re.compile(r"[A-Za-zÀ-ÿ]"),
+    "kana": re.compile(r"[\u3040-\u30ff]"),
+    "han": re.compile(r"[\u4e00-\u9fff]"),
+    "hangul": re.compile(r"[\uac00-\ud7af]"),
+    "thai": re.compile(r"[\u0e00-\u0e7f]"),
+    "myanmar": re.compile(r"[\u1000-\u109f]"),
+    "latin": re.compile(r"[A-Za-z\u00c0-\u00ff]"),
 }
 _FUNCTION_WORDS = {
     "en": "the and of to in is for with on are by this that from be as or at an it which".split(),
@@ -23,7 +23,7 @@ _FUNCTION_WORDS = {
     "fr": "le la les et des est pour avec une dans du en sur au par sont ce qui pas aux".split(),
     "es": "el la los las y es para con una en del que por se al son como su más".split(),
 }
-_WORD = re.compile(r"[a-zà-ÿäöüß]+")
+_WORD = re.compile(r"[a-z\u00e0-\u00ff\u00e4\u00f6\u00fc\u00df]+")
 
 
 @dataclass(frozen=True)

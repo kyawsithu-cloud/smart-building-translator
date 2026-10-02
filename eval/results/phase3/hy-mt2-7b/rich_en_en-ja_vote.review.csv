@@ -1,0 +1,16 @@
+﻿page/slide,segment,kind,status,problems,ocr_confidence,source,translation
+1,s1/2/p0,title,translated,,,Energy Consumption by System,システム別エネルギー消費量
+1,s1/3/chart/title/p0,chart,translated,,,Energy Consumption by System,システム別エネルギー消費量
+1,s1/3/chart/category_axis/p0,chart,translated,,,System,システム
+1,s1/3/chart/value_axis/p0,chart,translated,,,MWh per year,年間MWh
+1,s1/3/chart/v0,chart,translated,,,Energy consumption (MWh),エネルギー消費量（MWh）
+1,s1/3/chart/v1,chart,translated,,,Chiller,冷凍機
+1,s1/3/chart/v2,chart,translated,,,Air handling units,空調機
+1,s1/3/chart/v3,chart,translated,,,Lighting,照明
+1,s1/3/chart/v4,chart,translated,,,Other loads,その他の負荷
+1,s1/3/chart/v5,chart,translated,,,Target (MWh),目標値（年間MWh）
+1,s1/3/chart/v6,chart,translated,,,Chiller,冷凍機
+1,s1/3/chart/v7,chart,translated,,,Air handling units,空調機
+1,s1/3/chart/v8,chart,translated,,,Lighting,照明
+1,s1/3/chart/v9,chart,translated,,,Other loads,その他の負荷
+2,s2/2/p0,title,translated,,,Commissioning Photos,撮影写真

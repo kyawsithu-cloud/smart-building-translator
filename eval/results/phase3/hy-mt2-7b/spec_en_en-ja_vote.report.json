@@ -1,0 +1,55 @@
+{
+  "file": "spec_en.pdf",
+  "output": "spec_en_en-ja_vote.pdf",
+  "mode": "offline",
+  "file_type": "pdf",
+  "model": "hy-mt2-7b",
+  "model_file": "HY-MT2-7B-Q6_K.gguf",
+  "licence": "Apache-2.0",
+  "repair_model": "qwen3-8b",
+  "repaired": 0,
+  "repair_note": null,
+  "source_lang": "en",
+  "target_lang": "ja",
+  "protect": "verify",
+  "doc_terms_mode": "vote",
+  "memory": false,
+  "seconds": 26.0,
+  "llm_calls": 26,
+  "completion_tokens": 689,
+  "tokens_per_second": 32.5,
+  "slides": 2,
+  "segments": 29,
+  "translated_segments": 29,
+  "status_counts": {
+    "kept": 5,
+    "retried": 2,
+    "translated": 22
+  },
+  "translated_pct": 100.0,
+  "protected_token_integrity_pct": 100.0,
+  "glossary_adherence_pct": 100.0,
+  "doc_terms": 0,
+  "doc_terms_unresolved": 0,
+  "harmonised": 0,
+  "repair_tried": 0,
+  "doc_term_consistency_pct": null,
+  "tag_integrity_pct": 100.0,
+  "untranslatable": [],
+  "notices": [],
+  "ocr_segments": 0,
+  "issues": [
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "p1/t0/c2",
+      "message": "page 1: font reduced to 86% to fit"
+    },
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "p1/t0/c3",
+      "message": "page 1: font reduced to 89% to fit"
+    }
+  ]
+}

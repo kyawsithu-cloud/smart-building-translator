@@ -5,12 +5,13 @@ import copy
 from pathlib import Path
 
 from lxml import etree
-from pptx import Presentation
 
 from sbt import languages
 from sbt.domain.models import DocumentModel, Issue, Severity
-from sbt.parsers.pptx_walk import A, ParagraphRef, encode_paragraph, walk
-from sbt.pipeline.tags import split_spans
+from sbt.parsers.pptx_parser import open_presentation
+from sbt.parsers.pptx_walk import (A, ParagraphRef, SmartArtRef, TextNodeRef, encode_paragraph, flush_parts,
+                                   walk)
+from sbt.pipeline.tags import split_spans, strip_tags
 from sbt.renderers.text_fit import estimate_height, fit_text_frame
 
 
@@ -100,21 +101,32 @@ class PptxRenderer:
     def render(self, model: DocumentModel, output_path: Path) -> list[Issue]:
         if Path(output_path).resolve() == Path(model.source_path).resolve():
             raise ValueError("Refusing to overwrite the original document")
-        prs = Presentation(model.source_path)
+        prs = open_presentation(Path(model.source_path))
         by_id = {s.id: s for s in model.segments}
+        smartarts: list[SmartArtRef] = []
         ea_font = "" if theme_ea_font(prs) else DEFAULT_EA_FONT.get(self.lang.code, "")
         frames: dict[str, ParagraphRef] = {}
         baseline: dict[str, float] = {}    # source text height: never "fix" a box that already overflowed
         for item in walk(prs):
-            if isinstance(item, str):
+            if isinstance(item, SmartArtRef):
+                smartarts.append(item)
+                continue
+            if not isinstance(item, (ParagraphRef, TextNodeRef)):
                 continue
             seg = by_id.get(item.segment_id)
             if seg is None or seg.translation is None:
+                continue
+            if isinstance(item, TextNodeRef):
+                item.element.text = strip_tags(seg.translation)
                 continue
             if item.shape_key not in frames and item.shape is not None:
                 baseline[item.shape_key] = estimate_height(item.shape, self.source_lang)[0]
             replace_paragraph_text(item, seg.translation, self.lang.ooxml_lang, ea_font)
             frames.setdefault(item.shape_key, item)
+
+        for sa in smartarts:
+            self._sync_smartart_drawing(sa, model)
+        flush_parts(prs)
 
         issues: list[Issue] = []
         for key, ref in frames.items():
@@ -130,3 +142,16 @@ class PptxRenderer:
                                     f"slide {ref.slide_no}: font reduced to {int(result.scale * 100)}% to fit"))
         prs.save(str(output_path))
         return issues
+
+    def _sync_smartart_drawing(self, sa: SmartArtRef, model: DocumentModel) -> None:
+        """PowerPoint shows SmartArt from a cached drawing; give its paragraphs the same translations."""
+        if sa.drawing is None:
+            return
+        by_text = {s.plain_source.strip(): s.translation for s in model.segments
+                   if s.shape_key == sa.shape_key and s.translation}
+        for p in sa.drawing.iter(f"{A}p"):
+            plain = strip_tags(encode_paragraph(p).text).strip()
+            translation = by_text.get(plain)
+            if translation:
+                ref = ParagraphRef("", model.segments[0].kind, sa.slide_no, sa.shape_key, p, None, None)
+                replace_paragraph_text(ref, translation, self.lang.ooxml_lang)

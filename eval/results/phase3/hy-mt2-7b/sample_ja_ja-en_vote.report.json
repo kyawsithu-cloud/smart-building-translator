@@ -1,0 +1,61 @@
+{
+  "file": "sample_ja.pptx",
+  "output": "sample_ja_ja-en_vote.pptx",
+  "mode": "offline",
+  "file_type": "pptx",
+  "model": "hy-mt2-7b",
+  "model_file": "HY-MT2-7B-Q6_K.gguf",
+  "licence": "Apache-2.0",
+  "repair_model": "qwen3-8b",
+  "repaired": 0,
+  "repair_note": null,
+  "source_lang": "ja",
+  "target_lang": "en",
+  "protect": "verify",
+  "doc_terms_mode": "vote",
+  "memory": false,
+  "seconds": 20.8,
+  "llm_calls": 55,
+  "completion_tokens": 656,
+  "tokens_per_second": 31.7,
+  "slides": 8,
+  "segments": 59,
+  "translated_segments": 59,
+  "status_counts": {
+    "kept": 11,
+    "retried": 1,
+    "translated": 47
+  },
+  "translated_pct": 100.0,
+  "protected_token_integrity_pct": 100.0,
+  "glossary_adherence_pct": 100.0,
+  "doc_terms": 3,
+  "doc_terms_unresolved": 0,
+  "harmonised": 0,
+  "repair_tried": 0,
+  "doc_term_consistency_pct": 100.0,
+  "tag_integrity_pct": 100.0,
+  "untranslatable": [],
+  "notices": [],
+  "ocr_segments": 0,
+  "issues": [
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "s1/3",
+      "message": "slide 1: font reduced to 85% to fit"
+    },
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "s6/3",
+      "message": "slide 6: font reduced to 90% to fit"
+    },
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "s8/3",
+      "message": "slide 8: font reduced to 95% to fit"
+    }
+  ]
+}

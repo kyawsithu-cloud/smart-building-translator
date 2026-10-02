@@ -1,0 +1,2 @@
+Test files from Apache POI (https://github.com/apache/poi, test-data/slideshow), Apache License 2.0.
+Used unmodified as public test input for SmartArt and chart handling.

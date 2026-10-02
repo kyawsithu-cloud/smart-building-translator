@@ -25,17 +25,24 @@ from sbt.terminology.glossary import Glossary
 
 TESTSET = PROJECT_ROOT / "eval" / "testset"
 GLOSSARY = PROJECT_ROOT / "data" / "terminology" / "smart_building_en_ja.csv"
-DECKS = {"basic": ("sample_en.pptx", "sample_ja.pptx"),
-         "consistency": ("consistency_en.pptx", "consistency_ja.pptx")}
-COLUMNS = ["model", "deck", "direction", "doc_terms_mode", "translated_pct", "protected_token_integrity_pct",
+# name -> (file, source, target) runs; extra target languages (--extra) are added for English sources
+DECKS: dict[str, list[tuple[str, str, str]]] = {
+    "basic": [("sample_en.pptx", "en", "ja"), ("sample_ja.pptx", "ja", "en")],
+    "consistency": [("consistency_en.pptx", "en", "ja"), ("consistency_ja.pptx", "ja", "en")],
+    "rich": [("rich_en.pptx", "en", "ja"), ("rich_ja.pptx", "ja", "en")],
+    "pdf": [("spec_en.pdf", "en", "ja"), ("spec_ja.pdf", "ja", "en")],
+    "slides_pdf": [("slides_en.pdf", "en", "ja")],
+    "scanned": [("spec_en_scanned.pdf", "en", "ja"), ("spec_ja_scanned.pdf", "ja", "en")],
+}
+COLUMNS = ["model", "deck", "file", "direction", "doc_terms_mode", "translated_pct", "protected_token_integrity_pct",
            "glossary_adherence_pct", "doc_terms", "doc_term_consistency_pct", "tag_integrity_pct", "warnings",
-           "harmonised", "repaired", "seconds", "tokens_per_second"]
+           "harmonised", "repaired", "ocr_segments", "seconds", "tokens_per_second"]
 
 
 def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--models", nargs="*", default=list(PROFILES))
-    p.add_argument("--decks", nargs="*", default=list(DECKS))
+    p.add_argument("--decks", nargs="*", default=list(DECKS), choices=list(DECKS))
     p.add_argument("--doc-terms", nargs="*", default=["vote"], choices=["off", "vote", "hint", "enforce"])
     p.add_argument("--extra", nargs="*", default=[], help="extra target languages for EN source")
     p.add_argument("--repair", default="", help="repair model for flagged segments, e.g. qwen3-8b")
@@ -55,14 +62,15 @@ def main() -> None:
             continue
         runs = []
         for deck in args.decks:
-            en, ja = DECKS[deck]
-            runs += [(deck, "en", "ja", en), (deck, "ja", "en", ja)]
-            runs += [(deck, "en", t, en) for t in args.extra if t in profile.languages]
+            for file, src, tgt in DECKS[deck]:
+                runs.append((deck, src, tgt, file))
+                if src == "en":
+                    runs += [(deck, "en", t, file) for t in args.extra if t in profile.languages and t != tgt]
         jobs: list[tuple[str, TranslationJob]] = []
         with LlamaServer(profile) as server:
             for deck, src, tgt, file in runs:
                 for mode in args.doc_terms:
-                    out = out_root / model_id / f"{Path(file).stem}_{src}-{tgt}_{mode}.pptx"
+                    out = out_root / model_id / f"{Path(file).stem}_{src}-{tgt}_{mode}{Path(file).suffix}"
                     out.parent.mkdir(parents=True, exist_ok=True)
                     print(f"== {model_id} {deck} {src}->{tgt} doc_terms={mode}")
                     spec = JobSpec(TESTSET / file, out, src, tgt, model_id, args.repair or "", doc_terms=mode)

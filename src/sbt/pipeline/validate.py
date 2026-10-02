@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import re
+import unicodedata
 from dataclasses import dataclass
 
 from sbt import languages
@@ -11,18 +12,24 @@ from sbt.terminology.glossary import Hint
 
 # number_mismatch became retryable in Phase 2 after "210 MWh" turned into "2.1亿千瓦时" (×1000) in Chinese.
 RETRYABLE = {"empty", "tags", "placeholders", "token_missing", "term_missing", "untranslated", "foreign_script",
-             "number_mismatch"}
+             "number_mismatch", "added_text"}
 _SCRIPTS = {
-    "Korean": re.compile(r"[가-힯ᄀ-ᇿ]"),
-    "Japanese kana": re.compile(r"[぀-ヿ]"),
-    "Chinese/Japanese kanji": re.compile(r"[一-鿿]"),
-    "Thai": re.compile(r"[฀-๿]"),
-    "Burmese": re.compile(r"[က-႟]"),
-    "Cyrillic": re.compile(r"[Ѐ-ӿ]"),
-    "Arabic": re.compile(r"[؀-ۿ]"),
+    "Korean": re.compile(r"[\uac00-\ud7af\u1100-\u11ff]"),
+    "Japanese kana": re.compile(r"[\u3040-\u30ff]"),
+    "Chinese/Japanese kanji": re.compile(r"[\u2e80-\u2fdf\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]"),
+    "Thai": re.compile(r"[\u0e00-\u0e7f]"),
+    "Burmese": re.compile(r"[\u1000-\u109f]"),
+    "Cyrillic": re.compile(r"[\u0400-\u04ff]"),
+    "Arabic": re.compile(r"[\u0600-\u06ff]"),
 }
 _ALLOWED = {"ja": {"Japanese kana", "Chinese/Japanese kanji"}, "zh": {"Chinese/Japanese kanji"},
             "ko": {"Korean", "Chinese/Japanese kanji"}, "th": {"Thai"}, "my": {"Burmese"}}
+
+
+def _wide(text: str) -> bool:
+    """Any East-Asian wide character: in English/German/French/Spanish output it is always a leftover,
+    whatever code point the model used (Latin fonts cannot draw these; they show as boxes)."""
+    return any(unicodedata.east_asian_width(c) in ("W", "F") for c in text)
 
 
 def _foreign_scripts(source: str, output: str, tgt: str) -> list[str]:
@@ -56,6 +63,9 @@ def validate(source: str, output: str, tokens: list[str], hints: tuple[Hint, ...
             problems.append(Problem("placeholders", f"Keep the placeholder {ph} exactly once."))
 
     plain = strip_tags(output)
+    if output.count("\n") > source.count("\n"):
+        problems.append(Problem("added_text", "Translate only the given text, as one paragraph. Do not add other "
+                                              "lines or headings."))
     missing = [t for t in tokens if t not in plain]
     if missing:
         problems.append(Problem("token_missing", "Keep these unchanged: " + ", ".join(missing), len(missing)))
@@ -86,8 +96,8 @@ def validate(source: str, output: str, tokens: list[str], hints: tuple[Hint, ...
     latin_target = tgt in _LATIN
     if not latin_target and not tgt_lang.script.search(residue):          # e.g. en→ja with no Japanese
         problems.append(Problem("untranslated", f"The text was not translated into {tgt_lang.name}."))
-    elif latin_target and src not in _LATIN and src_lang.script.search(residue):   # e.g. ja→en leftovers
-        problems.append(Problem("untranslated", "Part of the text was left untranslated."))
+    elif latin_target and src not in _LATIN and (src_lang.script.search(residue) or _wide(residue)):
+        problems.append(Problem("untranslated", "Part of the text was left untranslated."))   # e.g. ja→en leftovers
     elif latin_target and src in _LATIN and plain.strip() == strip_tags(source).strip():
         problems.append(Problem("untranslated", f"The text was not translated into {tgt_lang.name}."))
 

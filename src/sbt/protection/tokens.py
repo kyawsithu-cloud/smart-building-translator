@@ -10,24 +10,34 @@ import re
 import unicodedata
 
 _OPAQUE = [
-    r"https?://[^\s<>\"'）」]+",
+    r"https?://[A-Za-z0-9\-._~:/?#\[\]@!$&'()*+,;=%]+",
     r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+",
     r"\b\d{1,3}(?:\.\d{1,3}){3}(?::\d+)?(?:/\d{1,2})?\b",
-    r"[A-Za-z]:\\(?:[^\\\s<>]+\\)*[^\\\s<>、。）]*",
+    r"[A-Za-z]:\\(?:[^\\<>\n\u3000-\u9fff\uff00-\uffef]+?\\)*[^\\\s<>\u3000-\u9fff\uff00-\uffef]*",  # Windows paths
     r"\b[A-Z]{1,6}-[A-Z0-9]*\d[A-Z0-9]*(?:-[A-Z0-9]+)*\b",       # part/model numbers: FX-PCG2611-0
     r"\bv\d+(?:\.\d+)+\b",                                        # versions
+    r"\b(?:[A-Za-z0-9-]+\.)+[A-Za-z]{2,}(?::\d+)?(?:/[^\s<>]*)?\b(?=[^.\w]|$)",  # host names: mqtt.example.com:8883
 ]
 _ACRONYM = r"(?<![A-Za-z0-9])[A-Z][A-Za-z0-9]*[A-Z0-9](?:/[A-Z]{2,})?(?![A-Za-z0-9])"   # BMS, CO2, BACnet, TCP/IP
 _NUMBER = re.compile(r"\d[\d,]*(?:\.\d+)?")
 
 OPAQUE_RE = re.compile("|".join(f"(?:{p})" for p in _OPAQUE))
 ACRONYM_RE = re.compile(_ACRONYM)
-_FULLWIDTH_ALNUM = re.compile(r"[Ａ-Ｚａ-ｚ０-９]")
+_FULLWIDTH_ALNUM = re.compile(r"[\uff21-\uff3a\uff41-\uff5a\uff10-\uff19]")
+
+
+def _trim(token: str) -> str:
+    """Sentence punctuation after a URL is not part of it; neither is an unbalanced closing bracket:
+    "(see https://x.example.com/a)." → https://x.example.com/a"""
+    token = token.rstrip(".,;:'")
+    while token.endswith(")") and token.count(")") > token.count("("):
+        token = token[:-1].rstrip(".,;:")
+    return token
 
 
 def protected_tokens(text: str, dnt_terms: list[str]) -> list[str]:
     """Tokens from `text` that must appear verbatim in the translation."""
-    found: list[str] = [m.group(0).rstrip(".,;:") for m in OPAQUE_RE.finditer(text)]
+    found: list[str] = [_trim(m.group(0)) for m in OPAQUE_RE.finditer(text)]
     for m in ACRONYM_RE.finditer(text):
         tok = m.group(0)
         if sum(c.isupper() for c in tok) >= 2 and not any(tok in f for f in found):
@@ -58,11 +68,20 @@ _LATIN_TARGETS = {"en", "de", "fr", "es"}
 _FW_PUNCT_TO_ASCII = str.maketrans({"（": "(", "）": ")", "～": "–", "〜": "–", "，": ", ", "；": "; "})
 
 
+_COMPAT = re.compile(r"[\uf900-\ufaff\u2f00-\u2fdf]")      # compatibility ideographs, Kangxi radicals
+_FULLWIDTH_FORMS = re.compile(r"[\uff01-\uff5e\u3000]")
+# a space between two Japanese/Chinese characters (incl. 、。「」（）) is never correct
+_CJK_GAP = re.compile(r"(?<=[\u3000-\u30ff\u4e00-\u9fff\uff00-\uffef])[ \t]+(?=[\u3000-\u30ff\u4e00-\u9fff\uff00-\uffef])")
+
+
 def tidy(source: str, output: str, tgt: str) -> str:
     """Deterministic clean-up after translation. Keeps the source document's own notation for units."""
-    out = output
+    # Models sometimes emit look-alike code points (年 as U+F98E): map them to the standard character.
+    out = _COMPAT.sub(lambda m: unicodedata.normalize("NFKC", m.group(0)), output)
     if tgt in ("ja", "zh", "ko"):
         out = normalize_fullwidth(out)
+    if tgt in ("ja", "zh"):
+        out = _CJK_GAP.sub("", out)
     if "％" in out and "％" not in source:
         out = out.replace("％", "%")
     if tgt in ("ja", "zh", "ko"):
@@ -70,7 +89,8 @@ def tidy(source: str, output: str, tgt: str) -> str:
     elif "℃" in out and "℃" not in source and "°C" in source:
         out = re.sub(r"\s?℃", " °C" if " °C" in source else "°C", out)
     if tgt in _LATIN_TARGETS:
-        out = out.translate(_FW_PUNCT_TO_ASCII).replace("：", ": ").replace("  ", " ")
+        out = out.translate(_FW_PUNCT_TO_ASCII).replace("：", ": ")
+        out = _FULLWIDTH_FORMS.sub(lambda m: unicodedata.normalize("NFKC", m.group(0)), out).replace("  ", " ")
         m = re.match(r"^((?:<g\d+>)?)([a-z])", out)
         if m and not re.match(r"^(?:<g\d+>)?[a-z]+[A-Z0-9]", out):   # don't touch identifiers like "iPhone"
             out = m.group(1) + m.group(2).upper() + out[m.end():]

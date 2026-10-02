@@ -9,6 +9,8 @@ Document → this computer → local model (llama-server on 127.0.0.1, started w
   If any code path tries to reach the internet, the job fails loudly instead of leaking.
 - The translation engine binds to 127.0.0.1 only and runs with `--offline` (it cannot download anything).
 - Only engines declaring `is_local = True` exist.
+- OCR (scanned PDFs, pictures) runs locally on the CPU with models stored inside the installed Python package or
+  `runtime\ocr`; it never downloads models at run time (that would be blocked by the network guard anyway).
 
 **ONLINE (not implemented)**
 ```

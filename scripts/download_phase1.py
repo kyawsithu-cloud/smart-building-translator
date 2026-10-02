@@ -46,6 +46,16 @@ ASSETS = [
           f"{HF}/tencent/Hy-MT2-7B-GGUF/resolve/ab8472660ac61fac25f1af43fac2599d52a8a775/HY-MT2-7B-Q6_K.gguf",
           "88ef0aba59952a4cfe4be36cb5baf797dbb370bc60e9dcbd7297036021e52831",
           ROOT / "models" / "HY-MT2-7B-Q6_K.gguf"),
+    # Optional OCR recognisers (Korean, Thai) — RapidOCR's official model host; SHA-256 as published in the
+    # rapidocr package (default_models.yaml). English/Japanese/Chinese/Latin OCR models ship inside rapidocr.
+    Asset("ocr-ko",
+          "https://www.modelscope.cn/models/RapidAI/RapidOCR/resolve/v3.9.2/onnx/PP-OCRv5/rec/korean_PP-OCRv5_rec_mobile.onnx",
+          "cd6e2ea50f6943ca7271eb8c56a877a5a90720b7047fe9c41a2e541a25773c9b",
+          ROOT / "ocr" / "korean_PP-OCRv5_rec_mobile.onnx"),
+    Asset("ocr-th",
+          "https://www.modelscope.cn/models/RapidAI/RapidOCR/resolve/v3.9.2/onnx/PP-OCRv5/rec/th_PP-OCRv5_rec_mobile.onnx",
+          "de541dd83161c241ff426f7ecfd602a0ba77d686cf3ab9a6c255ea82fd08006e",
+          ROOT / "ocr" / "th_PP-OCRv5_rec_mobile.onnx"),
     Asset("qwen3-8b",
           f"{HF}/Qwen/Qwen3-8B-GGUF/resolve/7c41481f57cb95916b40956ab2f0b139b296d974/Qwen3-8B-Q5_K_M.gguf",
           "068bae163faa96ad48032daf4e071a6a28fe67d8dcc95367609c2ff165e52738",

@@ -1,0 +1,92 @@
+{
+  "file": "slides_en.pdf",
+  "output": "slides_en_en-ja_vote.pdf",
+  "mode": "offline",
+  "file_type": "pdf",
+  "model": "hy-mt2-7b",
+  "model_file": "HY-MT2-7B-Q6_K.gguf",
+  "licence": "Apache-2.0",
+  "repair_model": "qwen3-8b",
+  "repaired": 1,
+  "repair_note": null,
+  "source_lang": "en",
+  "target_lang": "ja",
+  "protect": "verify",
+  "doc_terms_mode": "vote",
+  "memory": false,
+  "seconds": 44.2,
+  "llm_calls": 56,
+  "completion_tokens": 1180,
+  "tokens_per_second": 33.6,
+  "slides": 9,
+  "segments": 61,
+  "translated_segments": 61,
+  "status_counts": {
+    "kept": 11,
+    "repaired": 1,
+    "retried": 3,
+    "translated": 46
+  },
+  "translated_pct": 100.0,
+  "protected_token_integrity_pct": 100.0,
+  "glossary_adherence_pct": 100.0,
+  "doc_terms": 0,
+  "doc_terms_unresolved": 0,
+  "harmonised": 0,
+  "repair_tried": 1,
+  "doc_term_consistency_pct": null,
+  "tag_integrity_pct": 100.0,
+  "untranslatable": [],
+  "notices": [],
+  "ocr_segments": 0,
+  "issues": [
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "p3/r0",
+      "message": "page 3: font reduced to 86% to fit"
+    },
+    {
+      "code": "overflow",
+      "severity": "warning",
+      "segment": "p4/r0",
+      "message": "page 4: text shrunk to 73% to fit its box"
+    },
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "p4/r3",
+      "message": "page 4: font reduced to 85% to fit"
+    },
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "p4/r4",
+      "message": "page 4: font reduced to 97% to fit"
+    },
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "p4/r5",
+      "message": "page 4: font reduced to 94% to fit"
+    },
+    {
+      "code": "overflow",
+      "severity": "warning",
+      "segment": "p7/r0",
+      "message": "page 7: text shrunk to 74% to fit its box"
+    },
+    {
+      "code": "font_reduced",
+      "severity": "info",
+      "segment": "p7/r1",
+      "message": "page 7: font reduced to 93% to fit"
+    },
+    {
+      "code": "overflow",
+      "severity": "warning",
+      "segment": "p9/r0",
+      "message": "page 9: text shrunk to 77% to fit its box"
+    }
+  ]
+}

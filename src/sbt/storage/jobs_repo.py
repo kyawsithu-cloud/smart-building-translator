@@ -12,7 +12,7 @@ class JobRepo:
         self.conn.execute(
             "INSERT INTO translation_jobs(file_name, file_type, source_lang, target_lang, model, mode, segments, "
             "translated, warnings, seconds) VALUES (?,?,?,?,?,?,?,?,?,?)",
-            (report["file"], "pptx", report["source_lang"], report["target_lang"], report["model"],
+            (report["file"], report.get("file_type", "pptx"), report["source_lang"], report["target_lang"], report["model"],
              report["mode"], report["segments"], report["translated_segments"], len(report["issues"]),  # type: ignore[arg-type]
              report["seconds"]))
         self.conn.commit()

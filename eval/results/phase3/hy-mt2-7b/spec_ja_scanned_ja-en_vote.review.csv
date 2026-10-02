@@ -1,0 +1,30 @@
+﻿page/slide,segment,kind,status,problems,ocr_confidence,source,translation
+1,p1/ocr0,title,translated,,1.0,BMS統合仕様書,BMS Integration Specification Document
+1,p1/ocr1,image_text,translated,,0.992,スマートビルディングプラットフォームー改訂2.1、2026年3月15日,"Smart Building Platform – Revision 2.1, March 15, 2026"
+1,p1/ocr2,title,translated,,0.99,適用範囲,Scope of Application
+1,p1/ocr3,image_text,translated,,0.991,本書は、ビル管理システム（BMS）とクラウドプラットフォームとの統合について規定する。BMSは建物内の空調設備、照明および電力量計を監視・制御する。,"This document specifies the integration between a Building Management System (BMS) and a cloud platform. The BMS is responsible for monitoring and controlling the building’s HVAC systems, lighting, and power meters."
+1,p1/ocr4,title,translated,,1.0,システム構成,System Architecture
+1,p1/ocr5,image_text,translated,,0.955,空調機(AHU)コントローラー、型式 FX-PCG2611-0,"Air Handling Unit (AHU) Controller, Model FX-PCG2611-0"
+1,p1/ocr6,image_text,translated,,0.942,可変風量(VAV)ターミナルコントローラー,Variable Air Volume (VAV) Terminal Controller
+1,p1/ocr7,image_text,translated,,0.941,"在室センサーおよびCO2センサー(0~2,000 ppm)","Occupancy sensor and CO2 sensor (0~2,000 ppm)"
+1,p1/ocr8,image_text,translated,,0.962,エッジデバイスおよびゲートウエイ(BACnet/IP、Modbus TCP、MQTT),"Edge device and gateways (BACnet/IP, Modbus TCP, MQTT)"
+1,p1/ocr9,title,translated,,0.992,ネットワーク要件,Network Requirements
+1,p1/ocr10,image_text,translated,,0.688,値,Values
+1,p1/ocr11,image_text,translated,,0.97,項目,Item
+1,p1/ocr12,image_text,translated,,1.0,BMSサーバー,BMS server
+1,p1/ocr13,image_text,kept,,1.0,192.168.1.100,192.168.1.100
+1,p1/ocr14,image_text,translated,,0.984,BACnet/IPポート,BACnet/IP port
+1,p1/ocr15,image_text,kept,,1.0,47808,47808
+1,p1/ocr16,image_text,translated,,0.998,MQTTブローカー,MQTT broker
+1,p1/ocr17,image_text,kept,,1.0,mqtt.example.com:8883,mqtt.example.com:8883
+1,p1/ocr18,image_text,translated,,1.0,15分,15 minutes
+1,p1/ocr19,image_text,translated,,1.0,ポーリング間隔,Polling interval
+1,p1/ocr20,title,translated,,0.985,警報処理,Alarm handling
+1,p1/ocr21,image_text,translated,,0.984,冷凍機の警報が発生すると、システムは保守チームにメール(support@example.com）で通知し、作業指示を作成する。30分以内に警報が確認されない場合は、施設管理者にエスカレーションする。,"When an alarm is triggered for a chiller, the system notifies the maintenance team via email (support@example.com) and creates a work order. If the alarm is not confirmed within 30 minutes, it is escalated to the facility manager."
+1,p1/ocr22,image_text,translated,,0.995,注記：設定値の変更にはオペレーターの承認が必要である。,Note: Any change to the setpoint requires approval from the operator.
+1,p1/ocr23,image_text,kept,,0.997,1/2,1/2
+2,p2/ocr0,title,translated,,0.952,エネルギー管理,Energy management
+2,p2/ocr1,image_text,translated,,0.983,エネルギー管理システム（EMS)は15分ごとにエネルギー消費量を記録する。2025年夏には、デマンドレスポンスおよび冷房設定値の24°Cから26Cへの変更により、ピーク需要を18％削減した。,"The Energy Management System (EMS) records energy consumption every 15 minutes. By implementing demand response and adjusting the air conditioning setpoint from 24°C to 26°C, peak demand was reduced by 18% by the summer of 2025."
+2,p2/ocr2,title,translated,,0.913,データ保持,Data retention
+2,p2/ocr3,image_text,translated,,0.998,トレンドログのデータは、クラウドプラットフォーム(https://bms.example.com/trends)に13か月間保存される。,The data from trend logs is stored on the cloud platform (https://bms.example.com/trends) for 13 months.
+2,p2/ocr4,image_text,kept,,1.0,2/2,2/2

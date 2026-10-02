@@ -1,0 +1,62 @@
+﻿page/slide,segment,kind,status,problems,ocr_confidence,source,translation
+1,p1/r0,title,translated,,,Smart Building Platform Overview,スマートビルディングプラットフォーム概要
+1,p1/r1,body,translated,,,Building Management System (BMS) Integration Proposal — 15 March 2026,ビル管理システム（BMS）連携提案 — 2026年3月15日
+2,p2/r0,title,translated,,,Building Management System,ビル管理システム
+2,p2/r1,body,translated,,,The <g1>Building Management System</g1> monitors and controls HVAC equipment.,<g1>ビル管理システム</g1>は、HVAC機器の監視および制御を行います。
+2,p2/r2,body,retried,,,Air Handling Unit (AHU) and Fan Coil Unit (FCU) control,空調機(AHU)およびファンコイルユニット(FCU)の制御
+2,p2/r3,body,translated,,,Variable Air Volume (VAV) terminal control,可変風量（VAV）端子制御
+2,p2/r4,body,translated,,,<g1>Alarm</g1> and <g2>equipment status</g2> monitoring 24/7,24時間365日の<g1>警報</g1>および<g2>機器状態</g2>監視
+2,p2/r5,body,repaired,,,Energy Management System (EMS) for energy consumption analysis,エネルギー管理システム は エネルギー消費量 の分析に使用される（EMS） です。
+3,p3/r0,title,translated,,,Sensors and Field Devices,センサーとフィールド機器
+3,p3/r1,body,translated,,,Occupancy sensor,在室センサー
+3,p3/r2,body,translated,,,"CO2 sensor (0–2,000 ppm)","CO2センサー（0～2,000 ppm）"
+3,p3/r3,body,translated,,,Temperature sensor: ±0.2 °C accuracy,温度センサー：精度±0.2℃
+3,p3/r4,body,translated,,,Humidity: 30–70 %RH,湿度：30～70%RH
+3,p3/r5,body,retried,,,"Model <g1>FX-PCG2611-0</g1> controller, firmware v3.2.1",モデル<g1>FX-PCG2611-0</g1> コントローラー、ファームウェアv3.2.1
+4,p4/r0,title,translated,,,System Architecture,システムアーキテクチャ
+4,p4/r1,body,translated,,,Edge device,エッジデバイス
+4,p4/r2,body,translated,,,Gateway,ゲートウェイ
+4,p4/r3,body,translated,,,Cloud platform,クラウドプラットフォーム
+4,p4/r4,body,translated,,,Dashboard,ダッシュボード
+4,p4/r5,body,translated,,,Field controllers communicate over BACnet/IP and Modbus TCP; the gateway publishes telemetry to the cloud platform via MQTT over TLS (port 8883).,フィールドコントローラーはBACnet/IPおよびModbus TCPを介して通信を行い、ゲートウェイはTLS（ポート8883）を使用したMQTT経由で遠隔計測データをクラウドプラットフォームに送信します。
+5,p5/t0/c0,table_cell,translated,,,Protocol,プロトコル
+5,p5/t0/c1,table_cell,kept,,,BACnet/IP,BACnet/IP
+5,p5/t0/c2,table_cell,kept,,,Modbus TCP,Modbus TCP
+5,p5/t0/c3,table_cell,kept,,,MQTT,MQTT
+5,p5/t0/c4,table_cell,kept,,,KNX,KNX
+5,p5/t0/c5,table_cell,translated,,,Transport,転送
+5,p5/t0/c6,table_cell,kept,,,UDP,UDP
+5,p5/t0/c7,table_cell,kept,,,TCP,TCP
+5,p5/t0/c8,table_cell,kept,,,TCP,TCP
+5,p5/t0/c9,table_cell,translated,,,Twisted pair / IP,ツイストペア／IP
+5,p5/t0/c10,table_cell,translated,,,Typical use,代表的な利用例
+5,p5/t0/c11,table_cell,translated,,,HVAC controllers,HVACコントローラー
+5,p5/t0/c12,table_cell,translated,,,"Power meters, chillers",電力計、冷凍機
+5,p5/t0/c13,table_cell,translated,,,IoT telemetry to cloud,クラウド向けIoTテレメトリ
+5,p5/t0/c14,table_cell,translated,,,Lighting and blinds,照明とブラインド
+5,p5/t0/c15,table_cell,translated,,,Default port,デフォルトポート
+5,p5/t0/c16,table_cell,kept,,,47808,47808
+5,p5/t0/c17,table_cell,kept,,,502,502
+5,p5/t0/c18,table_cell,kept,,,1883 / 8883,1883 / 8883
+5,p5/t0/c19,table_cell,kept,,,3671,3671
+5,p5/r0,title,translated,,,Protocol Comparison,プロトコル比較
+6,p6/r0,title,translated,,,Energy Efficiency and Demand Response,エネルギー効率とデマンドレスポンス
+6,p6/r1,body,translated,,,Peak demand reduced by 18% in summer 2025,2025年夏のピーク需要18%削減
+6,p6/r2,body,translated,,,"Energy consumption: 1,250 MWh/year → 1,020 MWh/year","エネルギー消費量：年間1,250 MWh → 年間1,020 MWh"
+6,p6/r3,body,translated,,,<g1>Demand response</g1> signals are received from the utility via <g2>OpenADR 2.0b</g2>,<g1>デマンドレスポンス</g1>信号は<g2>OpenADR 2.0b</g2>経由で電力会社から受信される
+6,p6/r4,body,translated,,,Setpoint adjustment: cooling setpoint raised from 24 °C to 26 °C during peak hours,設定値調整：ピーク時間帯の冷却設定値を24℃から26℃に引き上げる
+6,p6/r5,body,translated,,,Power consumption is measured every 15 minutes,消費電力は15分ごとに測定される
+7,p7/r0,title,translated,,,Network and Access,ネットワークとアクセス
+7,p7/r1,body,translated,,,BMS server: 192.168.1.100 (VLAN 20),BMSサーバー：192.168.1.100（VLAN20）
+7,p7/r2,body,translated,,,Web dashboard: https://bms.example.com/dashboard,Webダッシュボード：https://bms.example.com/dashboard
+7,p7/r3,body,translated,,,Support: support@example.com,サポート：support@example.com
+7,p7/r4,body,translated,,,Configuration file: C:\Program Files\BMS\config\points.json,設定ファイル：C:\Program Files\BMS\config\points.json
+7,p7/r5,body,translated,,,"REST API over HTTPS; payloads in JSON, legacy exports in XML and SQL",HTTPS経由のREST API、JSON形式のペイロード、XML・SQL形式の従来エクスポート
+8,p8/r0,title,translated,,,Operation and Maintenance,運用・保守
+8,p8/r1,body,translated,,,"When a chiller alarm occurs, the system automatically notifies the maintenance team by e-mail and creates a work order, and if the alarm is not acknowledged within 30 minutes, it is escalated to the facility manager.",冷凍機の警報が発生すると、システムは自動的にメールで保守チームに通知し、作業指示を作成します。また、30分以内にその警報が確認されない場合は、問題が施設管理者に報告されます。
+8,p8/r2,body,translated,,,Scheduled maintenance of the AHU filters is performed every 3 months.,AHUのフィルターの定期的な保守作業は、3ヶ月ごとに行われます。
+8,p8/r3,body,translated,,,The PLC and SCADA system remain in service during the migration period.,移行期間中も、PLCおよびSCADAシステムは引き続き稼働し続けます。
+9,p9/r0,title,translated,,,Building Automation Roadmap,ビルオートメーションロードマップ
+9,p9/r1,body,translated,,,Phase 1 (Q2 2026): Building automation system upgrade,第1フェーズ（2026年Q2）：ビルオートメーションシステムのアップグレード
+9,p9/r2,body,translated,,,Phase 2 (Q4 2026): IoT sensors and edge devices,第2フェーズ（2026年Q4）：IoTセンサーとエッジデバイス
+9,p9/r3,body,retried,,,Phase 3 (2027): AI-based fault detection and diagnostics (FDD),第3フェーズ（2027年）：AIによる故障検出・診断（FDD）

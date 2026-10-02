@@ -1,11 +1,11 @@
 @echo off
-rem Smart Building Translator (Phase 1, offline).
-rem   Drag a .pptx onto this file, or run:  translate.bat "C:\path\deck.pptx" [src] [tgt]
-rem   src/tgt default to auto: English decks -> Japanese, Japanese decks -> English.
+rem Smart Building Translator (offline).
+rem   Drag a .pptx or .pdf onto this file, or run:  translate.bat "C:\path\file.pptx" [src] [tgt]
+rem   src/tgt default to auto: English documents -> Japanese, Japanese documents -> English.
 setlocal
 set "ROOT=%~dp0"
 if "%~1"=="" (
-  echo Drag a .pptx file onto translate.bat, or run: translate.bat "C:\path\deck.pptx" [en^|ja] [ja^|en]
+  echo Drag a .pptx or .pdf file onto translate.bat, or run: translate.bat "C:\path\file.pptx" [en^|ja] [ja^|en]
   pause
   exit /b 1
 )
