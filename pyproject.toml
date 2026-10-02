@@ -13,6 +13,7 @@ dependencies = [
     "pymupdf>=1.26",    # PDF read/write — AGPL-3.0 (see README, Licence)
     "rapidocr>=3.4",    # offline OCR; bundles the multilingual PP-OCRv6 models
     "onnxruntime>=1.18",
+    "pywebview>=5",     # desktop window (WebView2 on Windows)
 ]
 
 [project.optional-dependencies]

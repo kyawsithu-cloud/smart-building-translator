@@ -5,13 +5,27 @@ English and Japanese
 (plus Chinese, Korean, Burmese, Thai, German, French, Spanish), with terminology control and formatting
 preservation. Domain: smart buildings, BMS/BAS, HVAC, energy, IoT.
 
-**Status: Phase 3 — document processing (command line).** Results: [Phase 1](eval/results/PHASE1_RESULTS.md),
-[Phase 2](eval/results/PHASE2_RESULTS.md), [Phase 3](eval/results/PHASE3_RESULTS.md).
-Design: [ARCHITECTURE.md](ARCHITECTURE.md).
+**Status: Phase 4 — desktop app.** Results: [Phase 1](eval/results/PHASE1_RESULTS.md),
+[Phase 2](eval/results/PHASE2_RESULTS.md), [Phase 3](eval/results/PHASE3_RESULTS.md),
+[Phase 4](eval/results/PHASE4_RESULTS.md). Design: [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## Translate a document
-**Easiest:** drag a `.pptx` or `.pdf` file onto `translate.bat`. The language is detected automatically:
-English documents become Japanese, Japanese documents become English, other languages become English.
+**Easiest:** double-click `start.bat` and drop a `.pptx` or `.pdf` file onto the window. The language is
+detected automatically (English → Japanese, Japanese → English, other languages → English) and can be changed
+before you press **Translate**. Or drag a file onto `translate.bat` (no window, same result).
+
+The desktop app has these screens:
+
+| Screen | What it does |
+|---|---|
+| Translate | drop or browse a file, choose languages and glossary, progress steps, result with warnings, Open file / Open folder |
+| Review | source and translation side by side; filter "needs a look"; correct a paragraph and rebuild the document (no re-translation). Corrections are remembered. |
+| Glossary | add, edit, delete, search terms; import/export CSV; import the term sheet of the last translation |
+| History | recent translations (no document text); clear history and translation memory |
+| Models | hardware check and recommendation; download (hash-verified, virus-scanned) or delete models |
+| Settings | light/dark theme, translation memory, repair model, GPU/CPU, term consistency |
+
+Mode is always **Offline**; the Online option is shown disabled (not implemented).
 
 What is translated:
 
@@ -24,7 +38,7 @@ What is translated:
 | Scanned pages | – | yes, read by OCR (offline); check the review sheet |
 | Text inside pictures | detected and reported, not translated | detected and reported, not translated |
 
-**From a terminal** (in this folder):
+**From a terminal** (in this folder; `python -m sbt ui` opens the desktop app):
 ```
 .venv\Scripts\python -m sbt translate "C:\path\deck.pptx"                   # auto-detect language
 .venv\Scripts\python -m sbt translate "C:\path\deck.pptx" --src en --tgt zh   # choose languages
@@ -82,12 +96,13 @@ includes document content. Optional settings go in `%LOCALAPPDATA%\SmartBuilding
 1. Install **Python 3.13 (64-bit)** from python.org.
 2. Download this repository (green **Code** button → *Download ZIP*, then unzip; or `git clone`).
 3. Double-click `setup.bat` (downloads the small Python libraries from PyPI).
-4. Download the translation engine and model (about 7 GB) from their official sources, hash-verified:
+4. Double-click `start.bat`, open **Models** and download the translation engine and the Hy-MT2 model
+   (about 7 GB, from their official sources; every file is SHA-256-verified and scanned by Windows Defender).
+   Optional: Qwen3 for repair of flagged paragraphs (+5.6 GB). The same from a terminal:
    ```
    .venv\Scripts\python.exe scripts\download_phase1.py --only llama-cuda cudart hy-mt2-7b
    ```
-   Optional, for repair of flagged paragraphs (+5.6 GB): `... --only qwen3-8b`
-5. Run `.venv\Scripts\python -m sbt doctor`, then drag a `.pptx` onto `translate.bat`.
+5. Drop a `.pptx` or `.pdf` onto the window.
 
 After installation everything runs **offline**. No document content ever leaves the PC.
 
@@ -135,7 +150,9 @@ py -3.13 scripts/download_phase1.py                 # runtime + models, hash-ver
   MODEL_SETUP.md; there is no Burmese OCR). OCR'd text loses bold, and colour only where the scan is in colour.
 - Text inside pictures is detected and reported, not translated. A chart's data sheet (Edit Data) keeps the
   original labels.
-- `.ppt`, Word and Excel files are not supported (save as .pptx/.pdf). Command line only; the UI is Phase 4.
+- `.ppt`, Word and Excel files are not supported (save as .pptx/.pdf).
+- The desktop app needs the Microsoft Edge WebView2 Runtime (included in Windows 11). It is not yet a single
+  `.exe` (Phase 6); it runs from this folder via `start.bat`.
 
 ## Licence
 MIT for this project's code (see `LICENSE`). Models are downloaded separately under their own

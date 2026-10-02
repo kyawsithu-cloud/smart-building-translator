@@ -4,12 +4,12 @@
 - Python 3.13 (`py -3.13 -m venv .venv`, then `.venv\Scripts\activate`)
 - `pip install -e .[dev]`
 - `python -m pytest` (no model needed), `python -m ruff check src scripts tests`
-- Node 20+ only from Phase 4 (UI).
+- No Node.js needed: the UI is plain HTML/CSS/JavaScript modules without a build step.
 
 ## Layout
 ```
 src/sbt/
-  cli/          python -m sbt <command>: translate, glossary, history, doctor (thin; no logic)
+  cli/          python -m sbt <command>: translate, glossary, history, doctor, ui (thin; no logic)
   app/          jobs.py (one document end to end), reports.py (report/review/terms files)
   domain/       dataclasses shared by all layers
   formats.py    which parser/renderer handles which file type
@@ -23,9 +23,13 @@ src/sbt/
   storage/      SQLite: schema, glossaries, translation memory, job history
   hardware/     detection (CPU/RAM/GPU) and model recommendation
   privacy/      NetworkGuard
+  ui/           desktop app back end: app.py (window, drag & drop), api.py (functions the page calls),
+                runner.py (job thread, progress, cancel), review.py, downloads.py, settings_store.py
   settings.py   config/default.toml + %LOCALAPPDATA%\SmartBuildingTranslator\settings.toml
   langdetect.py offline language detection
   languages.py  language registry (add a language here)
+ui/             the page: index.html, css/app.css, js/app.js (router), js/views/*.js (one per screen),
+                js/mock-api.js (sample data for previewing in a browser)
 scripts/        model download, test decks/PDFs, evaluation (translation, consistency, OCR), rendering
 eval/           public test decks and results (never put real documents here)
 tests/unit/     fast tests; pipeline tests use a fake engine
@@ -38,6 +42,16 @@ tests/unit/     fast tests; pipeline tests use a fake engine
 - Measure before changing defaults: run `scripts/run_eval.py` (and `consistency_eval.py`) before and after.
 - Secrets from environment variables only (none are needed today).
 - Tests use generated or public documents only.
+
+## Working on the UI
+- Run the app: `python -m sbt ui` (add `--debug` for the WebView2 developer tools).
+- Preview without Python or models: `python -m http.server 8770 --bind 127.0.0.1 --directory ui`, then open
+  `http://127.0.0.1:8770/index.html?mock`. `?mock` swaps the Python bridge for `js/mock-api.js`.
+- Every function the page calls is a method of `sbt.ui.api.Api` and returns plain JSON data. Attributes of `Api`
+  must start with `_` (pywebview exposes public attributes to JavaScript).
+- The page's content security policy (`index.html`) allows nothing outside the app: keep it that way. No CDN
+  scripts, fonts or images; icons are inline SVG (`js/icons.js`).
+- Document text is inserted with `textContent` only, never as HTML.
 
 ## Adding a model
 1. Add a pinned entry (URL + SHA-256) to `scripts/download_phase1.py`.

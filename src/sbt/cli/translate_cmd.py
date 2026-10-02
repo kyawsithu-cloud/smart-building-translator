@@ -68,7 +68,7 @@ def _run(args: argparse.Namespace, cfg: Settings, src_path: Path) -> int:
     print(f"OFFLINE MODE — {languages.get(src).name} → {languages.get(tgt).name} with {args.model} on this "
           "computer. Nothing is sent to the network.")
     try:
-        report = jobs.run(spec, cfg, use_memory=not args.no_memory)
+        report = jobs.run(spec, cfg, use_memory=not args.no_memory).report
     except FileNotFoundError as e:
         print(f"[X] {e}\n    Copy the runtime folder from a working PC, or see MODEL_SETUP.md.")
         return 1

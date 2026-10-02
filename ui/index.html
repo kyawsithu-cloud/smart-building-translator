@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Nothing on this page may load from the internet. -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'">
+  <title>Smart Building Translator</title>
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"></div>
+        <div>
+          <div class="brand-name">Smart Building</div>
+          <div class="brand-sub">Translator</div>
+        </div>
+      </div>
+      <nav class="nav" id="nav">
+        <a href="#translate" data-view="translate"><span class="i" data-icon="translate"></span>Translate</a>
+        <a href="#review" data-view="review"><span class="i" data-icon="review"></span>Review<span class="badge hidden" id="review-badge"></span></a>
+        <a href="#glossary" data-view="glossary"><span class="i" data-icon="book"></span>Glossary</a>
+        <a href="#history" data-view="history"><span class="i" data-icon="clock"></span>History</a>
+        <a href="#models" data-view="models"><span class="i" data-icon="cpu"></span>Models</a>
+        <a href="#settings" data-view="settings"><span class="i" data-icon="settings"></span>Settings</a>
+      </nav>
+      <div class="mode-pill" title="Documents are translated on this computer. Nothing is sent to the internet.">
+        <span class="i" data-icon="shield"></span>
+        <div><strong>Offline</strong><br><span>Translated on this PC</span></div>
+      </div>
+    </aside>
+    <main class="main" id="main" tabindex="-1"></main>
+  </div>
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+  <div class="modal-backdrop hidden" id="modal"></div>
+  <div class="drop-overlay hidden" id="drop-overlay"><div><span class="i" data-icon="upload"></span>Drop to translate</div></div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

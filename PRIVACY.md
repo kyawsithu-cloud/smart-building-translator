@@ -11,6 +11,13 @@ Document → this computer → local model (llama-server on 127.0.0.1, started w
 - Only engines declaring `is_local = True` exist.
 - OCR (scanned PDFs, pictures) runs locally on the CPU with models stored inside the installed Python package or
   `runtime\ocr`; it never downloads models at run time (that would be blocked by the network guard anyway).
+- The desktop app is a window drawn by Microsoft Edge WebView2 (part of Windows 11). Its page is served from
+  this folder by a small server on 127.0.0.1 and has a content security policy that blocks every request to
+  another address, so the page itself cannot load or send anything over the internet. The window runs in
+  private mode (no browser cache, cookies or history are kept). Talking to Python goes through WebView2's
+  in-process bridge, not the network.
+- Model downloads started from the **Models** screen run in a separate process after you confirm; the app
+  process keeps its network guard. Nothing is downloaded automatically.
 
 **ONLINE (not implemented)**
 ```
@@ -26,11 +33,12 @@ so copying or uploading the project never includes it.
 
 | Data | Contains document text? | How to delete |
 |---|---|---|
-| Glossaries | Your terms only | `python -m sbt glossary delete <id>`, or delete the database |
-| Translation memory | **Yes** (source and translated paragraphs) | `python -m sbt history clear` (also compacts the file so the text is really gone). Turn off with `use_memory = false`, or per job with `--no-memory` |
+| Glossaries | Your terms only | Glossary screen, `python -m sbt glossary delete <id>`, or delete the database |
+| Translation memory | **Yes** (source and translated paragraphs, including your corrections from Review) | History screen → *Clear history*, or `python -m sbt history clear` (also compacts the file so the text is really gone). Turn off with `use_memory = false`, or per job with `--no-memory` |
 | Job history | File names, counts, timings; **no** document text | `python -m sbt history clear` |
 | Output files | **Yes**: `_JA.pptx`, `.review.csv`, `.terms.csv` next to your document | delete them like any file |
-| Logs (`runtime\logs`) | **No**: counts, timings and error types only | delete the folder |
+| Logs (`runtime\logs`, `%LOCALAPPDATA%\SmartBuildingTranslator\logs`) | **No**: counts, timings and error types only | delete the folders |
+| Settings (`settings.toml`) | **No** | Settings screen, or delete the file |
 
 Verified in Phase 1: the engine logs were searched for test phrases, IP addresses and URLs; there were no hits.
 

@@ -131,11 +131,14 @@ class TranslationPipeline:
         return tuple(h for h in hints if h.origin in ("glossary", "consensus") or self.opt.doc_terms == "enforce")
 
     # --- main pass --------------------------------------------------------------------------------------
-    def run(self, model: DocumentModel, progress=None) -> PipelineResult:
+    def run(self, model: DocumentModel, progress=None, stage=None) -> PipelineResult:  # type: ignore[no-untyped-def]
+        """progress(done, total) after each slide/page, stage(key) at each pass; either may raise to cancel."""
         src, tgt = self.opt.source_lang, self.opt.target_lang
         result = PipelineResult([], {})
         mode = self.opt.doc_terms
+        stage = stage or (lambda key: None)
         if mode != "off":
+            stage("terms")
             result.term_sheet = term_sheet.build(model.segments, src, tgt, self.glossary, self.engine,
                                                  contexts=3 if mode == "vote" else 1)
             log.info("Term sheet: %d candidate terms", len(result.term_sheet.all_terms))
@@ -145,6 +148,9 @@ class TranslationPipeline:
         for s in model.segments:
             by_slide[s.container].append(s)
 
+        stage("translate")
+        if progress:
+            progress(0, len(model.segments))
         done = 0
         for slide_no in sorted(by_slide):
             segs = by_slide[slide_no]
@@ -184,6 +190,7 @@ class TranslationPipeline:
                 progress(done, len(model.segments))
 
         if mode == "vote" and result.term_sheet is not None:
+            stage("align")
             self._harmonise(model, result.term_sheet, result)
         self._finalise(model, result)
         return result

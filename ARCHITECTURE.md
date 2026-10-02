@@ -1,9 +1,12 @@
 # Smart Building Translator — Architecture & Feasibility Analysis
 
-Status: original proposal (2026-09-30), kept for reference. Phases 1–3 are implemented; what changed after
+Status: original proposal (2026-09-30), kept for reference. Phases 1–4 are implemented; what changed after
 measurement is recorded in [Phase 1 results](eval/results/PHASE1_RESULTS.md) and
 [Phase 2](eval/results/PHASE2_RESULTS.md) and [Phase 3 results](eval/results/PHASE3_RESULTS.md) (model choice: Hy-MT2-7B + Qwen3-8B repair; document terms by
-majority vote instead of up-front term translation; data in %LOCALAPPDATA%; no web server, CLI first).
+majority vote instead of up-front term translation; data in %LOCALAPPDATA%; CLI first).
+[Phase 4](eval/results/PHASE4_RESULTS.md): the UI is plain HTML/CSS/JavaScript modules (no TypeScript build step,
+no Node.js); pywebview serves those static files from a loopback-only server (127.0.0.1) and the page's content
+security policy blocks every other address.
 Research snapshot date: 2026-09-30. Model landscape changes monthly — re-verify versions and licenses before locking choices.
 
 Priorities, in order: **Privacy → Technical translation accuracy → Formatting preservation**. Speed is explicitly secondary.
