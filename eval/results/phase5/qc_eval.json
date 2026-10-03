@@ -1,0 +1,93 @@
+{
+  "calibration": {
+    "paragraphs": 893,
+    "findings": 12,
+    "by_code": {
+      "picture_text": 2,
+      "partly_translated": 8,
+      "added_text": 1,
+      "possible_omission": 1
+    }
+  },
+  "heldout": {
+    "paragraphs": 863,
+    "findings": 45,
+    "by_code": {
+      "possible_omission": 4,
+      "glossary_term": 7,
+      "partly_translated": 9,
+      "added_text": 14,
+      "foreign_script": 1,
+      "number_changed": 1,
+      "token_missing": 1,
+      "token_changed": 6,
+      "token_added": 2
+    }
+  },
+  "seeded": {
+    "untranslated paragraph": {
+      "injected": 126,
+      "detected": 126,
+      "flagged": 126
+    },
+    "glossary term replaced": {
+      "injected": 72,
+      "detected": 72,
+      "flagged": 72
+    },
+    "words left untranslated": {
+      "injected": 122,
+      "detected": 122,
+      "flagged": 122
+    },
+    "recurring term worded differently": {
+      "injected": 56,
+      "detected": 56,
+      "flagged": 56
+    },
+    "repeated text translated differently": {
+      "injected": 10,
+      "detected": 10,
+      "flagged": 10
+    },
+    "paragraph not written to the file": {
+      "injected": 63,
+      "detected": 63,
+      "flagged": 63
+    },
+    "acronym dropped": {
+      "injected": 96,
+      "detected": 96,
+      "flagged": 96
+    },
+    "number changed": {
+      "injected": 113,
+      "detected": 113,
+      "flagged": 113
+    },
+    "sentence dropped": {
+      "injected": 101,
+      "detected": 60,
+      "flagged": 96
+    },
+    "unit changed": {
+      "injected": 77,
+      "detected": 76,
+      "flagged": 76
+    },
+    "identifier changed": {
+      "injected": 43,
+      "detected": 43,
+      "flagged": 43
+    }
+  },
+  "overflow": {
+    "boxes": 1056,
+    "tn": 957,
+    "tp": 74,
+    "fn": 12,
+    "fp": 13,
+    "files": 64
+  },
+  "seconds": 116.8
+}

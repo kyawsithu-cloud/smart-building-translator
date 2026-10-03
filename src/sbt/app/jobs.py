@@ -10,8 +10,9 @@ import time
 from dataclasses import dataclass
 from pathlib import Path
 
-from sbt import formats
+from sbt import formats, quality
 from sbt.app import reports
+from sbt.domain.models import Issue
 from sbt.engines.base import EngineStats, TranslationEngine
 from sbt.engines.llama_server import LlamaServer, model_path
 from sbt.engines.llamacpp import LlamaCppEngine
@@ -35,6 +36,7 @@ STAGES = {
     "align": "Making terms consistent",
     "repair": "Re-checking flagged paragraphs",
     "write": "Writing the translated document",
+    "check": "Checking quality",
 }
 
 
@@ -89,6 +91,8 @@ class TranslationJob:
         self.result: PipelineResult | None = None
         self.report: dict[str, object] = {}
         self.edited: set[str] = set()                # segment ids changed by the user in the review screen
+        self.quality = quality.QcReport()
+        self.render_issues: list[Issue] = []
         log.info("Job started: type=%s pages=%d segments=%d model=%s %s->%s", self.doc.file_type,
                  self.doc.container_count, len(self.doc.segments), spec.model, spec.source_lang, spec.target_lang)
 
@@ -121,6 +125,9 @@ class TranslationJob:
         renderer = formats.renderer_for(self.spec.input, self.spec.source_lang, self.spec.target_lang,
                                         self.spec.min_font_scale)
         render_issues = renderer.render(self.doc, self.spec.output)
+        self.render_issues = render_issues
+        self.reporter.stage("check")
+        self.check_quality(written=True)
         self.active += time.perf_counter() - t0
         meta: dict[str, object] = {
             "file": self.spec.input.name, "output": self.spec.output.name, "mode": "offline",
@@ -137,11 +144,21 @@ class TranslationJob:
             "tokens_per_second": round(self.stats.completion_tokens / self.stats.seconds, 1)
             if self.stats.seconds else None,
         }
-        self.report = reports.build(self.doc, self.result, render_issues, meta)
-        reports.write_all(self.spec.output, self.doc, self.result, self.report)
+        self.report = reports.build(self.doc, self.result, render_issues, meta, self.quality)
+        reports.write_all(self.spec.output, self.doc, self.result, self.report, self.quality)
         log.info("Job finished: segments=%d seconds=%s issues=%d", len(self.doc.segments), meta["seconds"],
                  len(self.report["issues"]))  # type: ignore[arg-type]
         return self.report
+
+    def check_quality(self, written: bool = False) -> quality.QcReport:
+        """Independent quality checks. `written`: also read the output file back (after it was written)."""
+        assert self.result is not None
+        self.quality = quality.check(self.doc, self.spec.source_lang, self.spec.target_lang, self.glossary,
+                                     sheet=self.result.term_sheet,
+                                     output=self.spec.output if written else None, original=self.spec.input,
+                                     render_issues=self.render_issues)
+        log.info("Quality: %s", {k: (v["errors"], v["warnings"]) for k, v in self.quality.summary().items()})
+        return self.quality
 
     def apply_edit(self, segment_id: str, translation: str) -> None:
         """A translation corrected by the user (review screen). Stored as human-approved in the memory."""

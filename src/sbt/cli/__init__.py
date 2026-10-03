@@ -1,6 +1,7 @@
 """Command line: python -m sbt <command>.
 
-  translate  translate a .pptx (language detected automatically)
+  translate  translate a .pptx or .pdf (language detected automatically)
+  check      quality-check a translation (original + translated file)
   glossary   list / add / edit / delete / import / export terminology
   history    recent jobs; `history clear` deletes job history and translation memory
   doctor     hardware, installed models, recommendation, data location
@@ -13,7 +14,7 @@ import logging
 import sys
 
 from sbt import settings as settings_mod
-from sbt.cli import doctor_cmd, glossary_cmd, history_cmd, translate_cmd, ui_cmd
+from sbt.cli import check_cmd, doctor_cmd, glossary_cmd, history_cmd, translate_cmd, ui_cmd
 from sbt.privacy import network_guard
 
 
@@ -31,7 +32,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="python -m sbt", description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = parser.add_subparsers(dest="cmd", required=True)
-    for module in (translate_cmd, glossary_cmd, history_cmd, doctor_cmd, ui_cmd):
+    for module in (translate_cmd, check_cmd, glossary_cmd, history_cmd, doctor_cmd, ui_cmd):
         module.register(sub, cfg)
     args = parser.parse_args(argv)
     try:

@@ -9,8 +9,11 @@
 ## Layout
 ```
 src/sbt/
-  cli/          python -m sbt <command>: translate, glossary, history, doctor, ui (thin; no logic)
-  app/          jobs.py (one document end to end), reports.py (report/review/terms files)
+  cli/          python -m sbt <command>: translate, check, glossary, history, doctor, ui (thin; no logic)
+  app/          jobs.py (one document end to end), checks.py (check a translation made elsewhere),
+                reports.py (report/review/terms files)
+  quality/      independent checks of a finished translation: completeness, terminology, identifiers,
+                output_check (reads the written file back), fonts, compare (pairs original + translation)
   domain/       dataclasses shared by all layers
   formats.py    which parser/renderer handles which file type
   parsers/      PPTX traversal (incl. charts, SmartArt, pictures) + parser; PDF parser (text, tables, scans)
@@ -23,8 +26,10 @@ src/sbt/
   storage/      SQLite: schema, glossaries, translation memory, job history
   hardware/     detection (CPU/RAM/GPU) and model recommendation
   privacy/      NetworkGuard
+  winfonts.py   installed Windows fonts, font faces, theme fonts per script
   ui/           desktop app back end: app.py (window, drag & drop), api.py (functions the page calls),
-                runner.py (job thread, progress, cancel), review.py, downloads.py, settings_store.py
+                runner.py (job thread, progress, cancel), review.py, pages.py (side-by-side pictures),
+                downloads.py, settings_store.py
   settings.py   config/default.toml + %LOCALAPPDATA%\SmartBuildingTranslator\settings.toml
   langdetect.py offline language detection
   languages.py  language registry (add a language here)
@@ -52,6 +57,14 @@ tests/unit/     fast tests; pipeline tests use a fake engine
 - The page's content security policy (`index.html`) allows nothing outside the app: keep it that way. No CDN
   scripts, fonts or images; icons are inline SVG (`js/icons.js`).
 - Document text is inserted with `textContent` only, never as HTML.
+
+## Quality checks
+- Each check returns `Finding`s (`src/sbt/quality/findings.py`): `message` never contains document text (it goes
+  to `.report.json`), `detail` may (shown in the app, written to the review sheet).
+- Measure every change: `python scripts/qc_eval.py` injects known errors into correct translations, lists every
+  warning on clean translations for review, and compares overflow warnings with PowerPoint's own layout
+  (`scripts/measure_text.ps1`, needs PowerPoint). Thresholds were tuned on the Phase 2–3 outputs; the Phase 1
+  outputs are the held-out set — keep it that way.
 
 ## Adding a model
 1. Add a pinned entry (URL + SHA-256) to `scripts/download_phase1.py`.

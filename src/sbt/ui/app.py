@@ -56,14 +56,19 @@ def main(debug: bool = False) -> int:
     _setup_logging()
     import webview
 
+    from sbt.ui import pages
     from sbt.ui.api import Api
+    pages.clear_cache()                 # page pictures contain document content: none survive a session
     api = Api()
     window = webview.create_window("Smart Building Translator", str(UI_DIR / "index.html"), js_api=api,
                                    width=1240, height=820, min_size=(900, 620), background_color="#f4f6f9")
     api._window = window
     window.events.loaded += lambda: _register_drop(window)
     log.info("UI started")
-    webview.start(debug=debug, private_mode=True)
+    try:
+        webview.start(debug=debug, private_mode=True)
+    finally:
+        pages.clear_cache()
     log.info("UI closed")
     return 0
 

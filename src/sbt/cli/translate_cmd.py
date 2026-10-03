@@ -83,9 +83,10 @@ def _run(args: argparse.Namespace, cfg: Settings, src_path: Path) -> int:
 
 
 def _summary(r: dict[str, object]) -> None:
-    issues = r["issues"]
-    assert isinstance(issues, list)
-    serious = [i for i in issues if i["severity"] != "info"]
+    quality = r.get("quality") or {}
+    assert isinstance(quality, dict)
+    summary: dict[str, dict[str, object]] = quality.get("summary") or {}
+    serious = [f for f in quality.get("findings") or [] if f["severity"] != "info"]
     head = "Translation completed" + (" with warnings." if serious else ".")
     print(f"\n{head}\n  Output:      {r['output']}\n  Translated:  {r['translated_pct']}% of text "
           f"({r['translated_segments']}/{r['segments']} paragraphs), translation time {r['seconds']} s")
@@ -105,43 +106,24 @@ def _summary(r: dict[str, object]) -> None:
               f"{r.get('repaired', 0)}")
     elif r.get("repair_note"):
         print(f"  Repair:      skipped ({r['repair_note']})")
-    by_code: dict[str, int] = {}
-    for i in issues:
-        by_code[i["code"]] = by_code.get(i["code"], 0) + 1
-    for code, n in sorted(by_code.items()):
-        print(f"  ! {n} × {_EXPLAIN.get(code, code)}")
+    print("  Quality checks:")
+    for row in summary.values():
+        errors, warnings = row["errors"], row["warnings"]
+        status = "OK" if not errors and not warnings else ", ".join(
+            x for x in (f"{errors} error(s)" if errors else "", f"{warnings} to check" if warnings else "") if x)
+        print(f"    {row['label']:<32} {status}")
+    for f in serious[:15]:
+        print(f"    ! {f['message']}")
+    if len(serious) > 15:
+        print(f"    … {len(serious) - 15} more — see the 'checks' column of the review sheet")
     for notice in r.get("notices") or []:      # type: ignore[union-attr]
         if str(notice).startswith("WARNING"):
             print(f"  ! {str(notice)[9:]}")
     if r.get("ocr_segments"):
         print(f"  OCR:         {r['ocr_segments']} paragraph(s) read from scanned pages — check them in the review "
               "sheet (OCR can misread characters)")
-    untranslatable = r.get("untranslatable") or []
-    if untranslatable:
-        kinds: dict[str, int] = {}
-        for u in untranslatable:
-            what = str(u).split(":", 1)[-1].strip()
-            kinds[what] = kinds.get(what, 0) + 1
-        for what, n in sorted(kinds.items()):
-            print(f"  ! {n} × {what}")
 
 
 def _pct(v: object) -> str:
     return "n/a" if v is None else f"{v}%"
 
-
-_EXPLAIN = {
-    "overflow": "text box may overflow even after shrinking the font",
-    "font_reduced": "text box font reduced to fit (informational)",
-    "term_missing": "required glossary term not used — check in the review sheet",
-    "token_missing": "identifier/number changed — check in the review sheet",
-    "untranslated": "paragraph left untranslated",
-    "empty": "paragraph could not be translated",
-    "tags": "formatting could not be mapped; paragraph uses one style",
-    "foreign_script": "characters from another language appeared",
-    "number_mismatch": "a number may have changed — check in the review sheet",
-    "length_suspicious": "translation unusually short/long (possible omission)",
-    "term_inconsistent": "glossary term translated inconsistently",
-    "placeholders": "protected placeholder lost",
-    "parentheses_lost": "brackets around an acronym were dropped",
-}

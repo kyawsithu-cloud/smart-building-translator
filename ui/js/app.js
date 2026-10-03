@@ -13,7 +13,8 @@ const views = { translate: translateView, review: reviewView, glossary: glossary
                 models: modelsView, settings: settingsView };
 
 // Shared state between views (one window, one translation at a time).
-export const state = { info: null, file: null, job: null, result: null, reviewDirty: false };
+export const state = { info: null, mode: "translate", file: null, check: { original: null, translation: null },
+                       job: null, result: null, reviewDirty: false, reviewCategory: null };
 
 export function applyTheme(theme) {
   const dark = theme === "dark" || (theme === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
@@ -55,8 +56,13 @@ function setupDrop() {
   window.addEventListener("drop", (e) => { e.preventDefault(); depth = 0; overlay.classList.add("hidden"); });
   window.sbtFileDropped = (path) => {
     overlay.classList.add("hidden");
-    if (state.job && state.job.status === "running") { toast("Wait until the current translation has finished.", "err"); return; }
-    state.file = { path, pending: true };
+    if (state.job && state.job.status === "running") { toast("Wait until the current job has finished.", "err"); return; }
+    if (state.mode === "check") {           // first drop = original, second = translation
+      state.check[state.check.original ? "translation" : "original"] = { path, pending: true };
+    } else {
+      state.file = { path, pending: true };
+    }
+    state.job = null; state.result = null;
     show("translate");
   };
 }

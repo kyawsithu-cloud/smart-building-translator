@@ -70,7 +70,7 @@ class _Work:
     previous: list[tuple[str, str]]
 
 
-def _nothing_to_translate(text: str, src: str, protected: list[str]) -> bool:
+def nothing_to_translate(text: str, src: str, protected: list[str]) -> bool:
     residue = text
     for t in sorted(protected, key=len, reverse=True):
         residue = residue.replace(t, " ")
@@ -161,7 +161,7 @@ class TranslationPipeline:
                 hints = self._hints(plain, slide_text, hint_sheet)
                 dnt = [h.source for h in hints if h.do_not_translate]
                 protected = tok.protected_tokens(plain, dnt)
-                if _nothing_to_translate(plain, src, protected):
+                if nothing_to_translate(plain, src, protected):
                     s.translation = s.source
                     result.outcomes[s.id] = SegmentOutcome("kept")
                     continue

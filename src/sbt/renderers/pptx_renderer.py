@@ -7,13 +7,19 @@ from pathlib import Path
 from lxml import etree
 
 from sbt import languages
-from sbt.domain.models import DocumentModel, Issue, Severity
+from sbt.domain.models import DocumentModel, Issue, SegmentKind, Severity
 from sbt.parsers.pptx_parser import open_presentation
-from sbt.parsers.pptx_walk import (A, ParagraphRef, SmartArtRef, TextNodeRef, encode_paragraph, flush_parts,
-                                   walk)
+from sbt.parsers.pptx_walk import (
+    A,
+    ParagraphRef,
+    SmartArtRef,
+    TextNodeRef,
+    encode_paragraph,
+    flush_parts,
+    walk,
+)
 from sbt.pipeline.tags import split_spans, strip_tags
 from sbt.renderers.text_fit import estimate_height, fit_text_frame
-
 
 # Used only when the deck's theme defines no font for the target script (e.g. an English template).
 DEFAULT_EA_FONT = {"ja": "Meiryo UI", "zh": "Microsoft YaHei UI", "ko": "Malgun Gothic"}
@@ -137,9 +143,20 @@ class PptxRenderer:
                 issues.append(Issue("overflow", Severity.WARNING, key,
                                     f"slide {ref.slide_no}: text likely exceeds its box even at "
                                     f"{int(result.scale * 100)}% font size"))
+            elif result.grows:
+                issues.append(Issue("box_grows", Severity.INFO, key,
+                                    f"slide {ref.slide_no}: text box grows with the longer text "
+                                    "(check it does not cover other content)"))
+            elif result.inherited:
+                issues.append(Issue("overflow_inherited", Severity.INFO, key,
+                                    f"slide {ref.slide_no}: text exceeds its box, as it did in the original"))
             elif result.scale < 1.0:
                 issues.append(Issue("font_reduced", Severity.INFO, key,
                                     f"slide {ref.slide_no}: font reduced to {int(result.scale * 100)}% to fit"))
+            elif ref.kind == SegmentKind.TITLE and key in baseline \
+                    and estimate_height(ref.shape, self.lang)[0] > 1.4 * baseline[key]:
+                issues.append(Issue("extra_lines", Severity.INFO, key,
+                                    f"slide {ref.slide_no}: title now wraps onto more lines than the original"))
         prs.save(str(output_path))
         return issues
 

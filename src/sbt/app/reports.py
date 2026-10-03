@@ -1,7 +1,7 @@
 """Job outputs next to the translated file.
 
-  <name>.report.json  metrics + warnings — no document text
-  <name>.review.csv   source/translation side by side — contains document text
+  <name>.report.json  metrics, warnings and quality-check results — no document text
+  <name>.review.csv   source/translation side by side with the quality checks — contains document text
   <name>.terms.csv    document term sheet in glossary format — contains document terms
 """
 from __future__ import annotations
@@ -12,6 +12,7 @@ from pathlib import Path
 
 from sbt.domain.models import DocumentModel, Issue
 from sbt.pipeline.translator import PipelineResult
+from sbt.quality import QcReport
 from sbt.terminology.glossary import write_csv
 
 
@@ -20,7 +21,7 @@ def pct(hit: int, total: int) -> float | None:
 
 
 def build(doc: DocumentModel, result: PipelineResult, render_issues: list[Issue],
-          meta: dict[str, object]) -> dict[str, object]:
+          meta: dict[str, object], quality: QcReport | None = None) -> dict[str, object]:
     statuses = [o.status for o in result.outcomes.values()]
     tagged = [s for s in doc.segments if s.tag_ids]
     translated = sum(s.translation is not None for s in doc.segments)
@@ -43,20 +44,24 @@ def build(doc: DocumentModel, result: PipelineResult, render_issues: list[Issue]
         "ocr_segments": sum(s.ocr_confidence is not None for s in doc.segments),
         "issues": [{"code": i.code, "severity": i.severity.value, "segment": i.segment_id, "message": i.message}
                    for i in result.issues + render_issues],
+        "quality": quality.public() if quality is not None else None,
     }
 
 
-def write_all(output: Path, doc: DocumentModel, result: PipelineResult, report: dict[str, object]) -> None:
+def write_all(output: Path, doc: DocumentModel, result: PipelineResult, report: dict[str, object],
+              quality: QcReport | None = None) -> None:
     output.with_suffix(".report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False),
                                                   encoding="utf-8")
     with output.with_suffix(".review.csv").open("w", encoding="utf-8-sig", newline="") as f:
         w = csv.writer(f)
-        w.writerow(["page/slide", "segment", "kind", "status", "problems", "ocr_confidence", "source",
+        w.writerow(["page/slide", "segment", "kind", "status", "checks", "ocr_confidence", "source",
                     "translation"])
+        checks = quality.by_segment() if quality is not None else {}
         for s in doc.segments:
             o = result.outcomes.get(s.id)
+            found = "; ".join(f"{f.severity.value}: {f.describe()}" for f in checks.get(s.id, []))
             w.writerow([s.container, s.id, s.kind.value, o.status if o else "",
-                        ";".join(o.problems) if o else "", "" if s.ocr_confidence is None else s.ocr_confidence,
-                        s.source, s.translation or ""])
+                        found if quality is not None else (";".join(o.problems) if o else ""),
+                        "" if s.ocr_confidence is None else s.ocr_confidence, s.source, s.translation or ""])
     if result.term_sheet and result.term_sheet.as_terms():
         write_csv(output.with_suffix(".terms.csv"), result.term_sheet.as_terms())

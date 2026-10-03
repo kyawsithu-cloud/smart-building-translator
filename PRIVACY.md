@@ -18,6 +18,10 @@ Document → this computer → local model (llama-server on 127.0.0.1, started w
   in-process bridge, not the network.
 - Model downloads started from the **Models** screen run in a separate process after you confirm; the app
   process keeps its network guard. Nothing is downloaded automatically.
+- Quality checks run on this PC. For the side-by-side page view, PDF pages are drawn by the app; PowerPoint
+  slides are drawn by the PowerPoint installed on this PC (opened read-only, without a window; your own open
+  presentations are not touched). The pictures are kept in `%LOCALAPPDATA%\SmartBuildingTranslator\cache`
+  and deleted when the next job starts, when the app closes, and when it starts again.
 
 **ONLINE (not implemented)**
 ```
@@ -39,6 +43,9 @@ so copying or uploading the project never includes it.
 | Output files | **Yes**: `_JA.pptx`, `.review.csv`, `.terms.csv` next to your document | delete them like any file |
 | Logs (`runtime\logs`, `%LOCALAPPDATA%\SmartBuildingTranslator\logs`) | **No**: counts, timings and error types only | delete the folders |
 | Settings (`settings.toml`) | **No** | Settings screen, or delete the file |
+| Quality report (`.report.json` → `quality`) | **No**: counts and messages only | with the output files |
+| Exported checks (`.checks.csv`) | **Yes**: the paragraphs concerned | delete like any file |
+| Page pictures (`cache`) | **Yes** (pictures of pages) | deleted automatically (next job, app closed or started) |
 
 Verified in Phase 1: the engine logs were searched for test phrases, IP addresses and URLs; there were no hits.
 

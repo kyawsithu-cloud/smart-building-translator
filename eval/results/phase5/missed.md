@@ -1,0 +1,44 @@
+# Seeded errors not detected
+
+- sentence dropped | sample_en_en-ja_vote | s7/3/p3 | 設定ファイル：C:\Program Fi
+- sentence dropped | sample_en_en-ja_vote | s7/3/p1 | Webダッシュボード：https://
+- sentence dropped | sample_ja_ja-en_vote | s7/3/p1 | Web dashboard: https:
+- sentence dropped | sample_ja_ja-en_vote | s2/3/p4 | Energy Management System (E
+- sentence dropped | sample_ja_ja-en_vote | s8/3/p0 | When an alarm is triggered on a chiller, the system automatically sends an email notificat
+- sentence dropped | sample_ja_ja-en_vote | s2/3/p2 | Variable air volum
+- sentence dropped | slides_en_en-ja_vote | p2/r5 | エネルギー管理システム は エネルギ
+- sentence dropped | slides_en_en-ja_vote | p7/r2 | Webダッシュボード：https://
+- sentence dropped | slides_en_en-ja_vote | p7/r4 | 設定ファイル：C:\Program Fi
+- sentence dropped | spec_en_en-ja_vote | p1/r1 | スマートビルディングプラットフォーム
+- sentence dropped | spec_en_en-ja_vote | p1/r8 | エッジデバイスとゲートウェイ（BAC
+- sentence dropped | spec_en_scanned_en-ja_vote | p1/ocr8 | エッジデバイスとゲートウェイ（BAC
+- sentence dropped | spec_ja_ja-en_vote | p1/r1 | Smart Building Platform
+- sentence dropped | spec_ja_ja-en_vote | p1/r11 | When an alarm is triggered for the chiller, the system notifies the maintenance team via e
+- sentence dropped | spec_ja_ja-en_vote | p1/r6 | Variable air volume 
+- sentence dropped | spec_ja_scanned_ja-en_vote | p1/ocr3 | This document specifies the integration between a Building Management System (BMS) and a c
+- sentence dropped | spec_ja_scanned_ja-en_vote | p1/ocr5 | Air Handling Unit (AHU) 
+- sentence dropped | spec_ja_scanned_ja-en_vote | p1/ocr6 | Variable Air Volume 
+- sentence dropped | spec_ja_scanned_ja-en_vote | p1/ocr8 | Edge device and gateways
+- unit changed | spec_ja_scanned_ja-en_vote | p2/ocr1 | The Energy Management System (EMS) records energy consumption every 15 minutes. By impleme
+- sentence dropped | consistency_en_en-my_vote | s1/3/p0 | အအေးပေးရေစနစ်နှင့် လေဝင်လ
+- sentence dropped | consistency_en_en-th_vote | s2/notes/p0 | ในช่วงฤดูหนาว การทำความเย็นแบบธรรมชาติจะช่วยลดชั่วโมงการท
+- sentence dropped | consistency_ja_ja-en_vote | s7/3/p1 | Sequence of Load Shutoff: lighting fi
+- sentence dropped | consistency_ja_ja-en_vote | s6/3/p1 | Demand-controlled ventilation 
+- sentence dropped | sample_en_en-ja_vote | s7/3/p3 | 設定ファイル：C:\Program Fi
+- sentence dropped | sample_en_en-ja_vote | s7/3/p1 | Webダッシュボード：https://
+- sentence dropped | sample_en_en-ko_vote | s7/3/p4 | HTTPS를 통한 REST API; 데이터는
+- sentence dropped | sample_en_en-ko_vote | s7/3/p3 | 구성 파일: C:\Program Fi
+- sentence dropped | sample_en_en-my_vote | s2/3/p2 | Variable Air Volume (
+- sentence dropped | sample_en_en-my_vote | s3/2/p0 | အာရုံခံကိရိယာများန
+- sentence dropped | sample_en_en-my_vote | s6/3/p0 | ၂၀၂၅ ခုနှစ် နွေရာသီတွင် အမြင့
+- sentence dropped | sample_en_en-my_vote | s1/2/p0 | ဉာဏ်ရည်မြင့် အဆောက်အအ
+- sentence dropped | sample_en_en-th_vote | s7/3/p0 | เซิร์ฟเวอร์ BMS: 1
+- sentence dropped | sample_en_en-th_vote | s9/3/p0 | ขั้นตอนที่ 1 (ไตรมาส 2 ปี 2026
+- sentence dropped | sample_en_en-th_vote | s9/3/p1 | ขั้นตอนที่ 2 (ไตรมาส 4 ปี 2
+- sentence dropped | sample_en_en-zh_vote | s7/3/p3 | 配置文件：C:\Program Fil
+- sentence dropped | sample_en_en-zh_vote | s7/3/p1 | 网页控制面板：https://bms
+- sentence dropped | sample_en_en-zh_vote | s7/3/p4 | 通过HTTPS传输的REST API，数据载
+- sentence dropped | sample_ja_ja-en_vote | s2/3/p2 | Variable air volum
+- sentence dropped | sample_ja_ja-en_vote | s6/3/p4 | Power consumption is 
+- sentence dropped | sample_ja_ja-en_vote | s6/3/p1 | Energy consumption: 1,
+- sentence dropped | sample_ja_ja-en_vote | s8/3/p0 | When an alarm is triggered on a chiller, the system automatically sends an email notificat

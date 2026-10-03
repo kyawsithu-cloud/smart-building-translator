@@ -74,23 +74,26 @@ class JobRunner:
     def busy(self) -> bool:
         return self.state.status == "running"
 
-    def start(self, spec: JobSpec, settings: Settings, use_memory: bool) -> None:
+    def start(self, spec: JobSpec, settings: Settings, use_memory: bool,
+              run: Callable[..., TranslationJob] | None = None) -> None:
+        """Run `run` (default: a translation) in the background. A check job uses sbt.app.checks.run_check."""
         if self.busy:
             raise RuntimeError("A translation is already running")
         self.state = JobState(status="running", started=time.time())
         self.job = None
         self._cancel.clear()
         reporter = UiReporter(self.state, self._cancel)
-        self._thread = threading.Thread(target=self._work, args=(spec, settings, use_memory, reporter),
-                                        daemon=True)
+        self._thread = threading.Thread(target=self._work, args=(spec, settings, use_memory, reporter,
+                                                                 run or self._run), daemon=True)
         self._thread.start()
 
     def cancel(self) -> None:
         self._cancel.set()
 
-    def _work(self, spec: JobSpec, settings: Settings, use_memory: bool, reporter: UiReporter) -> None:
+    def _work(self, spec: JobSpec, settings: Settings, use_memory: bool, reporter: UiReporter,
+              run: Callable[..., TranslationJob]) -> None:
         try:
-            self.job = self._run(spec, settings, use_memory=use_memory, reporter=reporter)
+            self.job = run(spec, settings, use_memory=use_memory, reporter=reporter)
             if self.state.stage:
                 self.state.stages_done.append(self.state.stage)
             self.state.status = "done"

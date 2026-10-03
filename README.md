@@ -5,9 +5,10 @@ English and Japanese
 (plus Chinese, Korean, Burmese, Thai, German, French, Spanish), with terminology control and formatting
 preservation. Domain: smart buildings, BMS/BAS, HVAC, energy, IoT.
 
-**Status: Phase 4 — desktop app.** Results: [Phase 1](eval/results/PHASE1_RESULTS.md),
+**Status: Phase 5 — quality control.** Results: [Phase 1](eval/results/PHASE1_RESULTS.md),
 [Phase 2](eval/results/PHASE2_RESULTS.md), [Phase 3](eval/results/PHASE3_RESULTS.md),
-[Phase 4](eval/results/PHASE4_RESULTS.md). Design: [ARCHITECTURE.md](ARCHITECTURE.md).
+[Phase 4](eval/results/PHASE4_RESULTS.md), [Phase 5](eval/results/PHASE5_RESULTS.md).
+Design: [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## Translate a document
 **Easiest:** double-click `start.bat` and drop a `.pptx` or `.pdf` file onto the window. The language is
@@ -18,8 +19,8 @@ The desktop app has these screens:
 
 | Screen | What it does |
 |---|---|
-| Translate | drop or browse a file, choose languages and glossary, progress steps, result with warnings, Open file / Open folder |
-| Review | source and translation side by side; filter "needs a look"; correct a paragraph and rebuild the document (no re-translation). Corrections are remembered. |
+| Translate | drop or browse a file, choose languages and glossary, progress steps, result with the quality checks, Open file / Open folder. **Check a translation**: compare a translation made elsewhere with its original |
+| Review | source and translation side by side with the checks of each paragraph; document checks (e.g. a term worded differently — fix it everywhere in one click); pages side by side with problems outlined; correct a paragraph and rebuild the document (no re-translation). Corrections are remembered. |
 | Glossary | add, edit, delete, search terms; import/export CSV; import the term sheet of the last translation |
 | History | recent translations (no document text); clear history and translation memory |
 | Models | hardware check and recommendation; download (hash-verified, virus-scanned) or delete models |
@@ -62,8 +63,20 @@ Results are written **next to the original**, which is never modified:
 3. **Translation memory**: paragraphs translated before are reused (if still valid with today's glossary),
    and similar earlier sentences are shown to the model as examples.
 4. **Repair**: paragraphs still flagged after retries are re-translated by a second model (Qwen3).
-5. **Checks**: identifiers (URLs, IPs, part numbers, acronyms), numbers, formatting, untranslated text,
-   text overflow.
+5. **Quality checks** of the finished translation and of the written file, in four groups:
+   *terminology consistency* (glossary terms, recurring terms worded differently, the same text translated
+   differently), *missing or partial translation* (untranslated words, cut-off or shortened paragraphs, text
+   not written to the file), *identifiers and numbers* (URLs, IPs, part numbers, acronyms, numbers, units) and
+   *layout and fonts* (text overflowing its box, measured like PowerPoint lays it out; missing glyphs).
+   Measured on injected errors: 95 % found by the intended check, 99 % of the affected paragraphs flagged;
+   0.2 false alarms per 100 paragraphs ([Phase 5 results](eval/results/PHASE5_RESULTS.md)).
+
+### Checking a translation made elsewhere
+In the app: Translate → *Check it against the original*, then drop the original and the translation. Or:
+```
+.venv\Scripts\python -m sbt check "C:\path\spec.pptx" "C:\path\spec_JA_agency.pptx"
+```
+The same checks run (nothing is changed); the findings with the text concerned go to `<translation>.checks.csv`.
 
 ### Improving terminology (recommended after each new type of document)
 1. Open `deck_JA.terms.csv` in Excel. Fix wrong translations (rows marked UNRESOLVED need a decision).
@@ -151,6 +164,9 @@ py -3.13 scripts/download_phase1.py                 # runtime + models, hash-ver
 - Text inside pictures is detected and reported, not translated. A chart's data sheet (Edit Data) keeps the
   original labels.
 - `.ppt`, Word and Excel files are not supported (save as .pptx/.pdf).
+- The quality checks find missing, partial, inconsistent and altered content, but not a fluent sentence with
+  the wrong meaning (there is no reference translation offline).
+- Slide pictures in Review's page comparison need Microsoft PowerPoint (PDF pages work without it).
 - The desktop app needs the Microsoft Edge WebView2 Runtime (included in Windows 11). It is not yet a single
   `.exe` (Phase 6); it runs from this folder via `start.bat`.
 
