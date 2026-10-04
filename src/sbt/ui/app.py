@@ -93,14 +93,15 @@ def _selftest(window, api, result: Path, document: Path | None = None) -> None: 
         while time.time() < deadline:
             try:
                 ready = window.evaluate_js("!!(window.pywebview && window.pywebview.api && "
-                                           "document.querySelector('.drop'))")
+                                           "document.querySelector('.drop, .setup-steps'))")
             except Exception:  # noqa: BLE001 - page not ready yet
                 ready = False
             if ready:
                 break
             time.sleep(0.5)
         report["ready_seconds"] = round(time.time() - _STARTED, 1)       # start → page usable
-        report["page_rendered"] = bool(window.evaluate_js("!!document.querySelector('.drop')"))
+        report["page_rendered"] = bool(window.evaluate_js("!!document.querySelector('.drop, .setup-steps')"))
+        report["screen"] = window.evaluate_js("location.hash")       # #setup on a first start without models
         report["bridge_functions"] = window.evaluate_js("Object.keys(window.pywebview.api).length")
         report["page_title"] = window.evaluate_js("document.title")
         info = api.app_info()
@@ -108,6 +109,7 @@ def _selftest(window, api, result: Path, document: Path | None = None) -> None: 
         report["languages"] = len(info["languages"])  # type: ignore[arg-type]
         report["ok"] = bool(report["page_rendered"]) and int(report["bridge_functions"] or 0) > 20  # type: ignore[call-overload]
         if document is not None:
+            window.evaluate_js("location.hash = '#translate'; 1")
             report["translation"] = translation = _selftest_translation(api, document)
             report["ok"] = report["ok"] and translation["status"] == "done" and bool(translation.get("output_written"))
     except Exception as e:  # noqa: BLE001 - reported, not raised

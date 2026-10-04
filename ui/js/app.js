@@ -8,9 +8,10 @@ import { glossaryView } from "./views/glossary.js";
 import { historyView } from "./views/history.js";
 import { modelsView } from "./views/models.js";
 import { settingsView } from "./views/settings.js";
+import { setupView } from "./views/setup.js";
 
 const views = { translate: translateView, review: reviewView, glossary: glossaryView, history: historyView,
-                models: modelsView, settings: settingsView };
+                models: modelsView, settings: settingsView, setup: setupView };
 
 // Shared state between views (one window, one translation at a time).
 export const state = { info: null, mode: "translate", file: null, check: { original: null, translation: null },
@@ -79,7 +80,10 @@ async function start() {
   matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () =>
     applyTheme((state.info && state.info.settings.theme) || "system"));
   window.addEventListener("hashchange", () => show(location.hash.slice(1)));
-  show(location.hash.slice(1) || "translate");
+  // First start (or the model is missing): the setup guide.
+  const info = state.info || {};
+  const needsSetup = !info.setup_done && (!info.engine_installed || !info.model_installed);
+  show(needsSetup ? "setup" : location.hash.slice(1) || "translate");
 }
 
 start();

@@ -52,7 +52,8 @@ Verified in Phase 1: the engine logs were searched for test phrases, IP addresse
 ## Other guarantees
 - No telemetry, analytics, crash upload or update check.
 - Model downloads happen only when you click Download (or run `sbt download`): pinned versions from the official
-  sources, SHA-256 checked, program files scanned by Windows Defender.
+  sources, SHA-256 checked, program files scanned by Windows Defender. Models copied from a folder or USB stick in
+  the setup guide get the same checks (fingerprint of every model file, Defender scan of the engine).
 - The installer copies files only; it downloads nothing and needs no administrator rights. The installed app has
   the same guarantees as running from source (network guard, page security policy, local data only). Uninstalling
   asks before deleting `%LOCALAPPDATA%\SmartBuildingTranslator` (glossaries, memory, history, models).

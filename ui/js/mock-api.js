@@ -61,11 +61,27 @@ const result = {
 const checkResult = { kind: "check", input: "D:\\Work\\Projects\\Spec.pptx", output: "D:\\Work\\Agency\\Spec_JA_agency.pptx",
   output_name: "Spec_JA_agency.pptx", source: "en", target: "ja", segments: 63, matched: 61, seconds: 41.2, term_note: "", notices: [], flagged: 2 };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+// Setup guide simulation: a "download" or "copy" that finishes after 6 seconds.
+const setupInstalled = { engine: false, "hy-mt2-7b": false, "qwen3-8b": false, "ocr-ko": false, "ocr-th": false };
+let setupRun = null;
+function setupProgress() {
+  const idle = { status: "idle", overall: 0, percent: 0, total_mb: 0, finished: [], verified: [], message: "", asset: "", file: "", copied_mb: 0 };
+  if (!setupRun) return { download: idle, copy: idle };
+  const pct = Math.min(100, Math.round((Date.now() - setupRun.t0) / 60));
+  const status = pct >= 100 ? "done" : "running";
+  if (status === "done") { setupRun.items.forEach((i) => { setupInstalled[i] = true; }); }
+  const busy = { ...idle, status, overall: pct, percent: pct, total_mb: 6428, asset: "hy-mt2-7b", file: "models/HY-MT2-7B-Q6_K.gguf",
+                 copied_mb: Math.round(6428 * pct / 100), finished: pct > 15 ? ["llama-cuda", "cudart"] : [], verified: pct > 50 ? ["hy-mt2-7b"] : [],
+                 message: status === "done" ? "Installed and verified" : "" };
+  const out = setupRun.kind === "copy" ? { download: idle, copy: busy } : { download: busy, copy: idle };
+  if (status === "done") setupRun = null;
+  return out;
+}
 
 export const mockApi = {
   async app_info() {
-    return { version: "0.5.0", mode: "offline", languages, glossaries: ["smart-building"], settings, engine_installed: true,
-             model_installed: true, data_dir: "C:\\Users\\you\\AppData\\Local\\SmartBuildingTranslator" };
+    return { version: "1.0.0", setup_done: !!settings.setup_done, mode: "offline", languages, glossaries: ["smart-building"], settings, engine_installed: setupInstalled.engine || !location.search.includes("fresh"),
+             model_installed: setupInstalled["hy-mt2-7b"] || !location.search.includes("fresh"), data_dir: "C:\\Users\\you\\AppData\\Local\\SmartBuildingTranslator" };
   },
   async choose_file() { return "D:\\Work\\Projects\\Building_System_Overview.pptx"; },
   async inspect_file(path) {
@@ -130,6 +146,22 @@ export const mockApi = {
       download: { status: "idle" }, runtime: { path: "C:\\Users\\you\\AppData\\Local\\SmartBuildingTranslator\\runtime", custom: false, free_gb: 412.3 } };
   },
   async choose_runtime_dir() { return {}; }, async reset_runtime_dir() { return {}; },
+  async setup_status() {
+    await sleep(200);
+    return { hardware: { cpu: "AMD Ryzen 7 5700X 8-Core Processor", cores: 16, ram_gib: 31.9,
+                         gpus: [{ name: "NVIDIA GeForce RTX 4060", vram_total_mib: 8188, vram_free_mib: 7197 }] },
+             recommendation: { model: "hy-mt2-7b", placement: "GPU", expectation: "Good. ~30 tok/s, 20–40 s per deck." },
+             runtime: { path: "C:\\Users\\you\\AppData\\Local\\SmartBuildingTranslator\\runtime", custom: false, free_gb: 412.3 },
+             installed: { ...setupInstalled }, sizes_mb: { engine: 549, "hy-mt2-7b": 5879, "qwen3-8b": 5580, "ocr-ko": 13, "ocr-th": 8 },
+             settings, progress: setupProgress() };
+  },
+  async setup_progress() { return setupProgress(); },
+  async setup_download(items) { setupRun = { kind: "download", items, t0: Date.now() }; },
+  async scan_models_folder() { await sleep(300); return { path: "E:\\runtime", engine: true, components: ["hy-mt2-7b", "qwen3-8b"], usable: true, size_gb: 11.4, removable: true }; },
+  async use_models_folder() { Object.assign(setupInstalled, { engine: true, "hy-mt2-7b": true, "qwen3-8b": true }); return {}; },
+  async copy_models() { setupRun = { kind: "copy", items: ["engine", "hy-mt2-7b", "qwen3-8b"], t0: Date.now() }; },
+  async cancel_setup() { setupRun = null; },
+  async finish_setup(target) { settings = { ...settings, target_lang: target, setup_done: true }; return this.app_info(); },
   async download() {}, async download_status() { return { status: "idle" }; }, async delete_model() {},
   async get_settings() { return settings; },
   async save_settings(c) { settings = { ...settings, ...c }; return settings; },

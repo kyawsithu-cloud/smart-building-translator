@@ -65,6 +65,10 @@ ASSETS = [
 ]
 
 
+# Approximate download sizes (MB), for one overall progress bar over several files.
+SIZE_MB = {"llama-cuda": 145, "cudart": 404, "hy-mt2-7b": 5879, "ocr-ko": 13, "ocr-th": 8, "qwen3-8b": 5580}
+
+
 def sha256_of(path: Path) -> str:
     h = hashlib.sha256()
     with path.open("rb") as f:
@@ -110,15 +114,23 @@ def extract_and_scan(asset: Asset, root: Path) -> None:
     target.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(root / asset.dest) as z:
         z.extractall(target)
-    if not DEFENDER.exists():
+    found = defender_scan(target)
+    if found is None:
         print(f"[{asset.name}] WARNING: Windows Defender CLI not found; scan skipped")
         return
-    r = subprocess.run([str(DEFENDER), "-Scan", "-ScanType", "3", "-File", str(target), "-DisableRemediation"],
+    if found:
+        raise RuntimeError(f"[{asset.name}] Defender scan reported a problem:\n{found}")
+    print(f"[{asset.name}] Windows Defender scan: no threats found")
+
+
+def defender_scan(folder: Path) -> str | None:
+    """Scans a folder with Windows Defender: "" = no threats, a report = problem, None = Defender not available."""
+    if not DEFENDER.exists():
+        return None
+    r = subprocess.run([str(DEFENDER), "-Scan", "-ScanType", "3", "-File", str(folder), "-DisableRemediation"],
                        capture_output=True, text=True, check=False,
                        creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
-    if r.returncode != 0:
-        raise RuntimeError(f"[{asset.name}] Defender scan reported a problem:\n{r.stdout}\n{r.stderr}")
-    print(f"[{asset.name}] Windows Defender scan: no threats found")
+    return "" if r.returncode == 0 else f"{r.stdout}\n{r.stderr}".strip()
 
 
 def run(only: list[str] | None = None, root: Path | None = None) -> int:

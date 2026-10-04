@@ -49,6 +49,9 @@ def detect(text: str) -> Detection:
     return Detection(best, scores[best] / hits)
 
 
-def default_target(source: str) -> str:
-    """English ↔ Japanese is the primary pair; other languages default to English."""
+def default_target(source: str, preferred: str = "") -> str:
+    """The user's usual target language when set (and different from the source); otherwise English ↔ Japanese,
+    and other languages to English."""
+    if preferred and preferred != source:
+        return preferred
     return {"en": "ja", "ja": "en"}.get(source, "en")

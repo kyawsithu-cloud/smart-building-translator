@@ -4,6 +4,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from sbt import settings as settings_mod
+from sbt.languages import LANGUAGES
 
 EDITABLE = {
     "use_memory": bool,       # keep a translation memory on this PC
@@ -13,9 +14,12 @@ EDITABLE = {
     "glossary": str,          # default glossary
     "theme": str,             # system | light | dark (UI only)
     "runtime_dir": str,       # folder with the engine and models ("" = default)
+    "target_lang": str,       # usual target language ("" = automatic)
+    "setup_done": bool,       # first-start setup guide completed
 }
 ALLOWED = {"gpu": {"auto", "cpu"}, "doc_terms": {"vote", "off", "hint", "enforce"},
-           "theme": {"system", "light", "dark"}, "repair_model": {"", "qwen3-8b"}}
+           "theme": {"system", "light", "dark"}, "repair_model": {"", "qwen3-8b"},
+           "target_lang": {"", *LANGUAGES}}
 
 
 def _toml_value(v: object) -> str:

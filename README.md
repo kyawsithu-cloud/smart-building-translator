@@ -17,10 +17,16 @@ Design: [ARCHITECTURE.md](ARCHITECTURE.md).
    The installer and the app are not code-signed: Windows SmartScreen may say "Windows protected your PC" —
    choose *More info → Run anyway* if the file came from your own build (compare its SHA-256 with
    `dist\SHA256SUMS.txt`).
-2. Start **Smart Building Translator**, open **Models** and download the translation engine and the Hy-MT2 model
-   (about 7 GB, once; hash-verified and virus-scanned) — or, if this PC already has them (for example this
-   project's `runtime` folder, or one copied from another PC), click **Models folder → Change…** and choose that
-   folder instead. Nothing needs downloading again.
+2. Start **Smart Building Translator**. On first start a **setup guide** opens:
+   1. *Welcome* — your hardware and the expected speed.
+   2. *Languages* — tick the languages you work with and choose **Usually translate into** (automatic
+      English ↔ Japanese, or e.g. Chinese). It is preselected for every document and can be changed per document
+      and later in Settings.
+   3. *Translation model* — **Download** it (about 7 GB, once; official sources, SHA-256-verified, program files
+      virus-scanned; free space is shown and another drive can be chosen), or **From a folder or USB stick** that
+      already has it: *Copy to this PC* (every model file is checked against its official fingerprint while it
+      is copied) or *Use it where it is*.
+   4. *Ready* — start translating.
 3. Drop a `.pptx` or `.pdf` onto the window.
 
 A portable copy (`SmartBuildingTranslator-1.0.0-portable.zip`, unzip anywhere) works the same way. Command-line
@@ -138,8 +144,9 @@ For development, or instead of the installer:
 After installation everything runs **offline**. No document content ever leaves the PC.
 
 ## Use on another PC
-**With the installer:** install the app there, copy the `runtime` folder (engine + models, about 7–13 GB) on a
-USB drive, and choose it in *Models → Models folder*. The glossary moves with `Glossary → Export / Import`.
+**With the installer:** put the Setup and this PC's models folder (the `llama` and `models` folders, about
+7–13 GB) on a USB stick. On the other PC run the Setup; in the setup guide choose **From a folder or USB stick →
+Copy to this PC**. No internet needed. The glossary moves with `Glossary → Export / Import`.
 
 **From the source folder:**
 1. Install **Python 3.13 (64-bit)** on the new PC (keep "py launcher" ticked).

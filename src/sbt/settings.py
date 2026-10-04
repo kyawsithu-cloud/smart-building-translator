@@ -59,6 +59,8 @@ class Settings:
     min_font_scale: float = 0.8
     protect: str = "verify"
     runtime_dir: str = ""                     # folder with llama/ and models/ ("" = default, see runtime_dir())
+    target_lang: str = ""                     # usual target language ("" = automatic: en→ja, ja→en, others→en)
+    setup_done: bool = False                  # the first-start setup guide was completed
     extra: dict[str, object] = field(default_factory=dict)
 
     @property
@@ -93,4 +95,7 @@ def load() -> Settings:
         raise ValueError("Only offline mode exists in this version. Set mode = \"offline\" in settings.toml.")
     if s.doc_terms not in ("off", "vote", "hint", "enforce"):
         raise ValueError("doc_terms must be off, vote, hint or enforce")
+    from sbt.languages import LANGUAGES
+    if s.target_lang and s.target_lang not in LANGUAGES:
+        raise ValueError(f"target_lang must be one of {', '.join(LANGUAGES)} (or empty for automatic)")
     return s

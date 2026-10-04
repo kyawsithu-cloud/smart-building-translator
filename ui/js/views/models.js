@@ -52,6 +52,7 @@ function folderCard(rt) {
         el("div", { class: "path" }, rt.path),
         el("div", { class: "muted small", style: "margin-top:4px" },
           `${rt.free_gb != null ? `${rt.free_gb} GB free on this drive. ` : ""}Already have the models (e.g. copied from another PC)? Choose that folder instead of downloading again.`)),
+      btn("Setup guide", { title: "Step-by-step: download, or copy from a folder or USB stick", onclick: () => show("setup") }),
       btn("Change…", { icon: "folder", onclick: () => change("choose_runtime_dir") }),
       rt.custom ? btn("Use default", { onclick: () => change("reset_runtime_dir") }) : null));
 }

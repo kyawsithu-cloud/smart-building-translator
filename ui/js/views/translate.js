@@ -79,7 +79,7 @@ function setupNote() {
   return el("div", { class: "note warn" }, icon("alert"),
     el("div", { style: "flex:1" }, el("strong", {}, "The translation model is not installed yet. "),
       "Download it in Models (about 7 GB, once), or choose a folder that already contains it."),
-    btn("Open Models", { kind: "primary", icon: "cpu", onclick: () => show("models") }));
+    btn("Set up now", { kind: "primary", icon: "cpu", onclick: () => show("setup") }));
 }
 
 function dropZone() {

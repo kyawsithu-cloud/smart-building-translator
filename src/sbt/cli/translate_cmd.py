@@ -14,7 +14,8 @@ def register(sub: argparse._SubParsersAction, cfg: Settings) -> None:  # type: i
     p = sub.add_parser("translate", help="translate a .pptx or .pdf file")
     p.add_argument("input", type=Path)
     p.add_argument("--src", default="auto", help="source language (en, ja, zh, ko, my, th, de, fr, es) or auto")
-    p.add_argument("--tgt", default="auto", help="target language, or auto (en→ja, ja→en, others→en)")
+    p.add_argument("--tgt", default="auto", help="target language, or auto (your usual target language from the "
+                                                 "app's settings; otherwise en→ja, ja→en, others→en)")
     p.add_argument("--out", type=Path, help="output file (default: <name>_<LANG>.pptx next to the input)")
     p.add_argument("--model", default=cfg.model, choices=sorted(PROFILES))
     p.add_argument("--repair-model", default=cfg.repair_model,
@@ -53,7 +54,7 @@ def _run(args: argparse.Namespace, cfg: Settings, src_path: Path) -> int:
         found = langdetect.detect(text)
         src = found.language
         print(f"Detected source language: {languages.get(src).name} (confidence {found.confidence:.0%})")
-    tgt = langdetect.default_target(src) if args.tgt == "auto" else args.tgt
+    tgt = langdetect.default_target(src, cfg.target_lang) if args.tgt == "auto" else args.tgt
     languages.get(src), languages.get(tgt)
     if src == tgt:
         print(f"[X] Source and target are both {languages.get(src).name}. Use --tgt to choose a target.")

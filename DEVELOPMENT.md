@@ -27,7 +27,8 @@ src/sbt/
   hardware/     detection (CPU/RAM/GPU) and model recommendation
   privacy/      NetworkGuard
   winfonts.py   installed Windows fonts, font faces, theme fonts per script
-  ui/           desktop app back end: app.py (window, drag & drop), api.py (functions the page calls),
+  ui/           desktop app back end: app.py (window, drag & drop, --selftest), api.py (functions the page calls),
+                model_copy.py (models from a folder / USB stick, verified),
                 runner.py (job thread, progress, cancel), review.py, pages.py (side-by-side pictures),
                 downloads.py, settings_store.py
   settings.py   config/default.toml + %LOCALAPPDATA%\SmartBuildingTranslator\settings.toml

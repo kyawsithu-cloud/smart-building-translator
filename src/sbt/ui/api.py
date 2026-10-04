@@ -27,7 +27,7 @@ from sbt.storage.glossary_repo import GlossaryRepo
 from sbt.storage.jobs_repo import JobRepo
 from sbt.storage.memory import TranslationMemory
 from sbt.terminology.glossary import Term
-from sbt.ui import downloads, pages, review, settings_store
+from sbt.ui import downloads, model_copy, pages, review, settings_store
 from sbt.ui.runner import JobRunner
 
 VERSION = __version__
@@ -53,6 +53,7 @@ class Api:
         self._window: Any = None                  # set by app.py; private so pywebview does not expose it
         self._runner = runner or JobRunner()
         self._downloader = downloads.Downloader()
+        self._copier = model_copy.Copier()
 
     # --- helpers --------------------------------------------------------------------------------------
     @staticmethod
@@ -79,6 +80,7 @@ class Api:
             "engine_installed": engine_path().exists(),
             "model_installed": model_path(PROFILES[s.model]).exists(),
             "data_dir": str(settings_mod.data_dir()),
+            "setup_done": s.setup_done,
         }
 
     # --- choosing a file --------------------------------------------------------------------------------
@@ -101,7 +103,7 @@ class Api:
             text = _ocr_first_page(p)
             notes.append("Scanned PDF: the text will be read by OCR (check the result in Review).")
         found = langdetect.detect(text) if text.strip() else langdetect.Detection("en", 0.0)
-        target = langdetect.default_target(found.language)
+        target = langdetect.default_target(found.language, self._settings().target_lang)
         return {"path": str(p), "name": p.name, "folder": str(p.parent), "type": p.suffix[1:].upper(),
                 "size_kb": round(p.stat().st_size / 1024), "pages": model.container_count,
                 "paragraphs": len(model.segments), "detected": found.language,
@@ -419,6 +421,69 @@ class Api:
         except OSError:
             free = None
         return {"path": str(folder), "custom": bool(settings_store.current().get("runtime_dir")), "free_gb": free}
+
+    # --- first-start setup guide --------------------------------------------------------------------------
+    def setup_status(self) -> dict[str, object]:
+        from sbt.download import SIZE_MB
+        hw = detect()
+        rec = recommend(hw, self._settings().model)
+        return {
+            "hardware": {"cpu": hw.cpu, "cores": hw.cores, "ram_gib": hw.ram_gib,
+                         "gpus": [g.__dict__ for g in hw.gpus]},
+            "recommendation": {"model": rec.model, "placement": rec.placement, "expectation": rec.expectation},
+            "runtime": self._runtime_info(),
+            "installed": {i.id: downloads.installed(i.id) for i in downloads.CATALOGUE},
+            "sizes_mb": {i.id: sum(SIZE_MB.get(a, 0) for a in i.assets) for i in downloads.CATALOGUE},
+            "settings": settings_store.current(),
+            "progress": self.setup_progress(),
+        }
+
+    def setup_progress(self) -> dict[str, object]:
+        return {"download": dict(self._downloader.state.__dict__), "copy": dict(self._copier.state.__dict__)}
+
+    def _busy_check(self) -> None:
+        if self._runner.busy or self._downloader.state.status == "running" or self._copier.state.status == "running":
+            raise RuntimeError("Wait until the current translation, download or copy has finished.")
+
+    def setup_download(self, items: list[str]) -> None:
+        """Download what is not installed yet, of the components chosen in the guide, in one run."""
+        self._busy_check()
+        wanted = [i for i in downloads.CATALOGUE if i.id in items and not downloads.installed(i.id)]
+        assets = tuple(a for i in wanted for a in i.assets)
+        if assets:
+            self._downloader.start_assets(assets, "setup")
+
+    def scan_models_folder(self, path: str | None = None) -> dict[str, object] | None:
+        """What a folder or USB stick contains (engine, models). Without `path`, the user picks the folder."""
+        if not path:
+            import webview
+            result = self._window.create_file_dialog(webview.FileDialog.FOLDER)
+            if not result:
+                return None
+            path = str(result[0] if isinstance(result, (list, tuple)) else result)
+        return model_copy.scan(Path(path))
+
+    def use_models_folder(self, path: str) -> dict[str, object]:
+        """Use the engine and models where they are (a folder on this PC)."""
+        self._busy_check()
+        found = model_copy.scan(Path(path))
+        if not found["engine"] and not found["components"]:
+            raise ValueError("No translation engine or models were found in that folder.")
+        settings_store.save({"runtime_dir": str(found["path"])})
+        return self._runtime_info()
+
+    def copy_models(self, path: str) -> None:
+        """Copy the engine and models from a folder or USB stick into this PC's models folder, verified."""
+        self._busy_check()
+        self._copier.start(Path(path), settings_mod.runtime_dir())
+
+    def cancel_setup(self) -> None:
+        self._downloader.cancel()
+        self._copier.cancel()
+
+    def finish_setup(self, target_lang: str = "") -> dict[str, object]:
+        settings_store.save({"target_lang": target_lang or "", "setup_done": True})
+        return self.app_info()
 
     def download(self, item_id: str) -> None:
         self._downloader.start(item_id)

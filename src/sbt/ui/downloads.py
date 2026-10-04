@@ -77,30 +77,56 @@ def delete(item_id: str) -> None:
 @dataclass
 class DownloadState:
     item: str = ""
-    status: str = "idle"           # idle | running | done | failed
-    asset: str = ""
-    percent: int = 0
+    status: str = "idle"           # idle | running | done | failed | cancelled
+    asset: str = ""                # file being downloaded now
+    percent: int = 0               # of that file
+    overall: int = 0               # of everything in this run (by size)
+    total_mb: int = 0
+    finished: list[str] = field(default_factory=list)   # files downloaded and verified
     message: str = ""
     log: list[str] = field(default_factory=list)
 
 
 class Downloader:
+    """Runs `sbt download --only …` in a separate process and follows its progress lines."""
+
     def __init__(self) -> None:
         self.state = DownloadState()
         self._proc: subprocess.Popen[str] | None = None
+        self._sizes: dict[str, int] = {}
+        self._done: dict[str, int] = {}
 
     def start(self, item_id: str) -> None:
         item = next((i for i in CATALOGUE if i.id == item_id), None)
         if item is None:
             raise ValueError("Unknown download")
+        self.start_assets(item.assets, item_id)
+
+    def start_assets(self, assets: tuple[str, ...], label: str) -> None:
+        """Several files in one run (the setup guide): one overall progress bar."""
+        from sbt.download import SIZE_MB
         if self.state.status == "running":
             raise RuntimeError("A download is already running")
-        self.state = DownloadState(item=item_id, status="running")
-        cmd = command(item.assets)
-        self._proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
+        if not assets:
+            raise ValueError("Nothing to download")
+        self._sizes = {a: SIZE_MB.get(a, 100) for a in assets}
+        self._done = dict.fromkeys(assets, 0)
+        self.state = DownloadState(item=label, status="running", total_mb=sum(self._sizes.values()))
+        self._proc = subprocess.Popen(command(assets), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
                                       encoding="utf-8", errors="replace",
                                       creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
         threading.Thread(target=self._follow, daemon=True).start()
+
+    def cancel(self) -> None:
+        if self._proc is not None and self.state.status == "running":
+            self.state.status = "cancelled"
+            self._proc.terminate()          # a partly downloaded file is kept as .part and resumed next time
+
+    def _progress(self, name: str, pct: int) -> None:
+        if name in self._done:
+            self._done[name] = self._sizes[name] * pct // 100
+            total = sum(self._sizes.values())
+            self.state.overall = min(100, sum(self._done.values()) * 100 // total) if total else 0
 
     def _follow(self) -> None:
         assert self._proc and self._proc.stdout
@@ -109,12 +135,19 @@ class Downloader:
             m = _LINE.match(line)
             if m and m.group("pct"):
                 self.state.asset, self.state.percent = m.group("name"), int(m.group("pct"))
+                self._progress(m.group("name"), int(m.group("pct")))
             elif line:
+                if m and ("verified" in line or "hash OK" in line):
+                    self._progress(m.group("name"), 100)
+                    self.state.finished.append(m.group("name"))
                 self.state.message = line[:200]
                 self.state.log.append(line[:200])
         code = self._proc.wait()
-        if code == 0:
-            self.state.status, self.state.percent, self.state.message = "done", 100, "Installed and verified"
+        if self.state.status == "cancelled":
+            self.state.message = "Download cancelled"
+        elif code == 0:
+            self.state.status, self.state.percent, self.state.overall = "done", 100, 100
+            self.state.message = "Installed and verified"
         else:
             self.state.status = "failed"
             self.state.message = next((ln for ln in reversed(self.state.log) if "MISMATCH" in ln or "Error" in ln),

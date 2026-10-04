@@ -23,9 +23,15 @@ export const settingsView = {
       input.addEventListener("change", () => onchange(input.checked));
       return el("label", { class: "switch" }, input, el("div", {}, el("div", { class: "t" }, title), el("div", { class: "d" }, desc)));
     };
+    const target = el("select", { onchange: (e) => save({ target_lang: e.target.value }) },
+      el("option", { value: "", selected: !s.target_lang }, "Automatic — English ↔ Japanese, other languages → English"),
+      state.info.languages.map((l) => el("option", { value: l.code, selected: s.target_lang === l.code }, l.name)));
     return el("section", { class: "view" },
       el("div", {}, el("h1", {}, "Settings")),
       el("div", { class: "card" }, el("h2", {}, "Appearance"), theme),
+      el("div", { class: "card" }, el("h2", {}, "Usually translate into"),
+        el("label", { class: "field", style: "max-width:520px" }, target),
+        el("p", { class: "muted small", style: "margin:8px 0 0" }, "Preselected for every document; you can still choose another language before translating.")),
       el("div", { class: "card", style: "display:flex;flex-direction:column;gap:16px" }, el("h2", { style: "margin:0" }, "Translation"),
         toggle("Keep recurring terms consistent", "Terms that appear several times are translated the same way throughout the document.",
           s.doc_terms !== "off", (v) => save({ doc_terms: v ? "vote" : "off" })),
