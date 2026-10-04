@@ -1,6 +1,6 @@
 // Models & hardware: detected hardware, recommendation (measured speeds only), install/delete components.
 import { call } from "../api.js";
-import { show } from "../app.js";
+import { show, state } from "../app.js";
 import { icon } from "../icons.js";
 import { el, btn, toast, dialog, confirmDialog } from "../ui.js";
 
@@ -23,18 +23,42 @@ export const modelsView = {
       el("div", { class: "card" }, el("h2", {}, `Recommended: ${rec.model} on ${rec.placement}`),
         el("p", { class: "muted", style: "margin:0" }, rec.expectation),
         rec.notes.map((n) => el("div", { class: "note warn", style: "margin-top:10px" }, icon("alert"), n))),
+      folderCard(sys.runtime),
       el("div", { class: "card" }, el("h2", {}, "Components"),
         el("table", { class: "table" }, el("tbody", {}, sys.items.map((it) => row(it, sys.download))))));
     clearInterval(timer);
     if (sys.download.status === "running") timer = setInterval(async () => {
       const d = await call("download_status");
-      if (d.status !== "running") { clearInterval(timer); timer = null; toast(d.status === "done" ? "Installed and verified" : d.message, d.status === "done" ? "" : "err"); }
+      if (d.status !== "running") {
+        clearInterval(timer); timer = null;
+        toast(d.status === "done" ? "Installed and verified" : d.message, d.status === "done" ? "" : "err");
+        await refreshInfo();
+      }
       show("models");
     }, 1000);
     return root;
   },
   leave() { clearInterval(timer); timer = null; },
 };
+
+// Where the engine and models are kept: e.g. a folder copied from another PC (no new download) or a larger drive.
+function folderCard(rt) {
+  const change = async (method) => {
+    try { await call(method); await refreshInfo(); show("models"); } catch (e) { toast(e.message, "err"); }
+  };
+  return el("div", { class: "card" },
+    el("div", { class: "card-row" },
+      el("div", { style: "flex:1;min-width:0" }, el("h2", { style: "margin:0 0 4px" }, "Models folder"),
+        el("div", { class: "path" }, rt.path),
+        el("div", { class: "muted small", style: "margin-top:4px" },
+          `${rt.free_gb != null ? `${rt.free_gb} GB free on this drive. ` : ""}Already have the models (e.g. copied from another PC)? Choose that folder instead of downloading again.`)),
+      btn("Change…", { icon: "folder", onclick: () => change("choose_runtime_dir") }),
+      rt.custom ? btn("Use default", { onclick: () => change("reset_runtime_dir") }) : null));
+}
+
+async function refreshInfo() {
+  try { state.info = await call("app_info"); } catch { /* keep the old state */ }
+}
 
 function row(it, dl) {
   const running = dl.status === "running" && dl.item === it.id;

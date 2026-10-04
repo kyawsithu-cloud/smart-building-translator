@@ -11,3 +11,7 @@ runtime/
 runtime_download.log
 .claude/
 *.egg-info/
+
+# Windows app build (packaging/build.py)
+/build/
+/dist/

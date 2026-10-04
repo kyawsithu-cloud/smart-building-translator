@@ -11,13 +11,15 @@ import httpx
 
 from sbt.engines.profiles import ModelProfile
 from sbt.hardware.probe import free_vram_mib
-from sbt.settings import PROJECT_ROOT
+from sbt.settings import runtime_dir
 
-RUNTIME = PROJECT_ROOT / "runtime"
+
+def engine_path() -> Path:
+    return runtime_dir() / "llama" / "llama-server.exe"
 
 
 def model_path(profile: ModelProfile) -> Path:
-    return RUNTIME / "models" / profile.file
+    return runtime_dir() / "models" / profile.file
 
 
 def vram_needed_mib(profile: ModelProfile) -> int:
@@ -48,13 +50,13 @@ class LlamaServer:
         self.gpu_layers = gpu_layers          # None = decide from free VRAM at start-up; "0" = CPU only
         self._proc: subprocess.Popen[bytes] | None = None
         self._log: IO[bytes] | None = None
-        self.log_path = RUNTIME / "logs" / f"llama-server-{profile.id}.log"
+        self.log_path = runtime_dir() / "logs" / f"llama-server-{profile.id}.log"
 
     def __enter__(self) -> LlamaServer:
         model = model_path(self.profile)
-        exe = RUNTIME / "llama" / "llama-server.exe"
+        exe = engine_path()
         if not exe.exists():
-            raise FileNotFoundError(f"Translation engine not installed: {exe.relative_to(PROJECT_ROOT)}")
+            raise FileNotFoundError(f"Translation engine not installed: {exe}")
         if not model.exists():
             raise FileNotFoundError(f"Model not installed: {model.name} (see MODEL_SETUP.md)")
         self.log_path.parent.mkdir(parents=True, exist_ok=True)

@@ -30,7 +30,7 @@ if not exist "runtime\models\HY-MT2-7B-Q6_K.gguf" set "MISSING=1"
 if defined MISSING (
   echo [!] The translation engine and model are not installed yet ^(about 7 GB^).
   echo     Copy the runtime folder from another PC, or download with:
-  echo     .venv\Scripts\python.exe scripts\download_phase1.py --only llama-cuda cudart hy-mt2-7b
+  echo     .venv\Scripts\python.exe -m sbt download --only llama-cuda cudart hy-mt2-7b
 )
 where nvidia-smi >nul 2>&1
 if errorlevel 1 (

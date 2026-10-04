@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 
-from sbt.engines.llama_server import RUNTIME, model_path
+from sbt.engines.llama_server import engine_path, model_path
 from sbt.engines.profiles import PROFILES
 from sbt.hardware.probe import detect
 from sbt.hardware.recommend import recommend
@@ -24,7 +24,7 @@ def run(args: argparse.Namespace, cfg: Settings) -> int:
     else:
         print("  GPU:   no NVIDIA GPU detected")
 
-    engine = RUNTIME / "llama" / "llama-server.exe"
+    engine = engine_path()
     print("\nTranslation engine")
     print(f"  llama-server: {'installed' if engine.exists() else 'NOT installed'}")
     print("\nModels")

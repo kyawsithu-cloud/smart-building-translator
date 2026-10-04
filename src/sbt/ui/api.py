@@ -6,17 +6,18 @@ to JavaScript start with an underscore (pywebview walks public attributes).
 from __future__ import annotations
 
 import os
+import shutil
 import subprocess
 from collections import Counter
 from pathlib import Path
 from typing import Any
 
-from sbt import formats, langdetect, languages
+from sbt import __version__, formats, langdetect, languages
 from sbt import settings as settings_mod
 from sbt.app import checks
 from sbt.app.jobs import JobSpec
 from sbt.domain.models import DocumentError
-from sbt.engines.llama_server import RUNTIME, model_path
+from sbt.engines.llama_server import engine_path, model_path
 from sbt.engines.profiles import PROFILES
 from sbt.hardware.probe import detect
 from sbt.hardware.recommend import recommend
@@ -29,7 +30,7 @@ from sbt.terminology.glossary import Term
 from sbt.ui import downloads, pages, review, settings_store
 from sbt.ui.runner import JobRunner
 
-VERSION = "0.5.0"
+VERSION = __version__
 EXPLAIN = {
     "overflow": "text may not fit its box even after shrinking",
     "font_reduced": "text box font reduced to fit",
@@ -75,7 +76,7 @@ class Api:
             "version": VERSION, "mode": "offline",
             "languages": [{"code": c, "name": lang.name} for c, lang in languages.LANGUAGES.items()],
             "glossaries": names, "settings": settings_store.current(),
-            "engine_installed": (RUNTIME / "llama" / "llama-server.exe").exists(),
+            "engine_installed": engine_path().exists(),
             "model_installed": model_path(PROFILES[s.model]).exists(),
             "data_dir": str(settings_mod.data_dir()),
         }
@@ -385,7 +386,39 @@ class Api:
                        "languages": sorted(PROFILES[i.id].languages) if i.id in PROFILES else []}
                       for i in downloads.CATALOGUE],
             "download": self._downloader.state.__dict__,
+            "runtime": self._runtime_info(),
         }
+
+    def choose_runtime_dir(self) -> dict[str, object]:
+        """Use another folder for the engine and models: one copied from another PC (no new download), or a
+        drive with more space for downloads."""
+        import webview
+        if self._runner.busy or self._downloader.state.status == "running":
+            raise RuntimeError("Wait until the current translation or download has finished.")
+        result = self._window.create_file_dialog(webview.FileDialog.FOLDER)
+        if not result:
+            return self._runtime_info()
+        folder = Path(result[0] if isinstance(result, (list, tuple)) else result)
+        if (folder / "runtime" / "models").is_dir() and not (folder / "models").is_dir():
+            folder = folder / "runtime"              # the project folder was chosen: use its runtime folder
+        settings_store.save({"runtime_dir": str(folder)})
+        return self._runtime_info()
+
+    def reset_runtime_dir(self) -> dict[str, object]:
+        if self._runner.busy or self._downloader.state.status == "running":
+            raise RuntimeError("Wait until the current translation or download has finished.")
+        settings_store.save({"runtime_dir": ""})
+        return self._runtime_info()
+
+    @staticmethod
+    def _runtime_info() -> dict[str, object]:
+        folder = settings_mod.runtime_dir()
+        probe = folder if folder.exists() else folder.anchor
+        try:
+            free = round(shutil.disk_usage(probe).free / 2**30, 1)
+        except OSError:
+            free = None
+        return {"path": str(folder), "custom": bool(settings_store.current().get("runtime_dir")), "free_gb": free}
 
     def download(self, item_id: str) -> None:
         self._downloader.start(item_id)

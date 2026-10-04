@@ -15,9 +15,8 @@ from typing import Any
 import numpy as np
 
 from sbt.ocr import ja_fix
-from sbt.settings import PROJECT_ROOT
+from sbt.settings import runtime_dir
 
-OCR_DIR = PROJECT_ROOT / "runtime" / "ocr"
 _EXTRA_REC = {"ko": "korean_PP-OCRv5_rec_mobile.onnx", "th": "th_PP-OCRv5_rec_mobile.onnx"}
 _BUNDLED = {"en", "ja", "zh", "de", "fr", "es"}
 log = logging.getLogger(__name__)
@@ -35,7 +34,7 @@ class OcrLine:
 
 
 def available(lang: str) -> bool:
-    return lang in _BUNDLED or (lang in _EXTRA_REC and (OCR_DIR / _EXTRA_REC[lang]).exists())
+    return lang in _BUNDLED or (lang in _EXTRA_REC and (runtime_dir() / "ocr" / _EXTRA_REC[lang]).exists())
 
 
 @lru_cache(maxsize=4)
@@ -43,7 +42,7 @@ def _engine(lang: str) -> Any:
     from rapidocr import RapidOCR
     params: dict[str, object] = {"Global.log_level": "error"}
     if lang in _EXTRA_REC:
-        rec = OCR_DIR / _EXTRA_REC[lang]
+        rec = runtime_dir() / "ocr" / _EXTRA_REC[lang]
         if not rec.exists():
             raise OcrUnavailable(f"OCR model for this language is not installed ({rec.name}); see MODEL_SETUP.md")
         params["Rec.model_path"] = str(rec)

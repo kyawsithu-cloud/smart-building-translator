@@ -5,13 +5,30 @@ English and Japanese
 (plus Chinese, Korean, Burmese, Thai, German, French, Spanish), with terminology control and formatting
 preservation. Domain: smart buildings, BMS/BAS, HVAC, energy, IoT.
 
-**Status: Phase 5 — quality control.** Results: [Phase 1](eval/results/PHASE1_RESULTS.md),
+**Status: Phase 6 — Windows app (version 1.0.0).** Results: [Phase 1](eval/results/PHASE1_RESULTS.md),
 [Phase 2](eval/results/PHASE2_RESULTS.md), [Phase 3](eval/results/PHASE3_RESULTS.md),
-[Phase 4](eval/results/PHASE4_RESULTS.md), [Phase 5](eval/results/PHASE5_RESULTS.md).
+[Phase 4](eval/results/PHASE4_RESULTS.md), [Phase 5](eval/results/PHASE5_RESULTS.md),
+[Phase 6](eval/results/PHASE6_RESULTS.md).
 Design: [ARCHITECTURE.md](ARCHITECTURE.md).
 
+## Install the app (Windows 10/11, no Python needed)
+1. Run `SmartBuildingTranslator-1.0.0-Setup.exe` (built with `packaging\build.py`, see DEVELOPMENT.md). It
+   installs for your user only (no administrator rights) and adds a Start menu entry (desktop icon optional).
+   The installer and the app are not code-signed: Windows SmartScreen may say "Windows protected your PC" —
+   choose *More info → Run anyway* if the file came from your own build (compare its SHA-256 with
+   `dist\SHA256SUMS.txt`).
+2. Start **Smart Building Translator**, open **Models** and download the translation engine and the Hy-MT2 model
+   (about 7 GB, once; hash-verified and virus-scanned) — or, if this PC already has them (for example this
+   project's `runtime` folder, or one copied from another PC), click **Models folder → Change…** and choose that
+   folder instead. Nothing needs downloading again.
+3. Drop a `.pptx` or `.pdf` onto the window.
+
+A portable copy (`SmartBuildingTranslator-1.0.0-portable.zip`, unzip anywhere) works the same way. Command-line
+tools are installed next to the app: `sbt.exe translate …`, `sbt.exe check …` (same commands as below).
+Uninstall from *Settings → Apps*; it asks whether to delete your glossaries, history and downloaded models too.
+
 ## Translate a document
-**Easiest:** double-click `start.bat` and drop a `.pptx` or `.pdf` file onto the window. The language is
+**Easiest:** start the app (or `start.bat` when running from the source folder) and drop a `.pptx` or `.pdf` file onto the window. The language is
 detected automatically (English → Japanese, Japanese → English, other languages → English) and can be changed
 before you press **Translate**. Or drag a file onto `translate.bat` (no window, same result).
 
@@ -105,7 +122,8 @@ Your glossary, translation memory and job history are stored on this PC in
 includes document content. Optional settings go in `%LOCALAPPDATA%\SmartBuildingTranslator\settings.toml`
 (see `config/default.toml` for the keys).
 
-## Install from GitHub (Windows 11)
+## Run from the source code (Windows 11)
+For development, or instead of the installer:
 1. Install **Python 3.13 (64-bit)** from python.org.
 2. Download this repository (green **Code** button → *Download ZIP*, then unzip; or `git clone`).
 3. Double-click `setup.bat` (downloads the small Python libraries from PyPI).
@@ -113,13 +131,17 @@ includes document content. Optional settings go in `%LOCALAPPDATA%\SmartBuilding
    (about 7 GB, from their official sources; every file is SHA-256-verified and scanned by Windows Defender).
    Optional: Qwen3 for repair of flagged paragraphs (+5.6 GB). The same from a terminal:
    ```
-   .venv\Scripts\python.exe scripts\download_phase1.py --only llama-cuda cudart hy-mt2-7b
+   .venv\Scripts\python.exe -m sbt download --only llama-cuda cudart hy-mt2-7b
    ```
 5. Drop a `.pptx` or `.pdf` onto the window.
 
 After installation everything runs **offline**. No document content ever leaves the PC.
 
 ## Use on another PC
+**With the installer:** install the app there, copy the `runtime` folder (engine + models, about 7–13 GB) on a
+USB drive, and choose it in *Models → Models folder*. The glossary moves with `Glossary → Export / Import`.
+
+**From the source folder:**
 1. Install **Python 3.13 (64-bit)** on the new PC (keep "py launcher" ticked).
 2. Copy this whole folder (~13 GB). You can skip `.venv` and `runtime\downloads`.
 3. Double-click `setup.bat`. It works offline: the libraries are in `runtime\wheels`.
@@ -133,7 +155,7 @@ Without an NVIDIA GPU it runs on the CPU (about 5 min per 10 slides). An NVIDIA 
 ```
 py -3.13 -m venv .venv
 .venv\Scripts\python -m pip install -e .[dev]
-py -3.13 scripts/download_phase1.py                 # runtime + models, hash-verified
+.venv\Scripts\python -m sbt download             # engine + models, hash-verified
 .venv\Scripts\python scripts/make_test_decks.py      # public test decks
 .venv\Scripts\python -m pytest                       # unit tests (no model needed)
 .venv\Scripts\python scripts/run_eval.py --models hy-mt2-7b --repair qwen3-8b   # scorecard
@@ -167,8 +189,8 @@ py -3.13 scripts/download_phase1.py                 # runtime + models, hash-ver
 - The quality checks find missing, partial, inconsistent and altered content, but not a fluent sentence with
   the wrong meaning (there is no reference translation offline).
 - Slide pictures in Review's page comparison need Microsoft PowerPoint (PDF pages work without it).
-- The desktop app needs the Microsoft Edge WebView2 Runtime (included in Windows 11). It is not yet a single
-  `.exe` (Phase 6); it runs from this folder via `start.bat`.
+- The desktop app needs the Microsoft Edge WebView2 Runtime (included in Windows 11; the installer checks for it).
+- The installer and the programs are not code-signed (no certificate), so SmartScreen warns on first start.
 
 ## Licence
 MIT for this project's code (see `LICENSE`). Models are downloaded separately under their own

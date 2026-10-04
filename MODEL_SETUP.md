@@ -7,12 +7,23 @@ anything) and `--no-webui`. It is started and stopped automatically for each job
 that are still flagged after retries (Phase 2: it fixed the one remaining omission on the test deck). It is not
 used for Burmese, where it was measured to be poor. Check what is installed with `python -m sbt doctor`.
 
-## Install (Phase 1)
+## Where the engine and models are kept
+| Running | Models folder |
+|---|---|
+| installed app | `%LOCALAPPDATA%\SmartBuildingTranslator\runtime` |
+| from the source folder | `runtime\` in this folder |
+| either, after *Models → Models folder → Change…* | the folder you chose (setting `runtime_dir`) |
+
+The folder holds `llama\` (engine), `models\` (GGUF files), `ocr\` (optional OCR models) and `logs\`. A folder
+copied from another PC (or this project's `runtime` folder) can be chosen directly — no download needed. Choosing
+a folder on another drive also makes new downloads go there.
+
+## Install
 ```
-py -3.13 scripts/download_phase1.py            # everything
-py -3.13 scripts/download_phase1.py --only hy-mt2-7b
+.venv\Scripts\python -m sbt download            # everything (installed app: sbt.exe download)
+.venv\Scripts\python -m sbt download --only hy-mt2-7b
 ```
-Files go to `runtime/` (git-ignored). Every file is pinned to an exact GitHub release / Hugging Face commit and
+Files go to the models folder above (`runtime/` in the source folder, git-ignored). Every file is pinned to an exact GitHub release / Hugging Face commit and
 checked against the SHA-256 published by that source; a mismatch deletes the file. The llama.cpp binaries are
 also scanned with Windows Defender after extraction. GGUF model files are pure weight data (no executable code).
 
@@ -28,7 +39,7 @@ CAT-Translate-7B was tested in Phase 1 and removed: it altered identifiers such 
 Runs on the CPU with ONNX Runtime; about 1–3 s per page. Fully offline.
 - **English, Japanese, Chinese and Latin-script languages**: the multilingual PP-OCRv6 models ship inside the
   `rapidocr` Python package — nothing to download.
-- **Korean, Thai** (optional, 13 MB + 8 MB): `.venv\Scripts\python.exe scripts\download_phase1.py --only ocr-ko ocr-th`
+- **Korean, Thai** (optional, 13 MB + 8 MB): `.venv\Scripts\python.exe -m sbt download --only ocr-ko ocr-th`
   (RapidOCR's official model host, checked against the SHA-256 published in the rapidocr package).
 - **Burmese**: no OCR model exists in this family; scanned Burmese pages are reported as not translatable.
 
@@ -43,5 +54,5 @@ Measured accuracy on the public scanned test PDFs: see eval/results/PHASE3_RESUL
 
 ## Adding a model
 Add a `ModelProfile` in `src/sbt/engines/profiles.py` (file, prompt style, languages, sampling) and a pinned
-entry in `scripts/download_phase1.py`. If the model needs a new prompt format, add a builder in
+entry in `src/sbt/download.py`. If the model needs a new prompt format, add a builder in
 `src/sbt/engines/prompts.py`.

@@ -51,6 +51,11 @@ Verified in Phase 1: the engine logs were searched for test phrases, IP addresse
 
 ## Other guarantees
 - No telemetry, analytics, crash upload or update check.
-- Model downloads happen only when you run the download script: pinned versions from the official sources,
-  SHA-256 checked, program files scanned by Windows Defender.
+- Model downloads happen only when you click Download (or run `sbt download`): pinned versions from the official
+  sources, SHA-256 checked, program files scanned by Windows Defender.
+- The installer copies files only; it downloads nothing and needs no administrator rights. The installed app has
+  the same guarantees as running from source (network guard, page security policy, local data only). Uninstalling
+  asks before deleting `%LOCALAPPDATA%\SmartBuildingTranslator` (glossaries, memory, history, models).
+- Each build is scanned with Windows Defender and its SHA-256 recorded in `dist\SHA256SUMS.txt`. The programs are
+  not code-signed.
 - Optional encryption at rest (DPAPI-protected key) for the database is planned, not implemented.

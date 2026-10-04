@@ -1,7 +1,7 @@
 """Model downloads from the Models screen.
 
-Downloads run in a separate process (scripts/download_phase1.py: pinned URLs, SHA-256 check, Defender scan of
-program files). The UI process — which holds document content — keeps its network guard on and never connects
+Downloads run in a separate process (`sbt download`, see sbt/download.py: pinned URLs, SHA-256 check,
+Defender scan of program files). The UI process — which holds document content — keeps its network guard on and never connects
 to the internet itself. Nothing is downloaded without an explicit click and confirmation.
 """
 from __future__ import annotations
@@ -11,12 +11,12 @@ import subprocess
 import sys
 import threading
 from dataclasses import dataclass, field
+from pathlib import Path
 
-from sbt.engines.llama_server import RUNTIME, model_path
+from sbt.engines.llama_server import engine_path, model_path
 from sbt.engines.profiles import PROFILES
-from sbt.settings import PROJECT_ROOT
+from sbt.settings import FROZEN, runtime_dir
 
-SCRIPT = PROJECT_ROOT / "scripts" / "download_phase1.py"
 _LINE = re.compile(r"^\[(?P<name>[\w.-]+)\] (?:(?P<pct>\d+)% of (?P<mb>\d+) MB|(?P<msg>.+))$")
 
 
@@ -43,14 +43,25 @@ CATALOGUE = [
     Item("ocr-th", "Thai OCR (optional)", ("ocr-th",), "8 MB", "modelscope.cn/models/RapidAI/RapidOCR",
          "Apache-2.0", "Reads scanned Thai pages"),
 ]
-_FILES = {"hy-mt2-7b": model_path(PROFILES["hy-mt2-7b"]), "qwen3-8b": model_path(PROFILES["qwen3-8b"]),
-          "ocr-ko": RUNTIME / "ocr" / "korean_PP-OCRv5_rec_mobile.onnx",
-          "ocr-th": RUNTIME / "ocr" / "th_PP-OCRv5_rec_mobile.onnx",
-          "engine": RUNTIME / "llama" / "llama-server.exe"}
+
+
+def _file(item_id: str) -> Path:
+    """The file that shows a component is installed (looked up each time: the models folder can change)."""
+    return {"hy-mt2-7b": lambda: model_path(PROFILES["hy-mt2-7b"]), "qwen3-8b": lambda: model_path(PROFILES["qwen3-8b"]),
+            "ocr-ko": lambda: runtime_dir() / "ocr" / "korean_PP-OCRv5_rec_mobile.onnx",
+            "ocr-th": lambda: runtime_dir() / "ocr" / "th_PP-OCRv5_rec_mobile.onnx",
+            "engine": engine_path}[item_id]()
+
+
+def command(assets: tuple[str, ...]) -> list[str]:
+    """The downloader process: sbt.exe next to the packaged app, or `python -m sbt` in development."""
+    if FROZEN:
+        return [str(Path(sys.executable).with_name("sbt.exe")), "download", "--only", *assets]
+    return [sys.executable, "-u", "-m", "sbt", "download", "--only", *assets]
 
 
 def installed(item_id: str) -> bool:
-    return _FILES[item_id].exists()
+    return _file(item_id).exists()
 
 
 def deletable(item_id: str) -> bool:
@@ -60,7 +71,7 @@ def deletable(item_id: str) -> bool:
 def delete(item_id: str) -> None:
     if not deletable(item_id):
         raise ValueError("This component cannot be deleted from the app")
-    _FILES[item_id].unlink(missing_ok=True)
+    _file(item_id).unlink(missing_ok=True)
 
 
 @dataclass
@@ -85,7 +96,7 @@ class Downloader:
         if self.state.status == "running":
             raise RuntimeError("A download is already running")
         self.state = DownloadState(item=item_id, status="running")
-        cmd = [sys.executable, "-u", str(SCRIPT), "--only", *item.assets]
+        cmd = command(item.assets)
         self._proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
                                       encoding="utf-8", errors="replace",
                                       creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))

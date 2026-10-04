@@ -1,6 +1,8 @@
 """Starts the desktop window.
 
-    python -m sbt ui        (or start.bat, which hides the console window)
+    SmartBuildingTranslator.exe     (installed app)
+    python -m sbt ui                (development; start.bat hides the console window)
+    … --selftest result.json        open the window, check page, bridge and paths, write the result, close
 
 Offline guarantees: the network guard is installed before anything else, the page has a content security
 policy that blocks every external request, and the only server involved is pywebview's own file server on
@@ -11,12 +13,16 @@ from __future__ import annotations
 import json
 import logging
 import sys
+import threading
+import time
 from logging.handlers import RotatingFileHandler
+from pathlib import Path
 
 from sbt.privacy import network_guard
-from sbt.settings import PROJECT_ROOT, data_dir
+from sbt.settings import FROZEN, PROJECT_ROOT, data_dir, runtime_dir
 
 UI_DIR = PROJECT_ROOT / "ui"
+_STARTED = time.time()
 log = logging.getLogger("sbt.ui")
 
 
@@ -51,7 +57,67 @@ def _register_drop(window) -> None:  # type: ignore[no-untyped-def]
     doc.events.drop += DOMEventHandler(on_drop, True, True)
 
 
-def main(debug: bool = False) -> int:
+def _selftest_translation(api, document: Path) -> dict[str, object]:  # type: ignore[no-untyped-def]
+    """The app's own translation path (job thread, engine, quality checks, Review, page pictures)."""
+    info = api.inspect_file(str(document))
+    api.start_translation({"path": str(document), "source": info["detected"], "target": info["target"],
+                           "memory": False})
+    deadline = time.time() + 900
+    status = api.job_status()
+    while status["status"] == "running" and time.time() < deadline:
+        time.sleep(1)
+        status = api.job_status()
+    out: dict[str, object] = {"status": status["status"], "error": status.get("error", ""),
+                              "stages": status.get("stages_done")}
+    result = status.get("result") or {}
+    if result:
+        summary = result["quality"]["summary"]
+        out.update({"segments": result["segments"], "translated_pct": result["translated_pct"],
+                    "output_written": Path(result["output"]).exists(),
+                    "quality": {k: (v["errors"], v["warnings"]) for k, v in summary.items()},
+                    "review_items": len(api.review_items())})
+        view = api.page_view(1)
+        out["page_view"] = {"available": view["available"], "reason": view.get("reason", ""),
+                            "has_pictures": str(view.get("translated", "")).startswith("data:image/png")}
+    return out
+
+
+def _selftest(window, api, result: Path, document: Path | None = None) -> None:  # type: ignore[no-untyped-def]
+    """Checks a packaged build without a person at the screen: page rendered, JavaScript bridge, paths and,
+    with a document, a complete translation through the app."""
+    from sbt import __version__
+    report: dict[str, object] = {"version": __version__, "frozen": FROZEN, "ui_dir": str(UI_DIR),
+                                 "runtime_dir": str(runtime_dir()), "data_dir": str(data_dir())}
+    try:
+        deadline = time.time() + 60
+        while time.time() < deadline:
+            try:
+                ready = window.evaluate_js("!!(window.pywebview && window.pywebview.api && "
+                                           "document.querySelector('.drop'))")
+            except Exception:  # noqa: BLE001 - page not ready yet
+                ready = False
+            if ready:
+                break
+            time.sleep(0.5)
+        report["ready_seconds"] = round(time.time() - _STARTED, 1)       # start → page usable
+        report["page_rendered"] = bool(window.evaluate_js("!!document.querySelector('.drop')"))
+        report["bridge_functions"] = window.evaluate_js("Object.keys(window.pywebview.api).length")
+        report["page_title"] = window.evaluate_js("document.title")
+        info = api.app_info()
+        report.update({k: info[k] for k in ("engine_installed", "model_installed", "mode")})
+        report["languages"] = len(info["languages"])  # type: ignore[arg-type]
+        report["ok"] = bool(report["page_rendered"]) and int(report["bridge_functions"] or 0) > 20  # type: ignore[call-overload]
+        if document is not None:
+            report["translation"] = translation = _selftest_translation(api, document)
+            report["ok"] = report["ok"] and translation["status"] == "done" and bool(translation.get("output_written"))
+    except Exception as e:  # noqa: BLE001 - reported, not raised
+        report["ok"] = False
+        report["error"] = f"{type(e).__name__}: {e}"
+    result.write_text(json.dumps(report, indent=2), encoding="utf-8")
+    window.destroy()
+
+
+def main(debug: bool = False, selftest: Path | None = None, selftest_document: Path | None = None) -> int:
     network_guard.install()
     _setup_logging()
     import webview
@@ -64,6 +130,8 @@ def main(debug: bool = False) -> int:
                                    width=1240, height=820, min_size=(900, 620), background_color="#f4f6f9")
     api._window = window
     window.events.loaded += lambda: _register_drop(window)
+    if selftest is not None:
+        threading.Thread(target=_selftest, args=(window, api, selftest, selftest_document), daemon=True).start()
     log.info("UI started")
     try:
         webview.start(debug=debug, private_mode=True)

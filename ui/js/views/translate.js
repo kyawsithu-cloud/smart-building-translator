@@ -73,8 +73,17 @@ async function chooseFile(slot) {
   } catch (e) { toast(e.message, "err"); }
 }
 
+function setupNote() {
+  const info = state.info;
+  if (info.engine_installed && info.model_installed) return null;
+  return el("div", { class: "note warn" }, icon("alert"),
+    el("div", { style: "flex:1" }, el("strong", {}, "The translation model is not installed yet. "),
+      "Download it in Models (about 7 GB, once), or choose a folder that already contains it."),
+    btn("Open Models", { kind: "primary", icon: "cpu", onclick: () => show("models") }));
+}
+
 function dropZone() {
-  return el("div", {},
+  return el("div", { style: "display:flex;flex-direction:column;gap:14px" }, setupNote(),
     el("div", { class: "drop" },
       icon("upload", "i big-icon"),
       el("div", { class: "t" }, "Drop a PowerPoint or PDF file here"),

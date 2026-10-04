@@ -127,8 +127,9 @@ export const mockApi = {
         { id: "hy-mt2-7b", label: "Hy-MT2 7B — main translator", size: "5.9 GB", licence: "Apache-2.0", purpose: "Translates all 9 languages", source: "huggingface.co/tencent/Hy-MT2-7B-GGUF", installed: true, deletable: true, languages: ["de", "en", "es", "fr", "ja", "ko", "my", "th", "zh"] },
         { id: "qwen3-8b", label: "Qwen3 8B — repair model (optional)", size: "5.6 GB", licence: "Apache-2.0", purpose: "Re-translates paragraphs that are still flagged", source: "huggingface.co/Qwen/Qwen3-8B-GGUF", installed: true, deletable: true, languages: ["de", "en", "es", "fr", "ja", "ko", "th", "zh"] },
         { id: "ocr-ko", label: "Korean OCR (optional)", size: "13 MB", licence: "Apache-2.0", purpose: "Reads scanned Korean pages", source: "modelscope.cn/models/RapidAI/RapidOCR", installed: false, deletable: true, languages: [] }],
-      download: { status: "idle" } };
+      download: { status: "idle" }, runtime: { path: "C:\\Users\\you\\AppData\\Local\\SmartBuildingTranslator\\runtime", custom: false, free_gb: 412.3 } };
   },
+  async choose_runtime_dir() { return {}; }, async reset_runtime_dir() { return {}; },
   async download() {}, async download_status() { return { status: "idle" }; }, async delete_model() {},
   async get_settings() { return settings; },
   async save_settings(c) { settings = { ...settings, ...c }; return settings; },

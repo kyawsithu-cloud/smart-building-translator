@@ -67,7 +67,7 @@ tests/unit/     fast tests; pipeline tests use a fake engine
   outputs are the held-out set — keep it that way.
 
 ## Adding a model
-1. Add a pinned entry (URL + SHA-256) to `scripts/download_phase1.py`.
+1. Add a pinned entry (URL + SHA-256) to `src/sbt/download.py`.
 2. Add a `ModelProfile` to `src/sbt/engines/profiles.py`: file, prompt style, languages it is *trusted* for,
    context size, sampling.
 3. If it needs its own prompt format, add a builder in `src/sbt/engines/prompts.py`.
@@ -78,6 +78,34 @@ tests/unit/     fast tests; pipeline tests use a fake engine
 2. A provider with `is_local=False` must not be constructible in offline mode, and needs the per-job consent
    flow described in PRIVACY.md (not built yet).
 
-## Building the Windows app (Phase 6, planned)
-PyInstaller (onedir) bundling the Python core + UI + `llama-server.exe`, wrapped with an Inno Setup installer
-→ `SmartBuildingTranslator.exe`. Models downloaded on demand, not bundled.
+## Building the Windows app
+```
+.venv\Scripts\python -m pip install -e .[build]      # PyInstaller
+.venv\Scripts\python packaging\build.py              # → dist\
+```
+| Output | What it is |
+|---|---|
+| `dist\SmartBuildingTranslator\` | the app folder: `SmartBuildingTranslator.exe` (desktop app), `sbt.exe` (command line), `_internal\` (Python, libraries, `ui\`, `config\`, `data\`), licence files |
+| `dist\SmartBuildingTranslator-<version>-portable.zip` | the same folder, zipped |
+| `dist\SmartBuildingTranslator-<version>-Setup.exe` | per-user installer (needs Inno Setup 6, see below) |
+| `dist\SHA256SUMS.txt` | fingerprints of the files above |
+
+What `build.py` does: version resource and icon → PyInstaller (`packaging\SmartBuildingTranslator.spec`, one folder,
+no UPX) → `THIRD_PARTY_LICENSES.txt` from the installed packages → Windows Defender scan → offline smoke tests of
+the built programs with a throw-away data folder (`sbt.exe doctor`; the window's `--selftest`, which checks page,
+JavaScript bridge and paths; and, when this folder has an installed `runtime`, a real translation of a public test
+deck and a scanned PDF plus `sbt.exe check`) → zip → installer (`packaging\installer.iss`) → scan → SHA-256.
+
+The engine and models are **not** inside the app: the installed app keeps them in
+`%LOCALAPPDATA%\SmartBuildingTranslator\runtime` (downloaded from the Models screen) or in any folder chosen there
+(`runtime_dir` setting; `SBT_RUNTIME_DIR` overrides it). Code that needs them calls `sbt.settings.runtime_dir()`;
+read-only files that ship with the app are found through `sbt.settings.PROJECT_ROOT`, which points into the app
+folder when packaged (`FROZEN`).
+
+**Inno Setup** (installer compiler, free): download `innosetup-6.x.exe` from jrsoftware.org (published on GitHub
+with its SHA-256; signed by Pyrsys B.V.) and install it for your user, e.g.
+`innosetup-6.7.3.exe /VERYSILENT /CURRENTUSER /DIR="<this folder>\runtime\tools\InnoSetup"`. `build.py` finds it
+there or in its standard locations; without it, the installer step is skipped.
+
+The programs are not code-signed. With a code-signing certificate, sign `SmartBuildingTranslator.exe`, `sbt.exe`
+and the Setup with `signtool` after the build.

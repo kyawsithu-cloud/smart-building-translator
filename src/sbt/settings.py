@@ -6,11 +6,15 @@ in the project folder, so copying or uploading the project never carries documen
 from __future__ import annotations
 
 import os
+import sys
 import tomllib
 from dataclasses import dataclass, field, fields
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
+# Packaged app (PyInstaller): read-only files that ship with the app (ui/, config/, data/) are in the app folder's
+# _internal directory; in development they are in the project folder.
+FROZEN = bool(getattr(sys, "frozen", False))
+PROJECT_ROOT = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parents[2]))
 DEFAULTS_FILE = PROJECT_ROOT / "config" / "default.toml"
 
 
@@ -21,6 +25,26 @@ def data_dir() -> Path:
         return Path(override)
     base = os.environ.get("LOCALAPPDATA") or str(Path.home() / "AppData" / "Local")
     return Path(base) / "SmartBuildingTranslator"
+
+
+def runtime_dir() -> Path:
+    """Translation engine, models and OCR models (large; written by the downloader).
+
+    SBT_RUNTIME_DIR, else the user's `runtime_dir` setting (e.g. a folder copied from another PC), else
+    %LOCALAPPDATA%\\SmartBuildingTranslator\\runtime for the installed app, or <project>\\runtime in development.
+    """
+    override = os.environ.get("SBT_RUNTIME_DIR")
+    if override:
+        return Path(override)
+    user = data_dir() / "settings.toml"
+    if user.exists():
+        try:
+            chosen = _flatten(tomllib.loads(user.read_text(encoding="utf-8-sig"))).get("runtime_dir")
+        except (tomllib.TOMLDecodeError, OSError):
+            chosen = None
+        if chosen:
+            return Path(str(chosen))
+    return data_dir() / "runtime" if FROZEN else PROJECT_ROOT / "runtime"
 
 
 @dataclass
@@ -34,6 +58,7 @@ class Settings:
     gpu: str = "auto"                         # auto | cpu
     min_font_scale: float = 0.8
     protect: str = "verify"
+    runtime_dir: str = ""                     # folder with llama/ and models/ ("" = default, see runtime_dir())
     extra: dict[str, object] = field(default_factory=dict)
 
     @property
@@ -61,7 +86,7 @@ def load() -> Settings:
     merged: dict[str, object] = {}
     for path in (DEFAULTS_FILE, data_dir() / "settings.toml"):
         if path.exists():
-            merged.update(_flatten(tomllib.loads(path.read_text(encoding="utf-8"))))
+            merged.update(_flatten(tomllib.loads(path.read_text(encoding="utf-8-sig"))))
     s = Settings(**{k: v for k, v in merged.items() if k in known})  # type: ignore[arg-type]
     s.extra = {k: v for k, v in merged.items() if k not in known}
     if s.mode != "offline":

@@ -1,6 +1,8 @@
 """Writes the user's settings file (%LOCALAPPDATA%\\SmartBuildingTranslator\\settings.toml) from the Settings screen."""
 from __future__ import annotations
 
+from pathlib import Path
+
 from sbt import settings as settings_mod
 
 EDITABLE = {
@@ -10,6 +12,7 @@ EDITABLE = {
     "doc_terms": str,         # vote | off
     "glossary": str,          # default glossary
     "theme": str,             # system | light | dark (UI only)
+    "runtime_dir": str,       # folder with the engine and models ("" = default)
 }
 ALLOWED = {"gpu": {"auto", "cpu"}, "doc_terms": {"vote", "off", "hint", "enforce"},
            "theme": {"system", "light", "dark"}, "repair_model": {"", "qwen3-8b"}}
@@ -39,6 +42,8 @@ def save(changes: dict[str, object]) -> dict[str, object]:
         value = EDITABLE[key](value)
         if key in ALLOWED and value not in ALLOWED[key]:
             raise ValueError(f"Invalid value for {key}")
+        if key == "runtime_dir" and value and not Path(str(value)).is_dir():
+            raise ValueError("The models folder does not exist.")
         values[key] = value
     path = settings_mod.data_dir() / "settings.toml"
     path.parent.mkdir(parents=True, exist_ok=True)

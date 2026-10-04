@@ -16,7 +16,7 @@ from pathlib import Path
 from sbt import quality
 from sbt.app.jobs import Reporter
 from sbt.engines.base import TranslationEngine
-from sbt.engines.llama_server import RUNTIME, LlamaServer, model_path
+from sbt.engines.llama_server import LlamaServer, engine_path, model_path
 from sbt.engines.llamacpp import LlamaCppEngine
 from sbt.engines.profiles import PROFILES
 from sbt.quality import compare
@@ -114,7 +114,7 @@ def run_check(spec: CheckSpec, settings: Settings, use_memory: bool = False,
     job = CheckJob(spec, glossary, reporter)
     profile = PROFILES.get(spec.model)
     usable = (profile is not None and {spec.source_lang, spec.target_lang} <= set(profile.languages)
-              and model_path(profile).exists() and (RUNTIME / "llama" / "llama-server.exe").exists())
+              and model_path(profile).exists() and engine_path().exists())
     if spec.use_model and usable and profile is not None:
         reporter.stage("load")
         with LlamaServer(profile, "0" if settings.gpu == "cpu" else None) as server:
